@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
-# Modülleri yüklemek için
-# sudo python3 -m pip install -U pandas==1.3.5
-# sudo python3 -m pip install -U numexpr==2.8.4
-# sudo python3 -m pip install -U numpy==1.21.6
+
 import sys
 sys.dont_write_bytecode = True
 
@@ -15,7 +12,9 @@ import sabitler
 
 def ikys_personel_verileri():
 	#if path.exists('./rapor/ikys_yeni.ods') == False:
-	df = pd.DataFrame(pd.read_excel('./ikys/Personel Rapor.ods', skiprows=2))
+	dfs = pd.read_html('./ikys/Personel Rapor.xls')
+	dfs[0].to_excel('./ikys/Personel Rapor.ods')
+	df = pd.DataFrame(pd.read_excel('./ikys/Personel Rapor.ods'))
 	df = df.dropna(how='all', axis=1)
 	df = df.groupby('Kadro Tipi').get_group('Memur')
 	df = df.drop_duplicates(subset=['Sicil'], ignore_index=True)
@@ -82,3 +81,4 @@ def ikys_personel_verileri():
 
 if __name__ == "__main__":
 	ikys_personel_verileri()
+

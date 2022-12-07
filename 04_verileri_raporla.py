@@ -3,13 +3,6 @@
 import sys
 sys.dont_write_bytecode = True
 
-#openpyxl==3.0.9
-#pandas==1.5.2
-#xlwings==0.25.3
-#numexpr==2.8.4
-#bottleneck==1.3.5
-#odfpy==1.4.1
-
 import numpy as np
 import pandas as pd
 

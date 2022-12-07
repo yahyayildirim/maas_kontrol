@@ -1,18 +1,22 @@
 #!/usr/bin/env python3
-# Modülleri yüklemek için
-# sudo python3 -m pip install -U pandas==1.3.5
-# sudo python3 -m pip install -U numexpr==2.8.4
-# sudo python3 -m pip install -U numpy==1.21.6
+
 import sys
 sys.dont_write_bytecode = True
+
+import warnings
+warnings.filterwarnings('ignore', category=UserWarning, module='openpyxl')
 
 import pandas as pd
 from os import path
 import re
+import glob
 import sabitler
 
 def kbs_bordro_verileri():
-	df = pd.DataFrame(pd.read_excel('./kbs/BordroDokumu.xlsx', sheet_name=0, skiprows=1))
+	dosya = glob.glob('./kbs/BordroDokumu*.xlsx', recursive=False)
+	for file in dosya:
+		df = pd.DataFrame(pd.read_excel(file, sheet_name=0, skiprows=1))
+	#df = pd.DataFrame(pd.read_excel(dosya, sheet_name=0, skiprows=1))
 	df = df.dropna(how='all', axis=1)
 	df = df[['Personel No TC.Kimlik No','Adı Soyadı','Hizmet Sın.-Ünvan','Öd.Es.D.-K. Em.Es.D.-K.',
 	 		'Öd.Ekgös-Em.Ekgös','Kıdem Ay-Kıdem Yıl','Aylık Tutar','Ek Gös.Ay.','Yan Ödeme Aylık',
