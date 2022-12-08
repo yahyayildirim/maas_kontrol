@@ -5,11 +5,11 @@ sys.dont_write_bytecode = True
 
 import pandas as pd
 
-# sabitler.ods dosyasında bulunan herbir sayfayı ayrı ayrı DataFramelere aktardık.
-df_0 = pd.DataFrame(pd.read_excel('sabitler.ods', sheet_name=0))
-df_1 = pd.DataFrame(pd.read_excel('sabitler.ods', sheet_name=1))
-df_2 = pd.DataFrame(pd.read_excel('sabitler.ods', sheet_name=2))
-df_3 = pd.DataFrame(pd.read_excel('sabitler.ods', sheet_name=3))
+# maas_verileri.ods dosyasında bulunan herbir sayfayı ayrı ayrı DataFramelere aktardık.
+df_0 = pd.DataFrame(pd.read_excel('maas_verileri.ods', sheet_name=0))
+df_1 = pd.DataFrame(pd.read_excel('maas_verileri.ods', sheet_name=1))
+df_2 = pd.DataFrame(pd.read_excel('maas_verileri.ods', sheet_name=2))
+df_3 = pd.DataFrame(pd.read_excel('maas_verileri.ods', sheet_name=3))
 df_per = pd.DataFrame(pd.read_excel('./rapor/kbs_personel_verileri.ods', sheet_name=0))
 
 

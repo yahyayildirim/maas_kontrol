@@ -3,16 +3,16 @@
 import sys
 sys.dont_write_bytecode = True
 
-import pandas as pd
-import numpy as np
+print("Lütfen bekleyiniz...")
 
+if __name__ == "__main__":
+	import kbs_personel_verileri
+	kbs_personel_verileri.kbs_personel_verileri()
 
-"""
-pandas.read_html(io, *, match='.+', flavor=None, header=None, index_col=None, 
-	skiprows=None, attrs=None, parse_dates=False, thousands=',', encoding=None, 
-	decimal='.', converters=None, na_values=None, keep_default_na=True, 
-	displayed_only=True, extract_links=None)
-"""
+	import ikys_personel_verileri
+	ikys_personel_verileri.ikys_personel_verileri()
 
-dfs = pd.read_html('./ikys/Personel Rapor.xls')
-dfs[0].to_excel('./ikys/Personel Rapor.ods')
+	import kbs_bordro_verileri
+	kbs_bordro_verileri.kbs_bordro_verileri()
+	
+	import verileri_raporla

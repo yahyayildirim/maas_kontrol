@@ -11,7 +11,6 @@ import sabitler
 
 
 def ikys_personel_verileri():
-	#if path.exists('./rapor/ikys_yeni.ods') == False:
 	dfs = pd.read_html('./ikys/Personel Rapor.xls')
 	dfs[0].to_excel('./ikys/Personel Rapor.ods')
 	df = pd.DataFrame(pd.read_excel('./ikys/Personel Rapor.ods'))

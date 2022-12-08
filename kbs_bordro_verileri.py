@@ -9,14 +9,13 @@ warnings.filterwarnings('ignore', category=UserWarning, module='openpyxl')
 import pandas as pd
 from os import path
 import re
-import glob
+from glob import glob
 import sabitler
 
 def kbs_bordro_verileri():
-	dosya = glob.glob('./kbs/BordroDokumu*.xlsx', recursive=False)
-	for file in dosya:
-		df = pd.DataFrame(pd.read_excel(file, sheet_name=0, skiprows=1))
-	#df = pd.DataFrame(pd.read_excel(dosya, sheet_name=0, skiprows=1))
+	dosya = glob('./kbs/BordroDokumu*', recursive=False)
+	data = [pd.read_excel(f, sheet_name=0, skiprows=1) for f in dosya]
+	df = pd.DataFrame(data[0])
 	df = df.dropna(how='all', axis=1)
 	df = df[['Personel No TC.Kimlik No','Adı Soyadı','Hizmet Sın.-Ünvan','Öd.Es.D.-K. Em.Es.D.-K.',
 	 		'Öd.Ekgös-Em.Ekgös','Kıdem Ay-Kıdem Yıl','Aylık Tutar','Ek Gös.Ay.','Yan Ödeme Aylık',
@@ -50,7 +49,7 @@ def kbs_bordro_verileri():
 
 	df[['TC Kimlik', 'Derece', 'Kademe', 'Yan Ödeme', 'Ek Gösterge', 'Hizmet Süresi (Yıl)']] = df[['TC Kimlik', 'Derece', 'Kademe', 'Yan Ödeme', 'Ek Gösterge', 'Hizmet Süresi (Yıl)']].apply(pd.to_numeric).fillna(0)		
 
-	df = df.drop_duplicates(subset=['TC Kimlik'], ignore_index=True, keep='last', inplace=False)
+	df = df.drop_duplicates(subset=['TC Kimlik'], ignore_index=True, keep='first', inplace=False)
 
 	df['Gösterge Puanı'] = df.apply(lambda row: sabitler.yan_odeme_puani_kbs(row['TC Kimlik']), axis=1)
 	

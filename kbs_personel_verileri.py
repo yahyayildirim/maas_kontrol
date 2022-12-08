@@ -3,16 +3,14 @@
 import sys
 sys.dont_write_bytecode = True
 
+from glob import glob
 import pandas as pd
-from os import path
 import re
-import glob
-
 
 def kbs_personel_verileri():
-	dosya = glob.glob('./kbs/_reports_MemurRaporlar_PersonelBilgileri_jrxml*.xls', recursive = True)
-	for file in dosya:
-		df = pd.DataFrame(pd.read_excel(file, sheet_name=0, skiprows=15))
+	dosya = glob('./kbs/_reports_MemurRaporlar*', recursive=False)
+	data = [pd.read_excel(f, sheet_name=0, skiprows=15) for f in dosya]
+	df = pd.DataFrame(data[0])
 	df.dropna(axis=0, thresh=8, inplace=True)			
 	df.dropna(axis=1, thresh=2, inplace=True)
 

@@ -8,7 +8,7 @@ KBS Sisteminde hata olup olmadığını kontrol etmek amacıyla yazılmıştır.
 Detaylar yazılacaktır.
 ```
 # KURULACAK PYTHON KÜTÜPHANELERİ
-Başta belirmem gerikir ki Python versiyonunun 3.8 ve üzeri olması gerekiyor.
+Başta belirtmem gerikir ki Python versiyonunun 3.8 ve üzeri olması gerekiyor.
 ```
 sudo apt install python3-pip
 sudo python3 -m pip install -U pip
@@ -20,3 +20,4 @@ sudo python3 -m pip install -U bottleneck
 sudo python3 -m pip install -U odfpy
 
 ```
+* pip3 install -r moduller.txt
