@@ -55,7 +55,7 @@ def kbs_bordro_verileri():
 	
 	df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Unvan', 'Derece', 'Kademe', 'Yan Ödeme', 'Ek Gösterge',
 	 		'Gösterge Puanı', 'Hizmet Süresi (Yıl)', 'Aylık Tutar', 'Ek Gös.Ay.', 'Yan Ödeme Aylık',
-	 		'Kıdem Aylık'
+	 		'Kıdem Aylık', 'Özel Hiz.Taz.', 'Ek Öde.(666 KHK'
 	 		]]
 
 	#'Özel Hiz.Taz.',	'Makam Taz.', 'Dil Tazminatı', 'Ek Öde.(666 KHK', 'Sendika Aidatı'

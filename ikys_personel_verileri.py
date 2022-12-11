@@ -63,9 +63,13 @@ def ikys_personel_verileri():
 	df['Yan Ödeme Aylık'] = round(df.apply(lambda row: sabitler.yan_odeme(row["Gösterge Puanı"], row["Unvan"]), axis=1), 2)
 
 	df['Kıdem Aylık'] = round(df.apply(lambda row: sabitler.kidem_ayligi(row["Hizmet Süresi (Yıl)"], row["Unvan"]), axis=1), 2)
+	
+	df['Özel Hiz.Taz.'] = round(df.apply(lambda row: sabitler.ozel_hizmet(row["Unvan"], row["Derece"]), axis=1), 2)
+
+	df['Ek Öde.(666 KHK'] = round(df.apply(lambda row: sabitler.ek_odeme(row["Unvan"], row["Derece"]), axis=1), 2)
 
 	df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Unvan', 'Derece', 'Kademe', 'Yan Ödeme', 'Ek Gösterge', 'Gösterge Puanı',
-			 'Hizmet Süresi (Yıl)', 'Aylık Tutar', 'Ek Gös.Ay.', 'Yan Ödeme Aylık', 'Kıdem Aylık'
+			 'Hizmet Süresi (Yıl)', 'Aylık Tutar', 'Ek Gös.Ay.', 'Yan Ödeme Aylık', 'Kıdem Aylık', 'Özel Hiz.Taz.', 'Ek Öde.(666 KHK'
 	 		]]
 
 	# Listeyi TC ye göre sıralıyoruz.

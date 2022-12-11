@@ -56,9 +56,16 @@ def kidem_ayligi(hizmetyili, unvan):
 		hizmetyili = 25
 	return df_1['aylik_katsayi'].iloc[-1] * 20 * hizmetyili
 
-def ozel_hizmet(tazminat_orani):
-	#En Yüksek Devlet Memuru Aylığı X % Tazminat Oranı
-	return df_1['aylik_katsayi'].iloc[-1] * 9500 * tazminat_orani / 100
+def ozel_hizmet(unvan, derece):
+	#Özel Hizmet Tazminatı = 9500 X Memur Maaş Katsayısı X Özel Hizmet Puanı / 100 formülüyle hesaplanır.
+	ozel_hizmet_taz = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece), 'oht_orani'].sum()
+	return df_1['aylik_katsayi'].iloc[-1] * ozel_hizmet_taz * 9500 / 100
+
+def ek_odeme(unvan, derece):
+	#Ek Öde.(666 KHK) = 9500 X Memur Maaş Katsayısı X Ek Ödeme Oranı / 100 formülüyle hesaplanır.
+	khk_666 = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece), 'ek_odeme_orani'].sum()
+	#print(unvan,derece,khk_666)
+	return df_1['aylik_katsayi'].iloc[-1] * khk_666 * 9500 / 100
 
 def yan_odeme_puani(unvan, derece):
 	if unvan == 'Şube Md.' or unvan == 'Din Hz.Uzm':

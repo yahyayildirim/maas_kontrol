@@ -8,16 +8,10 @@ KBS Sisteminde hata olup olmadığını kontrol etmek amacıyla yazılmıştır.
 Detaylar yazılacaktır.
 ```
 # KURULACAK PYTHON KÜTÜPHANELERİ
-Başta belirtmem gerikir ki Python versiyonunun 3.8 ve üzeri olması gerekiyor.
-```
-sudo apt install python3-pip
-sudo python3 -m pip install -U pip
-sudo python3 -m pip install -U pandas
-sudo python3 -m pip install -U numexpr
-sudo python3 -m pip install -U numpy
-sudo python3 -m pip install -U openpyxl
-sudo python3 -m pip install -U bottleneck
-sudo python3 -m pip install -U odfpy
+* Başta belirtmem gerikir ki Python versiyonunun 3.8 ve üzeri olması gerekiyor.
 
-```
-* pip3 install -r moduller.txt
+* Öncelikler indirdiğimiz arşiv dosyasını açıp klasörün içine giriyoruz ve uçbirimi açarak `sudo apt install python3-pip` komutu ile python kütüphanlerini indirmemiz için gerekli olan paketi kuruyoruz. Daha sonra `sudo python3 -m pip install -r moduller.txt` komutu ile gerekli olan kütüphanleri kuruyoruz.
+
+* İKYS --> Sicil --> Personel Sorgula menüsüne geliyoruz.
+
+* KBS Sistemine giriyoruz ve Raporlar bölümünden ilgili yılı ve ayı seçip, 
