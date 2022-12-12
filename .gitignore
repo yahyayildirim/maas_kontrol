@@ -1,5 +1,5 @@
 # Belirli bir dosyayı es geçmek için
-test_test.py
+# git update-index --assume-unchanged <dosya_adi>
 
 
 # Belirli bir dizini es geçmek için
