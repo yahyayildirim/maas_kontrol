@@ -30,7 +30,9 @@ kbs_verisi = pd.DataFrame(pd.read_excel('./rapor/kbs_bordro_verileri.ods'))
 ikys_verisi = pd.DataFrame(pd.read_excel('./rapor/ikys_personel_verileri.ods'))
 
 if ikys_verisi.shape == kbs_verisi.shape:
-    diff = ikys_verisi.compare(kbs_verisi, align_axis=1, keep_shape=False, keep_equal=True, result_names=('kbs', 'ikys'))
+    #diff = ikys_verisi.compare(kbs_verisi, align_axis=1, keep_shape=False, keep_equal=True, result_names=('kbs', 'ikys'))
+    diff = ikys_verisi.compare(kbs_verisi, align_axis=1, keep_shape=False, keep_equal=True).rename({'self': 'kbs', 'other': 'ikys'}, axis=1, level=1)
+
     diff.to_excel('./rapor/ikys_kbs_kontrol_raporu_1.ods')
 
     #### Raporlarma Versiyon - 2
