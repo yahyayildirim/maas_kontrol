@@ -1,3 +1,15 @@
-ikys/
-kbs/
-rapor/
+# Belirli bir dosyayı es geçmek için
+config.php
+
+# Belirli bir dizini es geçmek için
+logs/
+
+# Belirli bir uzantılı dosyaları es geçmek için
+*.styl
+*.xls
+*.xlsx
+*.ods
+
+# log dosyalarını es geç ama error.log dosyaları hariç.
+*.log
+!errors.log
