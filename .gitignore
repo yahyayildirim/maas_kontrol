@@ -1,6 +1,6 @@
 # Belirli bir dosyayı es geçmek için
 # git update-index --assume-unchanged <dosya_adi>
-
+test
 
 # Belirli bir dizini es geçmek için
 logs/
