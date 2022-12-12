@@ -12,8 +12,6 @@ logs/
 *.xlsx
 *.ods
 *.log
-*.gitignore
-*.gitkeep
 
 
 # error.log dosyaları hariç.
