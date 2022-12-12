@@ -32,14 +32,13 @@ ikys_verisi = pd.DataFrame(pd.read_excel('./rapor/ikys_personel_verileri.ods'))
 if ikys_verisi.shape == kbs_verisi.shape:
     #diff = ikys_verisi.compare(kbs_verisi, align_axis=1, keep_shape=False, keep_equal=True, result_names=('kbs', 'ikys'))
     diff = ikys_verisi.compare(kbs_verisi, align_axis=1, keep_shape=False, keep_equal=True).rename({'self': 'kbs', 'other': 'ikys'}, axis=1, level=1)
-
     diff.to_excel('./rapor/ikys_kbs_kontrol_raporu_1.ods')
 
     #### Raporlarma Versiyon - 2
     ikys_verisi.equals(kbs_verisi)
-    comparison_values = ikys_verisi.values == kbs_verisi.values
-    rows,cols=np.where(comparison_values==False)
-    for item in zip(rows,cols):
+    comparison_values = (ikys_verisi.values == kbs_verisi.values)
+    rows, cols = np.where(comparison_values == False)
+    for item in zip(rows, cols):
         ikys_verisi.iloc[item[0], item[1]] = 'ikys {} --> kbs {}'.format(ikys_verisi.iloc[item[0], item[1]],kbs_verisi.iloc[item[0], item[1]])
     ikys_verisi.to_excel('./rapor/ikys_kbs_kontrol_raporu_2.ods')
 
