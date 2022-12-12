@@ -1,17 +1,32 @@
 # MAAŞ KONTROL PROGRAMI
 
+```
+Bu programın amacı, İKYS ve KBS Sisteminden aldığımız raporlaro karşılaştırarak hata olup olmadığını kontrol etmek amacıyla yazılmıştır.
 
 ```
-Bu programın amacı, İKYS Sisteminde bulunan verileri baz alarak,
-KBS Sisteminde hata olup olmadığını kontrol etmek amacıyla yazılmıştır.
 
-Detaylar yazılacaktır.
-```
-# KURULACAK PYTHON KÜTÜPHANELERİ
+
+# ÖN HAZIRLIK
 * Başta belirtmem gerikir ki Python versiyonunun 3.7 ve üzeri olması gerekiyor.
+* Masaüstündeyken sağ tık yaparak `Burada Uçbirim Aç`a tıklıyoruz.
+* `sudo apt install -yy git python3-pip` yazıp enter yapın.
+* `sudo python3 -m pip install -U -r moduller.txt` komutu ile gerekli olan kütüphanleri kuruyoruz.
+* `git clone https://gitlab.com/yahyayildirim/maas_kontrol.git` ile programı indiriyoruz.
+* Şimdi Masaüstünde maas_kontrol adında bir klasör oluşmuş olması gerekiyor.
 
-* Öncelikler indirdiğimiz arşiv dosyasını açıp klasörün içine giriyoruz ve uçbirimi açarak `sudo apt install python3-pip` komutu ile python kütüphanlerini indirmemiz için gerekli olan paketi kuruyoruz. Daha sonra `sudo python3 -m pip install -U -r moduller.txt` komutu ile gerekli olan kütüphanleri kuruyoruz.
 
-* İKYS --> Sicil --> Personel Sorgula menüsüne geliyoruz.
+# İKYS ÜZERİNDEN YAPILACAKLAR
+* Masaüstünde bulunan **maas_kontrol/izle** klasöründeki **ornek_ikys_personel_sorgulama.webm** videoyu izleyin.
 
-* KBS Sistemine giriyoruz ve Raporlar bölümünden ilgili yılı ve ayı seçip, 
+
+# KBS ÜZERİNDEN YAPILACAKLAR
+* Masaüstünde bulunan **maas_kontrol/izle** klasöründeki **ornek_kbs_raporlar.webm** videoyu izleyin.
+
+
+# PROGRAMIN ÇALIŞTIRILMASI
+* Programı iki yol ile çalıştırbiliriz.
+### 1. YOL:
+* **maas_kontrol** klasöründe uçbirim açıp, `./Program_Calistir.py` komutunu çalıştırmak
+
+### 2. YOL:
+* **maas_kontrol** klasöründe bulunan **Program_Calistir.py** dosyasına çift tıklayarak açılan menüden **Uçbirimde Çalıştır** butonuna tıklamak.
