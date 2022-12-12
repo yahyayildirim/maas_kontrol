@@ -1,15 +1,21 @@
 # Belirli bir dosyayı es geçmek için
-config.php
+test_test.py
+
+
 
 # Belirli bir dizini es geçmek için
 logs/
+
+
 
 # Belirli bir uzantılı dosyaları es geçmek için
 *.styl
 *.xls
 *.xlsx
 *.ods
-
-# log dosyalarını es geç ama error.log dosyaları hariç.
 *.log
+
+
+
+# error.log dosyaları hariç.
 !errors.log
