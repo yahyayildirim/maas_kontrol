@@ -9,8 +9,16 @@ Bu programın amacı, İKYS ve KBS Sisteminden aldığımız raporlaro karşıla
 # ÖN HAZIRLIK
 * Başta belirtmem gerikir ki Python versiyonunun 3.7 ve üzeri olması gerekiyor.
 * Masaüstündeyken sağ tık yaparak `Burada Uçbirim Aç`a tıklıyoruz.
-* `sudo apt install -yy git python3-pip` yazıp enter yapın.
-* `sudo python3 -m pip install -U -r moduller.txt` komutu ile gerekli olan kütüphanleri kuruyoruz.
+* 
+```
+sudo apt install -yy git python3-pip
+```
+yazıp enter yapın.
+* 
+```
+sudo python3 -m pip install -U -r moduller.txt
+```
+komutu ile gerekli olan kütüphanleri kuruyoruz.
 * `git clone https://gitlab.com/yahyayildirim/maas_kontrol.git` ile programı indiriyoruz.
 * Şimdi Masaüstünde maas_kontrol adında bir klasör oluşmuş olması gerekiyor.
 
