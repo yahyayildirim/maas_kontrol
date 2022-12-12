@@ -2,10 +2,8 @@
 test_test.py
 
 
-
 # Belirli bir dizini es geçmek için
 logs/
-
 
 
 # Belirli bir uzantılı dosyaları es geçmek için
@@ -14,7 +12,8 @@ logs/
 *.xlsx
 *.ods
 *.log
-
+*.gitignore
+*.gitkeep
 
 
 # error.log dosyaları hariç.
