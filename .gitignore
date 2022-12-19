@@ -16,3 +16,4 @@ logs/
 
 # error.log dosyaları hariç.
 !errors.log
+!maas_verileri.xlsx
