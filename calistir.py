@@ -16,3 +16,4 @@ if __name__ == "__main__":
 	kbs_bordro_verileri.kbs_bordro_verileri()
 	
 	import verileri_raporla
+	import kontrol_raporu_hazirla
