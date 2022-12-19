@@ -6,9 +6,6 @@ sys.dont_write_bytecode = True
 print("Lütfen bekleyiniz...")
 
 if __name__ == "__main__":
-	import kbs_personel_verileri
-	kbs_personel_verileri.kbs_personel_verileri()
-
 	import ikys_personel_verileri
 	ikys_personel_verileri.ikys_personel_verileri()
 

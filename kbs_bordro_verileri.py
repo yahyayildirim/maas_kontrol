@@ -59,27 +59,30 @@ def kbs_bordro_verileri():
 	df = df.sort_values('Net Ödenen', ascending=False).drop_duplicates('TC Kimlik').sort_index()
 	#df = df.groupby('TC Kimlik').agg('max').reset_index()
 
+	#df['Gösterge Puanı'] = df.apply(lambda row: sabitler.yan_odeme_puani_kbs(row['TC Kimlik']), axis=1)
+	df['Gösterge Puanı'] = round(df.apply(lambda row: sabitler.tutardan_yan_odeme_puani_bul(row['Yan Ödeme Aylık']), axis=1))
+
 	df['Ek Tazminat Puanı'] = round(df.apply(lambda row: sabitler.tutardan_ek_tazminat_puani_bul(row['Ek Tazminat']), axis=1))
 
-	df['Özel Hiz. Taz. Puanı'] = df.apply(lambda row: sabitler.ozel_hizmet_orani_kbs(row['TC Kimlik']), axis=1)
+	df['Özel Hiz. Taz. Puanı'] = round(df.apply(lambda row: sabitler.tutardan_ozel_hizmet_orani_bul(row['Özel Hiz.Taz.']), axis=1))
 
 	df['666 KHK Oranı'] = round(df.apply(lambda row: sabitler.tutardan_666_orani_bul(row['Ek Öde.(666 KHK']), axis=1))
-
-	df['Gösterge Puanı'] = df.apply(lambda row: sabitler.yan_odeme_puani_kbs(row['TC Kimlik']), axis=1)
 
 
 	# df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Unvan', 'Derece', 'Kademe', 'Yan Ödeme', 'Aylık Tutar', 'Ek Gösterge',
 	#  		'Gösterge Puanı', 'Hizmet Süresi (Yıl)', 'Ek Gös.Ay.', 'Yan Ödeme Aylık',
 	#  		'Kıdem Aylık', 'Özel Hiz.Taz.', 'Ek Öde.(666 KHK'
 	#  		]]
-	df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Unvan', 'Derece', 'Kademe', 'Yan Ödeme', 'Aylık Tutar', 'Ek Gösterge', 'Ek Gös.Ay.', 'Gösterge Puanı', 'Yan Ödeme Aylık', 'Ek Tazminat Puanı', 'Özel Hiz. Taz. Puanı', 'Özel Hiz.Taz.', '666 KHK Oranı', 'Ek Öde.(666 KHK']].fillna(0)
+	df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Unvan', 'Derece', 'Kademe', 'Yan Ödeme', 'Aylık Tutar',
+	'Ek Gösterge', 'Ek Gös.Ay.', 'Gösterge Puanı', 'Yan Ödeme Aylık', 'Ek Tazminat Puanı', 'Özel Hiz. Taz. Puanı',
+	'Özel Hiz.Taz.', '666 KHK Oranı', 'Ek Öde.(666 KHK']].fillna(0)
 
 	# Listeyi TC veya Adı-Soyadına göre sıralayabilirsiniz, dikkat etmeniz gereken ise ikys_personel ve kbs_personelde de aynı değişikliği yapmanızdır.
 	#df.sort_values(by=['TC Kimlik'], inplace=True, ignore_index=True)
 	df.sort_values(by=['Adı Soyadı'], inplace=True, ignore_index=True)
 
 	df.to_excel('./kbs/kbs_bordro_verileri.xlsx', index=False, freeze_panes=(1,2))
-	print('3. KBS personel bordro bilgileri uygun formata getirildi...')
+	print('2. KBS personel bordro bilgileri uygun formata getirildi...')
 	time.sleep(2)
 
 if __name__ == '__main__':

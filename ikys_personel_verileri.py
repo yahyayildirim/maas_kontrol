@@ -50,11 +50,15 @@ def ikys_personel_verileri():
 	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(İlçe.*)', value=r'İlçe Müft.')
 	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Şube.*)', value=r'Şube Md.')
 	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Veri.*)', value=r'V.H.K.İ.')
+	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Memur.*Ş.*)', value=r'Memur')
+	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Hiz.*Ş.*)', value=r'Hzmetli(Ş)')
+	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Kaloriferci)', value=r'Kaloriferc')
 	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Vaiz.*)', value=r'Vaiz')
 	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Cez.*)', value=r'Cezv.Vaizi')
 	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Din.*)', value=r'Din Hz.Uzm')
 	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(İma.*)', value=r'İmam.Hat.')
-	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Kuran.*)', value=r'Kur.Krs.Öğ')
+	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Kur.*Öğre.*)', value=r'Kur.Krs.Öğ')
+	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Kur.*Uz.*)', value=r'Kur.Uz.Öğ')
 	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Müez.*)', value=r'Müez.Kayyı')
 	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Uzman.İmam.*)', value=r'Uz.İm.Hat')
 
@@ -97,7 +101,7 @@ def ikys_personel_verileri():
 	# maas_verileri.xlsx içerisindeki bilgileri, sabitler.py dosyasındaki fonksiyon ile unvan, derece ve ogrenim bilgisi değerlerini göndererek çekiyoruz.
 	df['Ek Tazminat Puanı'] = df.apply(lambda row: sabitler.ek_tazminat_puani(row["Unvan"], row["Derece"], row["ogrenim"]), axis=1)
 
-	# Ek Ödeme oranını maa_verileri.xlsx dosyasından fonksiyon ile çekiyoruz.
+	# Ek Ödeme oranını maas_verileri.xlsx dosyasından fonksiyon ile çekiyoruz.
 	df['666 KHK Oranı'] = df.apply(lambda row: sabitler.ek_odeme_666_orani(row["Unvan"], row["Derece"], row["ogrenim"]), axis=1)
 
 	# aynı şekilde ek ödeme 666 khk tutarını sabitler.py dosyasındaki fonsiyona gerekli parametreleri göndererek hesaplıyoruz.
@@ -112,7 +116,7 @@ def ikys_personel_verileri():
 
 	# DataFrame içinde topladığımız ve sütunlarını belirlediğimiz verilerimizi excele xlsx formatında aktarıyoruz. freeze_panes değeri ile ilk satır ve ilk iki sütunu donduruyoruz.
 	df.to_excel('./ikys/ikys_personel_verileri.xlsx', index=False, freeze_panes=(1,2))
-	print('2. İKYS personel bilgileri uygun formata getirildi...')
+	print('1. İKYS personel bilgileri uygun formata getirildi...')
 	time.sleep(2)
 
 if __name__ == "__main__":

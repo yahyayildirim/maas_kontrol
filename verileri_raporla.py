@@ -24,5 +24,5 @@ ikys_kbs_esitle.to_excel('./ikys/ikys_personel_verileri.xlsx', index=False, head
 kbs_ikys_esitle = kbs_verisi.loc[kbs_verisi['TC Kimlik'].isin(ikys_verisi['TC Kimlik'])]
 kbs_ikys_esitle.to_excel('./kbs/kbs_bordro_verileri.xlsx', index=False, header=True, freeze_panes=(1,0))
 
-print('4. KBS sisteminde bulunup, İKYS sisteminde olmayan personel raporu hazırlandı...')
-print('5. İKYS sisteminde bulunup, KBS sisteminde olmayan personel raporu hazırlandı...')
+print('3. KBS sisteminde bulunup, İKYS sisteminde olmayan personel raporu hazırlandı...')
+print('4. İKYS sisteminde bulunup, KBS sisteminde olmayan personel raporu hazırlandı...')

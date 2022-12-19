@@ -25,7 +25,7 @@ if ikys_verisi.shape == kbs_verisi.shape:
         veri = data.xs(key='ikys verisi', axis='columns', level=1)
         return pd.DataFrame(np.where(data.ne(veri, level=0), renk, ''), index=data.index, columns=data.columns)
     df_final.style.apply(arkaplani_renklendir, axis=None).to_excel('./rapor/maas_kontrol_raporu.xlsx', engine='openpyxl', freeze_panes=(2,2))
-    print('6. Maaş Kontrol Raporu başarılı bir şekilde hazırlandı...')
+    print('5. Maaş Kontrol Raporu başarılı bir şekilde hazırlandı...')
     print('Artık uçbirimi kapatıp, /rapor/ klasörüne bakabilirsiniz...')
     time.sleep(20)
 else:
