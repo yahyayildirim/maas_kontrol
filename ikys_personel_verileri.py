@@ -34,6 +34,9 @@ def ikys_personel_verileri():
 	# Eğer unvan sütunu boş ise Vekil olarak değiştirmesini sağlıyoruz.
 	df['Unvan'] = df['Unvan'].fillna('Vekil')
 
+	# Eğer sınıf sütunu boş ise DH olarak değiştirmesini sağlıyoruz.
+	df['Sınıf'] = df['Sınıf'].fillna('DH')
+
 	# İKYS raporundaki öğrenim durumu çok uzun ve karmaşık olduğu için, regex ve replace metodları ile istediğimiz formata çeviriyoruz.
 	for i in df["Öğrenim Durumu-Okul-Fakülte-Bölüm"].tolist():
 		ogrenimnul = re.search("Doktora|Lisansüstü|Üniversite|Lisans Tamamlama|Yüksek Okul|İmam Hatip|Lise|Ortaokul|İlköğretim|İlkokul|Okur-Yazar", i)
