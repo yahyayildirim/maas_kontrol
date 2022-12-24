@@ -7,6 +7,7 @@ print("Lütfen bekleyiniz...")
 
 if __name__ == "__main__":
 	import kbs_bordro_verileri
+	kbs_bordro_verileri.kbs_temiz_veri()
 	kbs_bordro_verileri.kbs_bordro_verileri()
 
 	import ikys_personel_verileri

@@ -44,6 +44,7 @@ def ikys_personel_verileri():
 
 	# Adı ve Soyadını büyük harfe çeviriyoruz. Büyük harfe çevirdiğimizde, küçük i harfi I olarak geçiyor. bunu düzeltmek için de ayrıca replace etmemiz gerekiyor.
 	df['Adı Soyadı'] = df['Adı Soyadı'].str.replace('i', 'İ').str.upper()
+	df['Adı Soyadı'].replace(regex=True, inplace=True, to_replace=r'^(DR. )', value=r'')
 
 	# Sınıf sütunundaki büyük harfler hariç herşeyi siliyoruz ve geriye sadece GİH,DH,TH,YH ibarelerini bırakıyoruz.
 	df['Sınıf'].replace(regex=True, inplace=True, to_replace=r'([a-z]|\s|ı|ü|ş|ç|ğ|ö|)', value=r'')
