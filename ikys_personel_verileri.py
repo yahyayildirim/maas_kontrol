@@ -34,9 +34,6 @@ def ikys_personel_verileri():
 	# Eğer unvan sütunu boş ise Vekil olarak değiştirmesini sağlıyoruz.
 	df['Unvan'] = df['Unvan'].fillna('Vekil')
 
-	# Eğer sınıf sütunu boş ise DH olarak değiştirmesini sağlıyoruz.
-	df['Sınıf'] = df['Sınıf'].fillna('DH')
-
 	# İKYS raporundaki öğrenim durumu çok uzun ve karmaşık olduğu için, regex ve replace metodları ile istediğimiz formata çeviriyoruz.
 	for i in df["Öğrenim Durumu-Okul-Fakülte-Bölüm"].tolist():
 		ogrenimnul = re.search("Doktora|Lisansüstü|Üniversite|Lisans Tamamlama|Yüksek Okul|İmam Hatip|Lise|Ortaokul|İlköğretim|İlkokul|Okur-Yazar", i)
@@ -56,13 +53,13 @@ def ikys_personel_verileri():
 	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(İlçe.*)', value=r'İlçe Müft.')
 	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Şube.*)', value=r'Şube Md.')
 	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Veri.*)', value=r'V.H.K.İ.')
-	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Memur.*Ş.*)', value=r'Memur')
+	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Memur.*Ş.*)', value=r'Memur(Ş)')
 	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Hiz.*Ş.*)', value=r'Hzmetli(Ş)')
 	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Kaloriferci)', value=r'Kaloriferc')
 	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Vaiz.*)', value=r'Vaiz')
 	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Cez.*)', value=r'Cezv.Vaizi')
 	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Din.*)', value=r'Din Hz.Uzm')
-	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(İma.*)', value=r'İmam.Hat.')
+	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(İma.*)', value=r'İmam-Hat.')
 	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Kur.*Öğre.*)', value=r'Kur.Krs.Öğ')
 	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Kur.*Uz.*)', value=r'Kur.Uz.Öğ')
 	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Müez.*)', value=r'Müez.Kayyı')
@@ -122,7 +119,7 @@ def ikys_personel_verileri():
 
 	# DataFrame içinde topladığımız ve sütunlarını belirlediğimiz verilerimizi excele xlsx formatında aktarıyoruz. freeze_panes değeri ile ilk satır ve ilk iki sütunu donduruyoruz.
 	df.to_excel('./ikys/ikys_personel_verileri.xlsx', index=False, freeze_panes=(1,2))
-	print('1. İKYS personel bilgileri uygun formata getirildi...')
+	print('2. İKYS personel bilgileri uygun formata getirildi...')
 	time.sleep(2)
 
 if __name__ == "__main__":

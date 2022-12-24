@@ -27,7 +27,7 @@ if ikys_verisi.shape == kbs_verisi.shape:
     df_final.style.apply(arkaplani_renklendir, axis=None).to_excel('./rapor/maas_kontrol_raporu.xlsx', engine='openpyxl', freeze_panes=(2,2))
     print('5. Maaş Kontrol Raporu başarılı bir şekilde hazırlandı...')
     print('Artık uçbirimi kapatıp, /rapor/ klasörüne bakabilirsiniz...')
-    time.sleep(20)
+    time.sleep(10)
 else:
     print('Birşeyler ters gitti... Lütfen telegramdan, yazılımcı ile iletişime geçin. @yahyayildirim')
-    time.sleep(60)
+    time.sleep(20)
