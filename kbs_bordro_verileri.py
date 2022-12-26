@@ -13,27 +13,29 @@ from glob import glob
 import sabitler
 
 def kbs_temiz_veri():
-	#Excel Dosyamızı çağırıyoruz, ilk iki satırı almıyoruz ve veri değişkenine atıyoruz
-
 	dosya = glob('./kbs/BordroDokumu*', recursive=False)
 	data = [pd.read_excel(f, sheet_name=1, skiprows=6) for f in dosya]
 	df = pd.DataFrame(data[0])
-
-	#df = pd.DataFrame(pd.read_excel('./kbs/BordroDokumu_ortahisar.xlsx', sheet_name=1, skiprows=6))
 	df.dropna(axis=0, how='any', inplace=True)
 	df.dropna(axis=1, thresh=2, inplace=True)
+
 	say = 0
 	df_list = []
 	for c in range(len(df.columns)):
 		col = df.columns[say].split('\n')
+		#print(col)
 		sutun = []
 		for cl in col:
 			sutun.append(cl.strip())
-		df_say = df[df.columns[c]].str.split('\n', expand=True)
+		#print(len(df.columns[c]))
+		if len(df.columns[c]) < 15:
+			df_say = df[df.columns[c]]
+		else:
+			df_say = df[df.columns[c]].str.split('\n', expand=True)
 		df_list.append(pd.DataFrame(df_say.values, columns=sutun))
 		say = say + 1
-	deneme = pd.concat(df_list, axis=1)
-	deneme.to_excel('./kbs/Bordro_Dokumu_Temiz.xlsx', index=False)
+	df = pd.concat(df_list, axis=1)
+	df.to_excel('./kbs/Bordro_Dokumu_Temiz.xlsx', index=False)
 
 
 def kbs_bordro_verileri():
