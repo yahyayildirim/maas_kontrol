@@ -109,8 +109,8 @@ def kbs_bordro_verileri():
 	df.sort_values(by=['Adı Soyadı'], inplace=True, ignore_index=True)
 
 	df.to_excel('./kbs/kbs_bordro_verileri.xlsx', index=False, freeze_panes=(1,2))
-	print('1. KBS personel bordro bilgileri uygun formata getirildi...')
-	time.sleep(2)
+	print('%15')
+	time.sleep(1)
 
 if __name__ == '__main__':
 	kbs_temiz_veri()

@@ -120,8 +120,8 @@ def ikys_personel_verileri():
 
 	# DataFrame içinde topladığımız ve sütunlarını belirlediğimiz verilerimizi excele xlsx formatında aktarıyoruz. freeze_panes değeri ile ilk satır ve ilk iki sütunu donduruyoruz.
 	df.to_excel('./ikys/ikys_personel_verileri.xlsx', index=False, freeze_panes=(1,2))
-	print('2. İKYS personel bilgileri uygun formata getirildi...')
-	time.sleep(2)
+	print('%30')
+	time.sleep(1)
 
 if __name__ == "__main__":
 	ikys_personel_verileri()
