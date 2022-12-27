@@ -16,22 +16,26 @@ if ikys_verisi.shape == kbs_verisi.shape:
     kbs = ikys_verisi[~ikys_verisi.apply(tuple, 1).isin(kbs_verisi.apply(tuple, 1))]
     ikys = kbs_verisi[~kbs_verisi.apply(tuple, 1).isin(ikys_verisi.apply(tuple, 1))]
 
-    df_all = pd.concat([kbs.set_index('TC Kimlik'), ikys.set_index('TC Kimlik')], axis='columns', keys=['ikys verisi', 'kbs verisi'])
+    df_all = pd.concat([kbs.set_index('Adı Soyadı'), ikys.set_index('Adı Soyadı')], axis='columns', keys=['ikys verisi', 'kbs verisi'])
     df_final = df_all.swaplevel(axis='columns')[kbs_verisi.columns[1:]]
 
     def arkaplani_renklendir(data, color='red'):
         renk = 'background-color: {}'.format(color)
         veri = data.xs(key='ikys verisi', axis='columns', level=1)
         return pd.DataFrame(np.where(data.ne(veri, level=0), renk, ''), index=data.index, columns=data.columns)
-    df_final.style.apply(arkaplani_renklendir, axis=None).to_excel('./rapor/maas_kontrol_raporu_v1.xlsx', engine='openpyxl', freeze_panes=(2,2))
+    df_final.style.apply(arkaplani_renklendir, axis=None).to_excel('./rapor/maas_kontrol_raporu_v1.xlsx', engine='openpyxl', freeze_panes=(2,1))
 
     #### Raporlama Versiyon-2
-    df_fark = kbs.compare(ikys, align_axis=1, keep_shape=True, keep_equal=True, result_names=('ikys verisi', 'kbs verisi'))
+    kbs.set_index('Adı Soyadı', inplace=True)
+    ikys.set_index('Adı Soyadı', inplace=True)
+    df_fark = kbs.compare(ikys, align_axis=1, keep_shape=False, keep_equal=True)
+    #df_fark = kbs.compare(ikys, align_axis=1).rename(index={'self': 'left', 'other': 'right'}, level=-1)
+
     def arkaplani_renklendir(data, color='red'):
         renk = 'background-color: {}'.format(color)
-        veri = data.xs(key='ikys verisi', axis='columns', level=1)
+        veri = data.xs(key='self', axis='columns', level=1)
         return pd.DataFrame(np.where(data.ne(veri, level=0), renk, ''), index=data.index, columns=data.columns)
-    df_fark.style.apply(arkaplani_renklendir, axis=None).to_excel('./rapor/maas_kontrol_raporu_v2.xlsx', engine='openpyxl', freeze_panes=(2,2))
+    df_fark.style.apply(arkaplani_renklendir, axis=None).to_excel('./rapor/maas_kontrol_raporu_v2.xlsx', engine='openpyxl', freeze_panes=(2,1))
 
     print('%100')
     time.sleep(0.5)
