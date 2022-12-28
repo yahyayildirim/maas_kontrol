@@ -16,8 +16,9 @@ def kbs_temiz_veri():
 	dosya = glob('./kbs/BordroDokumu*', recursive=False)
 	data = [pd.read_excel(f, sheet_name=1, skiprows=6) for f in dosya]
 	df = pd.DataFrame(data[0])
-	df.dropna(axis=0, how='any', inplace=True)
+	df.dropna(axis=0, thresh=5, inplace=True)
 	df.dropna(axis=1, thresh=2, inplace=True)
+	df.drop(df.tail(2).index,inplace=True)
 
 	say = 0
 	df_list = []
