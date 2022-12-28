@@ -30,12 +30,12 @@ if ikys_verisi.shape == kbs_verisi.shape:
     ikys.reset_index(drop=True, inplace=True)
     kbs.set_index('Adı Soyadı', inplace=True)
     ikys.set_index('Adı Soyadı', inplace=True)
-    df_fark = kbs.compare(ikys, align_axis=1, keep_shape=False, keep_equal=True)
-    #df_fark = kbs.compare(ikys, align_axis=1).rename(index={'self': 'left', 'other': 'right'}, level=-1)
+    #df_fark = kbs.compare(ikys, align_axis=1, keep_shape=False, keep_equal=True)
+    df_fark = kbs.compare(ikys, align_axis=1, keep_shape=False, keep_equal=True).rename(columns={'self': 'ikys verisi', 'other': 'kbs verisi'}, level=-1)
 
     def arkaplani_renklendir(data, color='red'):
         renk = 'background-color: {}'.format(color)
-        veri = data.xs(key='self', axis='columns', level=1)
+        veri = data.xs(key='ikys verisi', axis='columns', level=1)
         return pd.DataFrame(np.where(data.ne(veri, level=0), renk, ''), index=data.index, columns=data.columns)
     df_fark.style.apply(arkaplani_renklendir, axis=None).to_excel('./rapor/maas_kontrol_raporu_v2.xlsx', engine='openpyxl', freeze_panes=(2,1))
 
