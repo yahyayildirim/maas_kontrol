@@ -26,6 +26,8 @@ if ikys_verisi.shape == kbs_verisi.shape:
     df_final.style.apply(arkaplani_renklendir, axis=None).to_excel('./rapor/maas_kontrol_raporu_v1.xlsx', engine='openpyxl', freeze_panes=(2,1))
 
     #### Raporlama Versiyon-2
+    kbs.reset_index(drop=True, inplace=True)
+    ikys.reset_index(drop=True, inplace=True)
     kbs.set_index('Adı Soyadı', inplace=True)
     ikys.set_index('Adı Soyadı', inplace=True)
     df_fark = kbs.compare(ikys, align_axis=1, keep_shape=False, keep_equal=True)
