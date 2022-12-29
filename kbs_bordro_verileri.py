@@ -37,6 +37,8 @@ def kbs_temiz_veri():
 		say = say + 1
 	df = pd.concat(df_list, axis=1)
 	df.to_excel('./kbs/Bordro_Dokumu_Temiz.xlsx', index=False)
+	print('%10')
+	time.sleep(1)
 
 
 def kbs_bordro_verileri():
@@ -103,7 +105,7 @@ def kbs_bordro_verileri():
 	#  		'Gösterge Puanı', 'Hizmet Süresi (Yıl)', 'Ek Gös.Ay.', 'Yan Ödeme Aylık',
 	#  		'Kıdem Aylık', 'Özel Hiz.Taz.', 'Ek Öde.(666 KHK'
 	#  		]]
-	df = df[['Adı Soyadı', 'TC Kimlik', 'Sınıf', 'Unvan', 'Derece', 'Kademe', 'Yan Ödeme', 'Aylık Tutar',
+	df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Unvan', 'Derece', 'Kademe', 'Yan Ödeme', 'Aylık Tutar',
 	'Ek Gösterge', 'Ek Gös.Ay.', 'Gösterge Puanı', 'Yan Ödeme Aylık', 'Ek Tazminat Puanı', 'Özel Hiz. Taz. Puanı',
 	'Özel Hiz.Taz.', '666 KHK Oranı', 'Ek Öde.(666 KHK']].fillna(0)
 
@@ -111,8 +113,9 @@ def kbs_bordro_verileri():
 	#df.sort_values(by=['TC Kimlik'], inplace=True, ignore_index=True)
 	df.sort_values(by=['Adı Soyadı'], inplace=True, ignore_index=True)
 
+	# DataFrame içinde topladığımız ve sütunlarını belirlediğimiz verilerimizi excele xlsx formatında aktarıyoruz. freeze_panes değeri ile ilk satır ve ilk iki sütunu donduruyoruz.
 	df.to_excel('./kbs/kbs_bordro_verileri.xlsx', index=False, freeze_panes=(1,2))
-	print('%15')
+	print('%20')
 	time.sleep(1)
 
 if __name__ == '__main__':
