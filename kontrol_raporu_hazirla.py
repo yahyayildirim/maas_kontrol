@@ -43,7 +43,7 @@ def kontrol_raporu_v2():
             ikys_verisi.set_index('TC Kimlik', inplace=True)
 
         #df_fark = kbs_verisi.compare(ikys_verisi, align_axis=1, keep_shape=False, keep_equal=True)
-        df_fark = kbs_verisi.compare(ikys_verisi, align_axis=1, keep_shape=False, keep_equal=False).rename(columns={'self': 'ikys verisi', 'other': 'kbs verisi'}, level=-1)
+        df_fark = ikys_verisi.compare(kbs_verisi, align_axis=1, keep_shape=False, keep_equal=False).rename(columns={'self': 'ikys verisi', 'other': 'kbs verisi'}, level=-1)
 
         def arkaplani_renklendir(data, color='red'):
             renk = 'background-color: {}'.format(color)
