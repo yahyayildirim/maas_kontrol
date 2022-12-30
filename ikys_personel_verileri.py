@@ -37,11 +37,14 @@ def ikys_personel_verileri():
 
 	# İKYS raporundaki öğrenim durumu çok uzun ve karmaşık olduğu için, regex ve replace metodları ile istediğimiz formata çeviriyoruz.
 	for i in df["Öğrenim Durumu-Okul-Fakülte-Bölüm"].tolist():
-		ogrenimbul = re.search("Doktora|Lisansüstü|Üniversite|Lisans Tamamlama|Yüksek Okul|İmam Hatip|Lise|Ortaokul|İlköğretim|İlkokul|Okur - Yazar", i)
+		ogrenimbul = re.search("Doçentlik|Master|Doktora|Lisansüstü|Üniversite|Lisans Tamamlama|Yüksek Okul|İmam Hatip|Meslek|Lise|Birinci Devre|Ortaokul|İlköğretim|İlkokul|Okur - Yazar", i)
 		df['Öğrenim Durumu-Okul-Fakülte-Bölüm'] = df['Öğrenim Durumu-Okul-Fakülte-Bölüm'].replace([i], ogrenimbul.group(0))
 
 	# Özel Hizmet Tazminatı için öğrenim durumunu Yüksek Okul, İHL ve Diğer olarak değiştiriyoruz.
-	df['ogrenim'] = df['Öğrenim Durumu-Okul-Fakülte-Bölüm'].replace(['Doktora', 'Lisansüstü', 'Üniversite', 'Lisans Tamamlama', 'İmam Hatip', 'Lise', 'Ortaokul', 'İlköğretim', 'İlkokul', 'Okur-Yazar'], ['Yüksek Okul', 'Yüksek Okul', 'Yüksek Okul', 'Yüksek Okul', 'İHL', 'Diğer', 'Diğer', 'Diğer', 'Diğer', 'Diğer'])
+	df['ogrenim'] = df['Öğrenim Durumu-Okul-Fakülte-Bölüm'].replace(
+		['Doçentlik', 'Master', 'Doktora', 'Lisansüstü', 'Üniversite', 'Lisans Tamamlama', 'İmam Hatip', 'Meslek', 'Lise', 'Birinci Devre', 'Ortaokul', 'İlköğretim', 'İlkokul', 'Okur-Yazar'],
+		['Yüksek Okul', 'Yüksek Okul', 'Yüksek Okul', 'Yüksek Okul', 'Yüksek Okul', 'Yüksek Okul', 'İHL', 'Diğer', 'Diğer', 'Diğer', 'Diğer', 'Diğer', 'Diğer', 'Diğer']
+		)
 
 	# Adı ve Soyadını büyük harfe çeviriyoruz. Büyük harfe çevirdiğimizde, küçük i harfi I olarak geçiyor. bunu düzeltmek için de ayrıca replace etmemiz gerekiyor.
 	df['Adı Soyadı'] = df['Adı Soyadı'].str.replace('i', 'İ').str.upper()
