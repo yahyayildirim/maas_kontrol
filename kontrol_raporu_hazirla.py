@@ -30,7 +30,6 @@ def kontrol_raporu_v1():
         time.sleep(20)
 
 def kontrol_raporu_v2():
-#    pass
     if ikys_verisi.shape == kbs_verisi.shape:
         #### Raporlama Versiyon-2
         kbs_verisi.reset_index(drop=True, inplace=True)
@@ -43,12 +42,12 @@ def kontrol_raporu_v2():
             ikys_verisi.set_index('TC Kimlik', inplace=True)
 
         #df_fark = kbs_verisi.compare(ikys_verisi, align_axis=1, keep_shape=False, keep_equal=True)
-        df_fark = ikys_verisi.compare(kbs_verisi, align_axis=1, keep_shape=False, keep_equal=False).rename(columns={'self': 'ikys verisi', 'other': 'kbs verisi'}, level=-1)
+        df_fark = ikys_verisi.compare(kbs_verisi, align_axis=1, keep_shape=False, keep_equal=True).rename(columns={'self': 'ikys verisi', 'other': 'kbs verisi'}, level=-1)
 
         def arkaplani_renklendir(data, color='red'):
             renk = 'background-color: {}'.format(color)
-            veri = data.xs(key='kbs verisi', axis='columns', level=1)
-            df_rapor = pd.DataFrame(np.where(data.ne(veri, level=0), '', renk), index=data.index, columns=data.columns)
+            veri = data.xs(key='ikys verisi', axis='columns', level=1)
+            df_rapor = pd.DataFrame(np.where(data.ne(veri, level=0), renk, ''), index=data.index, columns=data.columns)
             return df_rapor
 
         df_fark.style.apply(arkaplani_renklendir, axis=None).to_excel('./rapor/maas_kontrol_raporu_v2.xlsx', engine='openpyxl', freeze_panes=(2,1))
