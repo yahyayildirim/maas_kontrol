@@ -24,16 +24,15 @@ def kontrol_raporu_v1():
             return pd.DataFrame(np.where(data.ne(veri, level=0), renk, ''), index=data.index, columns=data.columns)
         df_final.style.apply(arkaplani_renklendir, axis=None).to_excel('./rapor/maas_kontrol_raporu_v1.xlsx', engine='openpyxl', freeze_panes=(2,1))
         print('%90')
-        time.sleep(1)
     else:
         print('maas_kontrol_raporu_v1 hazırlanırken hata oluştu...\nLütfen telegramdan, yazılımcı ile iletişime geçin. @yahyayildirim')
-        time.sleep(20)
+        time.sleep(5)
 
 def kontrol_raporu_v2():
     if ikys_verisi.shape == kbs_verisi.shape:
         #### Raporlama Versiyon-2
-        kbs_verisi.reset_index(drop=True, inplace=True)
-        ikys_verisi.reset_index(drop=True, inplace=True)
+        #kbs_verisi.reset_index(drop=True, inplace=True)
+        #ikys_verisi.reset_index(drop=True, inplace=True)
         if ikys_verisi['Adı Soyadı'].equals(kbs_verisi['Adı Soyadı']):
             kbs_verisi.set_index('Adı Soyadı', inplace=True)
             ikys_verisi.set_index('Adı Soyadı', inplace=True)
@@ -52,13 +51,12 @@ def kontrol_raporu_v2():
 
         df_fark.style.apply(arkaplani_renklendir, axis=None).to_excel('./rapor/maas_kontrol_raporu_v2.xlsx', engine='openpyxl', freeze_panes=(2,1))
         print('%100')
-        time.sleep(1)
         x = input("İşleminiz başarılı bir şekilde tamamlanmıştır.\nPencereyi kapatmak için herhangi bir tuşa basın.")
         sys.exit(x)
 
     else:
         print('maas_kontrol_raporu_v2 hazırlanırken hata oluştu...\nLütfen telegramdan, yazılımcı ile iletişime geçin. @yahyayildirim')
-        time.sleep(20)
+        time.sleep(5)
 
 if __name__ == '__main__':
     kontrol_raporu_v1()
