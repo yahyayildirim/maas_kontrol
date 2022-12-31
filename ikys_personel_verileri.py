@@ -3,19 +3,25 @@
 import sys
 sys.dont_write_bytecode = True
 
-import pandas as pd
-from datetime import datetime
 import re
 import time
 import sabitler
+import pandas as pd
+from pathlib import Path
+from datetime import datetime
 
 def ikys_personel_verileri():
 	#İKYSden indirdiğimiz dosya, html formatında olduğu için önce read_html metodu ile açıp, xlsx formatında tekrar kaydediyoruz.
-	dfs = pd.read_html('./ikys/Personel Rapor.xls')
-	dfs[0].to_excel('./ikys/Personel Rapor.xlsx', index=False)
+	bu_dizin = Path.cwd() / "ikys"
+	ikys_raporlar = list(Path(bu_dizin).glob("Personel Rapor*.xls"))
+	df = pd.DataFrame()
+	for rapor in ikys_raporlar:
+		dfs = pd.read_html(rapor)
+		df = df.append(dfs, ignore_index=True)
+	#df.to_excel('./ikys/Personel_Rapor_Temiz.xlsx', index=False)
 	
 	#xlsx formatına çevirdiğimiz dosyamızı read_excel metodu ile açıp, DataFrame aktarıyoruz.
-	df = pd.DataFrame(pd.read_excel('./ikys/Personel Rapor.xlsx'))
+	#df = pd.DataFrame(pd.read_excel('./ikys/Personel_Rapor_Temiz.xlsx'))
 
 	# Boş olan ve değeri bulunmayan satır ve sütunları siliyoruz.
 	df = df.dropna(how='all', axis=1)
@@ -120,12 +126,11 @@ def ikys_personel_verileri():
 
 	# Listeyi TC veya Adı-Soyadına göre sıralayabilirsiniz, dikkat etmeniz gereken ise kbs_bordro ve kbs_personelde de aynı değişikliği yapmanızdır.
 	#df.sort_values(by=['TC Kimlik'], inplace=True, ignore_index=True)
-	df.sort_values(by=['Adı Soyadı'], inplace=True, ignore_index=True)
+	df.sort_values(by=['TC Kimlik'], inplace=True, ignore_index=True)
 
 	# DataFrame içinde topladığımız ve sütunlarını belirlediğimiz verilerimizi excele xlsx formatında aktarıyoruz. freeze_panes değeri ile ilk satır ve ilk iki sütunu donduruyoruz.
 	df.to_excel('./ikys/ikys_personel_verileri.xlsx', index=False, freeze_panes=(1,2))
 	print('%30')
-	time.sleep(1)
 
 if __name__ == "__main__":
 	ikys_personel_verileri()

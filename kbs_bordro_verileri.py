@@ -6,19 +6,26 @@ sys.dont_write_bytecode = True
 import warnings
 warnings.filterwarnings('ignore', category=UserWarning, module='openpyxl')
 
-import pandas as pd
 import re
 import time
-from glob import glob
 import sabitler
+import pandas as pd
+from pathlib import Path
+from glob import glob
+from datetime import datetime
 
 def kbs_temiz_veri():
-	dosya = glob('./kbs/BordroDokumu*', recursive=False)
-	data = [pd.read_excel(f, sheet_name=1, skiprows=6) for f in dosya]
-	df = pd.DataFrame(data[0])
-	df.dropna(axis=0, thresh=5, inplace=True)
-	df.dropna(axis=1, thresh=2, inplace=True)
-	df.drop(df.tail(2).index,inplace=True)
+	#İKYSden indirdiğimiz dosya, html formatında olduğu için önce read_html metodu ile açıp, xlsx formatında tekrar kaydediyoruz.
+	bu_dizin = Path.cwd() / "kbs"
+	kbs_raporlar = list(Path(bu_dizin).glob("BordroDokumu*.xlsx"))
+	df = pd.DataFrame()
+
+	for rapor in kbs_raporlar:
+		dfs = pd.read_excel(rapor, sheet_name=1, skiprows=6)
+		df = df.append(dfs, ignore_index=True)
+		df.dropna(axis=0, thresh=5, inplace=True)
+		df.dropna(axis=1, thresh=2, inplace=True)
+		df.drop(df.tail(2).index,inplace=True)		
 
 	say = 0
 	df_list = []
@@ -38,8 +45,6 @@ def kbs_temiz_veri():
 	df = pd.concat(df_list, axis=1)
 	df.to_excel('./kbs/Bordro_Dokumu_Temiz.xlsx', index=False)
 	print('%10')
-	time.sleep(1)
-
 
 def kbs_bordro_verileri():
 	dosya = glob('./kbs/Bordro_Dokumu*', recursive=False)
@@ -111,12 +116,11 @@ def kbs_bordro_verileri():
 
 	# Listeyi TC veya Adı-Soyadına göre sıralayabilirsiniz, dikkat etmeniz gereken ise ikys_personel ve kbs_personelde de aynı değişikliği yapmanızdır.
 	#df.sort_values(by=['TC Kimlik'], inplace=True, ignore_index=True)
-	df.sort_values(by=['Adı Soyadı'], inplace=True, ignore_index=True)
+	df.sort_values(by=['TC Kimlik'], inplace=True, ignore_index=True)
 
 	# DataFrame içinde topladığımız ve sütunlarını belirlediğimiz verilerimizi excele xlsx formatında aktarıyoruz. freeze_panes değeri ile ilk satır ve ilk iki sütunu donduruyoruz.
 	df.to_excel('./kbs/kbs_bordro_verileri.xlsx', index=False, freeze_panes=(1,2))
 	print('%20')
-	time.sleep(1)
 
 if __name__ == '__main__':
 	kbs_temiz_veri()
