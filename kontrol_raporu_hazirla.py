@@ -51,7 +51,7 @@ def kontrol_raporu_v2():
 
         df_fark.style.apply(arkaplani_renklendir, axis=None).to_excel('./rapor/maas_kontrol_raporu_v2.xlsx', engine='openpyxl', freeze_panes=(2,1))
         print('%100')
-        x = input("İşleminiz başarılı bir şekilde tamamlanmıştır.\nPencereyi kapatmak için herhangi bir tuşa basın.")
+        x = input("İşleminiz başarılı bir şekilde tamamlanmıştır.\nPencereyi kapatmak için enter tuşa basın.")
         sys.exit(x)
 
     else:
