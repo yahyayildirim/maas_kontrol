@@ -4,7 +4,8 @@ import sys
 sys.dont_write_bytecode = True
 
 import warnings
-warnings.filterwarnings('ignore', category=UserWarning, module='openpyxl')
+warnings.filterwarnings(action='ignore', category=UserWarning, module='openpyxl')
+warnings.simplefilter(action='ignore', category=FutureWarning)
 
 import re
 import time

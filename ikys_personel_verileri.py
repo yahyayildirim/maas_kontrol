@@ -3,10 +3,14 @@
 import sys
 sys.dont_write_bytecode = True
 
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
+
 import re
 import time
 import sabitler
 import pandas as pd
+pd.options.mode.chained_assignment = None  # default='warn'
 from pathlib import Path
 from datetime import datetime
 
@@ -32,10 +36,14 @@ def ikys_personel_verileri():
 	# Mükerrer kayıtlarıda çıkarıyoruz.
 	df = df.drop_duplicates(subset=['Sicil'], ignore_index=True)
 
+	for i in df.index:
+		unvan = df.iloc[i]['Unvan']
+		if pd.isna(unvan):
+			#print(df.iloc[i]['Görevlendirme Unvanı'])
+			df['Unvan'][i] = df.iloc[i]['Görevlendirme Unvanı']
+
 	# Bize lazım olan sütunları çekiyoruz.
-	df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Unvan',
-			'Öğrenim Durumu-Okul-Fakülte-Bölüm', 'Sendika', 'Diyanete Giriş Tarihi', 'İlk Memuriyete Başlama Tarihi',
-			'Ödenilecek Derece/Kademe', 'Hizmet Süresi (Ay)', 'Hizmet Süresi (Yıl)']]
+	df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Unvan', 'Öğrenim Durumu-Okul-Fakülte-Bölüm', 'Sendika', 'Diyanete Giriş Tarihi', 'İlk Memuriyete Başlama Tarihi', 'Ödenilecek Derece/Kademe', 'Hizmet Süresi (Ay)', 'Hizmet Süresi (Yıl)']]
 
 	# Eğer unvan sütunu boş ise Vekil olarak değiştirmesini sağlıyoruz.
 	#df['Unvan'] = df['Unvan'].fillna('Vekil')
@@ -75,6 +83,8 @@ def ikys_personel_verileri():
 	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Kur.*Uz.*)', value=r'Kur.Uz.Öğ')
 	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Müez.*)', value=r'Müez.Kayyı')
 	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Uzman.*İmam.*)', value=r'Uz.İm.Hat')
+	#df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Vekil.*K)', value=r'Müez.Kayyı')
+	#df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Vekil.*H)', value=r'İmam-Hat.')
 
 	# Ödenilecek Derece/Kademe sütunundaki parantezleri siliyoruz
 	df['Ödenilecek Derece/Kademe'].replace(regex=True, inplace=True, to_replace=r'[()]', value=r'')

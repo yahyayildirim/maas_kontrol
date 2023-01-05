@@ -22,6 +22,9 @@ def gosterge_puani(derece,kademe):
 def aylik_katsayi(gosterge_puani, unvan):
 	if unvan == "İl Müftüsü":
 		gosterge_puani = 0
+	vekilper = ['Vekil M.K', 'Vekil İ-H']
+	if unvan in vekilper:
+		gosterge_puani = (gosterge_puani / 3) * 2
 	return df_1['aylik_katsayi'].iloc[-1] * gosterge_puani
 	# gosterge_puani x aylik_kaysayi = Aylık Tutar
 
@@ -47,6 +50,11 @@ def taban_aylik(binlik, unvan):
 def ek_gosterge(ek_gosterge, unvan):
 	if unvan == "İl Müftüsü":
 		ek_gosterge = 0
+
+	vekilper = ['Vekil M.K', 'Vekil İ-H']
+	if unvan in vekilper:
+		ek_gosterge = ((df_1['aylik_katsayi'].iloc[-1] * ek_gosterge) / 3) * 2
+
 	return df_1['aylik_katsayi'].iloc[-1] * ek_gosterge
 	# aylik_katsayi x ek_gosterge
 
@@ -59,7 +67,7 @@ def kidem_ayligi(hizmetyili, unvan):
 	return df_1['aylik_katsayi'].iloc[-1] * 20 * hizmetyili
 
 def ozel_hizmet_orani(unvan, derece, ogrenim):
-	unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp', 'Vekil']
+	unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp', 'Vekil M.K', 'Vekil İ-H']
 	uz_unvanlar = ['Uzman Vaiz', 'Uz.İm.Hat', 'Kur.Uz.Öğ', 'Baş Müez.Kayyı', 'Baş Vaiz', 'Baş.İm.Hat', 'Kur.Baş.Öğ']
 	#print(unvan, derece, ogrenim)
 	if unvan in unvanlar:
@@ -74,7 +82,7 @@ def ozel_hizmet_orani(unvan, derece, ogrenim):
 	return ozel_hizmet_orani
 
 def ozel_hizmet(unvan, derece, ogrenim):
-	unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp', 'Vekil']
+	unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp', 'Vekil M.K', 'Vekil İ-H']
 	uz_unvanlar = ['Uzman Vaiz', 'Uz.İm.Hat', 'Kur.Uz.Öğ', 'Baş Müez.Kayyı', 'Baş Vaiz', 'Baş.İm.Hat', 'Kur.Baş.Öğ']
 	#print(unvan, derece, ogrenim)
 
@@ -95,7 +103,7 @@ def ozel_hizmet(unvan, derece, ogrenim):
 	return ozel_hizmet_tutari
 
 def ek_odeme_666(unvan, derece, ogrenim):
-	unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp', 'Vekil']
+	unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp', 'Vekil M.K', 'Vekil İ-H']
 	uz_unvanlar = ['Uzman Vaiz', 'Uz.İm.Hat', 'Kur.Uz.Öğ', 'Baş Müez.Kayyı', 'Baş Vaiz', 'Baş.İm.Hat', 'Kur.Baş.Öğ']
 	#print(unvan, derece, ogrenim)
 
@@ -111,7 +119,7 @@ def ek_odeme_666(unvan, derece, ogrenim):
 		return df_1['aylik_katsayi'].iloc[-1] * khk_666 * 9500 / 100
 
 def ek_odeme_666_orani(unvan, derece, ogrenim):
-	unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp', 'Vekil']
+	unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp', 'Vekil M.K', 'Vekil İ-H']
 	uz_unvanlar = ['Uzman Vaiz', 'Uz.İm.Hat', 'Kur.Uz.Öğ', 'Baş Müez.Kayyı', 'Baş Vaiz', 'Baş.İm.Hat', 'Kur.Baş.Öğ']
 	#print(unvan, derece, ogrenim)
 	if unvan in unvanlar:
