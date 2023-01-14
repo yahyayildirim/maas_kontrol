@@ -5,6 +5,26 @@ Bu programın amacı, İKYS ve KBS Sisteminden aldığımız raporları karşıl
 olmadığını kontrol etmek amacıyla yazılmıştır.
 
 ```
+Bu program ile; İKYS ve KBS sistemlerinde bulunan aşağıdaki veriler karşılaştırılır.
+* T.C. Kimlik No
+* Adı ve Soyad
+* Unvan
+* Hizmet Sınıfı
+* Derece
+* Kademe
+* Yan Ödeme	Puanı
+* Aylık Tutar
+* Ek Gösterge
+* Ek Gösterge Tutarı
+* Gösterge Puanı (İş güç., teminde güç., mali sorum. vs.)
+* Gösterge Tutarı
+* Ek Tazminat Puanı
+* Özel Hizmet Tazminatı Puanı
+* Özel Hizmet Tazminatı Tutarı
+* 666 KHK Puanı
+* 666 KHK Tutarı
+
+Şimdilik bunlar, Kıdem Yılını ve buna bağlı olarak ödenen Kıdem Aylık Tutarını maalesef ekleyemiyorum. Çünkü; İKYS ve KBS'deki hizmet süreleri bir birini tutmuyor. Diyanete Başlama Tarihi ve İlk Göreve Başlama Tarihlerini ayrı ayrı denememe rağmen, olumlu sonuç alamadım.
 
 ## 
 
@@ -19,13 +39,15 @@ sudo apt install -yy git python3-pip
 ```
 4- Aşağıdaki kodu uçbirime kopyalayın ve enter yapın.
 ```
-sudo python3 -m pip install -U -r moduller.txt
-```
-5- Aşağıdaki kodu uçbirime kopyalayın ve enter yapın.
-```
 git clone https://gitlab.com/yahyayildirim/maas_kontrol.git
 ```
-6- Şimdi Masaüstünde **maas_kontrol** adında bir klasör oluşmuş olması gerekiyor.
+5- Şimdi Masaüstünde **maas_kontrol** adında bir klasör oluşmuş olması gerekiyor. `cd maas_kontrol` komutu ile klasöre geçiş yapın.
+
+6- Aşağıdaki kodu uçbirime yazın/kopyalayın ve enter yapın.
+```
+sudo python3 -m pip install -U -r moduller.txt
+```
+_**NOT: İl Müftülükleri eğer dib.local ağında ise pip depoları maalesef engelli durumda olduğu için, harici bir internet ile modülleri kurmaları gerekmektedir.**_
 
 ## 
 
