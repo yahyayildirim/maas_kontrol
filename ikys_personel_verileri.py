@@ -83,6 +83,7 @@ def ikys_personel_verileri():
 	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Kur.*Uz.*)', value=r'Kur.Uz.Öğ')
 	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Müez.*)', value=r'Müez.Kayyı')
 	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Uzman.*İmam.*)', value=r'Uz.İm.Hat')
+	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Ayniyat Saymanı)', value=r'Ayn.Saym.')	
 	#df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Vekil.*K)', value=r'Müez.Kayyı')
 	#df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Vekil.*H)', value=r'İmam-Hat.')
 
@@ -101,7 +102,7 @@ def ikys_personel_verileri():
 	df['Yan Ödeme'] = df.apply(lambda row: sabitler.gosterge_puani(row["Derece"], row["Kademe"]), axis=1)
 
 	# Personelin İş Güçlüğü, İş Riski, Teminde Güçlük ve Mali Sorumluluk puanlarını, unvan ve dereceye göre sabitler.py dosyasındaki fonksiyon aracılığı ile maas_verileri.xlsx içerisinden çekiyoruz.
-	df['Gösterge Puanı'] = df.apply(lambda row: sabitler.yan_odeme_puani(row["Unvan"], row["Derece"]), axis=1)
+	df['Gösterge Puanı'] = df.apply(lambda row: sabitler.yan_odeme_puani(row["Unvan"], row["Derece"], row["Hizmet Süresi (Yıl)"]), axis=1)
 
 	# df['Yan Ödeme'] ile aldığımız oran ile unvan bilgisini alarak sabitler.py dosyasındaki fonksiyon aracılığı TL tutarı hesaplıyoruz.
 	df['Aylık Tutar'] = round(df.apply(lambda row: sabitler.aylik_katsayi(row["Yan Ödeme"], row["Unvan"]), axis=1), 2)
