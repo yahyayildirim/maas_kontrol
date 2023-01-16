@@ -132,7 +132,8 @@ def ek_odeme_666_orani(unvan, derece, ogrenim):
 		khk_666 = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece), 'ek_odeme_orani'].sum()
 		return khk_666
 
-def yan_odeme_puani(unvan, derece):
+def yan_odeme_puani(unvan, derece, hizmetyili):
+
 	if unvan == 'Şube Md.' or unvan == 'Din Hz.Uzm':
 		is_guclugu = df_2.loc[(df_2['unvan'] == unvan) & (df_2['derece'] == derece), 'is_guclugu'].sum()
 		is_riski = df_2.loc[(df_2['unvan'] == unvan) & (df_2['derece'] == derece), 'is_riski'].sum()
@@ -140,6 +141,19 @@ def yan_odeme_puani(unvan, derece):
 		mali_sorumluluk = df_2.loc[(df_2['unvan'] == unvan) & (df_2['derece'] == derece), 'mali_sorumluluk'].sum()
 		return is_guclugu + is_riski + tem_gucluk + mali_sorumluluk
 
+	elif unvan == 'Tekniker' or unvan == 'Teknisyen':
+		if hizmetyili <= 5:
+			is_guclugu = df_2.loc[(df_2['unvan'] == unvan) & (df_2['hizmetyili'] == "<5"), 'is_guclugu'].sum()
+			is_riski = df_2.loc[(df_2['unvan'] == unvan) & (df_2['hizmetyili'] == "<5"), 'is_riski'].sum()
+			tem_gucluk = df_2.loc[(df_2['unvan'] == unvan) & (df_2['hizmetyili'] == "<5"), 'tem_gucluk'].sum()
+			mali_sorumluluk = df_2.loc[(df_2['unvan'] == unvan) & (df_2['hizmetyili'] == "<5"), 'mali_sorumluluk'].sum()
+			return is_guclugu + is_riski + tem_gucluk + mali_sorumluluk
+		else:
+			is_guclugu = df_2.loc[(df_2['unvan'] == unvan) & (df_2['hizmetyili'] == "5>"), 'is_guclugu'].sum()
+			is_riski = df_2.loc[(df_2['unvan'] == unvan) & (df_2['hizmetyili'] == "5>"), 'is_riski'].sum()
+			tem_gucluk = df_2.loc[(df_2['unvan'] == unvan) & (df_2['hizmetyili'] == "5>"), 'tem_gucluk'].sum()
+			mali_sorumluluk = df_2.loc[(df_2['unvan'] == unvan) & (df_2['hizmetyili'] == "5>"), 'mali_sorumluluk'].sum()
+			return is_guclugu + is_riski + tem_gucluk + mali_sorumluluk			
 	else:
 		is_guclugu = df_2.loc[df_2['unvan'] == unvan, 'is_guclugu'].sum()
 		is_riski = df_2.loc[df_2['unvan'] == unvan, 'is_riski'].sum()
