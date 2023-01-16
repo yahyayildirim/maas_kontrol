@@ -53,14 +53,14 @@ _**NOT: İl Müftülükleri eğer dib.local ağında ise pip depoları maalesef 
 
 # İKYS ÜZERİNDEN YAPILACAKLAR
 Masaüstünde bulunan **maas_kontrol/izle** klasöründeki **ornek_ikys_personel_sorgulama.webm** videoyu izleyin.
-* **ÖNEMLİ NOT:** İndirdiğiniz dosya adının mutlaka Personel Rapor.xls olmalıdır. Eğer, indirdiğiniz dosya Personel Rapor(1).xls gibi ise mutlaka adını Personel Rapor.xls olarak değiştirin.
+* **ÖNEMLİ NOT:** İndirdiğiniz dosyayı hiç açmayın, olduğu gibi ikys klasörüne taşıyın/kopyalayın. Hiçbir şekilde ismini veya dosya uzantısını değiştirmeyin.
 
 
 ## 
 
 # KBS ÜZERİNDEN YAPILACAKLAR
 Masaüstünde bulunan **maas_kontrol/izle** klasöründeki **ornek_kbs_raporlar.webm** videoyu izleyin.
-* **ÖNEMLİ NOT:** Dosya ismini değiştirmenize gerek yokru. Burada dikkat etmeniz gereken, kbs klasörüne indirdiğiniz dosyaların ilk indirileni baz alınır. Onun için gereksiz olan veya güncel olmayanı silin. En son indirdiğiniz tek kalsın.
+* **ÖNEMLİ NOT:** Dosya ismini değiştirmenize gerek yoktur. Burada dikkat etmeniz gereken, kbs klasörüne indirdiğiniz dosyaların ilk indirileni baz alınır. Onun için gereksiz olan veya güncel olmayanı silin. En son indirdiğiniz tek kalsın.
 
 ## 
 
@@ -69,3 +69,8 @@ Programı iki yol ile çalıştırbiliriz.
 * **1. YOL:** maas_kontrol klasöründe uçbirim açıp, `./calistir.py` komutunu çalıştırmak
 
 * **2. YOL:** maas_kontrol klasöründe bulunan **calistir.py** dosyasına çift tıklayarak açılan menüden **Uçbirimde Çalıştır** butonuna tıklamak.
+
+##
+
+#GÜNCELLEME
+* Programı devamlı güncelliyorum. Onun için programı çalıştırmadan önce mutlaka **maas_kontrol** klasörünün içinde uç birim açıp **git pull** ile güncelleme yapın.
