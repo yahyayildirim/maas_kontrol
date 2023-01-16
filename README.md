@@ -72,5 +72,5 @@ Programı iki yol ile çalıştırbiliriz.
 
 ##
 
-#GÜNCELLEME
+# GÜNCELLEME
 * Programı devamlı güncelliyorum. Onun için programı çalıştırmadan önce mutlaka **maas_kontrol** klasörünün içinde uç birim açıp **git pull** ile güncelleme yapın.
