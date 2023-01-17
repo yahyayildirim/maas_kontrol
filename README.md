@@ -47,8 +47,9 @@ git clone https://gitlab.com/yahyayildirim/maas_kontrol.git
 ```
 sudo python3 -m pip install -U -r moduller.txt
 ```
-_**NOT: İl Müftülükleri eğer dib.local ağında ise pip depoları maalesef engelli durumda olduğu için, harici bir internet ile modülleri kurmaları gerekmektedir.**_
-
+_**NOT: İl Müftülükleri eğer dib.local ağında ise pip depoları maalesef engelli (sertifika hatası) durumda olduğu için, harici bir aşağıdaki komut ile modülleri kurmaları gerekmektedir.
+```sudo python3 -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org -U -r moduller.txt```
+**_
 ## 
 
 # İKYS ÜZERİNDEN YAPILACAKLAR
