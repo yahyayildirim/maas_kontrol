@@ -19,13 +19,16 @@ def gosterge_puani(derece,kademe):
 	return puan
 	# derece ve kademe girdisini alarak yan ödeme puanını verir
 
-def aylik_katsayi(gosterge_puani, unvan):
-	if unvan == "İl Müftüsü":
-		gosterge_puani = 0
-	vekilper = ['Vekil M.K', 'Vekil İ-H']
-	if unvan in vekilper:
-		gosterge_puani = (gosterge_puani / 3) * 2
-	return df_1['aylik_katsayi'].iloc[-1] * gosterge_puani
+def aylik_katsayi(gosterge_puani, unvan, izin):
+	vekilper = ['Vekil M.K', 'Vekil İ-H']	
+	if izin == "Aylıksız İzin" or unvan == "İl Müftüsü":
+		aylik_tutar = 0
+	elif unvan in vekilper:
+		aylik_tutar = (df_1['aylik_katsayi'].iloc[-1] * gosterge_puani / 3) * 2
+	else:
+		aylik_tutar = df_1['aylik_katsayi'].iloc[-1] * gosterge_puani
+	return aylik_tutar
+	print(aylik_tutar)
 	# gosterge_puani x aylik_kaysayi = Aylık Tutar
 
 def tutardan_yan_odeme_puani_bul(tutar):
@@ -47,15 +50,15 @@ def taban_aylik(binlik, unvan):
 	return df_1['taban_aylik_katsayi'].iloc[-1] * binlik
 	# taban_aylik_katsayi x 1000
 
-def ek_gosterge(ek_gosterge, unvan):
-	if unvan == "İl Müftüsü":
-		ek_gosterge = 0
-
-	vekilper = ['Vekil M.K', 'Vekil İ-H']
-	if unvan in vekilper:
+def ek_gosterge(ek_gosterge, unvan, izin):
+	vekilper = ['Vekil M.K', 'Vekil İ-H']	
+	if izin == "Aylıksız İzin" or unvan == "İl Müftüsü":
+		return 0
+	elif unvan in vekilper:
 		ek_gosterge = ((df_1['aylik_katsayi'].iloc[-1] * ek_gosterge) / 3) * 2
-
-	return df_1['aylik_katsayi'].iloc[-1] * ek_gosterge
+		return ek_gosterge
+	else:
+		return df_1['aylik_katsayi'].iloc[-1] * ek_gosterge
 	# aylik_katsayi x ek_gosterge
 
 def kidem_ayligi(hizmetyili, unvan):
@@ -66,100 +69,115 @@ def kidem_ayligi(hizmetyili, unvan):
 		hizmetyili = 25
 	return df_1['aylik_katsayi'].iloc[-1] * 20 * hizmetyili
 
-def ozel_hizmet_orani(unvan, derece, ogrenim):
-	unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp', 'Vekil M.K', 'Vekil İ-H']
-	uz_unvanlar = ['Uzman Vaiz', 'Uz.İm.Hat', 'Kur.Uz.Öğ', 'Baş Müez.Kayyı', 'Baş Vaiz', 'Baş.İm.Hat', 'Kur.Baş.Öğ']
-	#print(unvan, derece, ogrenim)
-	if unvan in unvanlar:
-		ozel_hizmet_orani = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece) & (df_3['ogrenim'] == ogrenim), 'oht_orani'].sum()
-	elif unvan in uz_unvanlar:
-		ozel_hizmet_orani = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece) & (df_3['ogrenim'] == ogrenim), 'oht_orani'].sum()
-		#ozel_hizmet_orani_2 = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece) & (df_3['ogrenim'] == ogrenim), 'ek_1'].sum()
-		#ozel_hizmet_orani = ozel_hizmet_orani_1 + ozel_hizmet_orani_2
+def ozel_hizmet_orani(unvan, derece, ogrenim, izin):
+	if izin == "Aylıksız İzin":
+		return 0
+
 	else:
-		ozel_hizmet_orani = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece), 'oht_orani'].sum()
-
-	return ozel_hizmet_orani
-
-def ozel_hizmet(unvan, derece, ogrenim):
-	unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp', 'Vekil M.K', 'Vekil İ-H']
-	uz_unvanlar = ['Uzman Vaiz', 'Uz.İm.Hat', 'Kur.Uz.Öğ', 'Baş Müez.Kayyı', 'Baş Vaiz', 'Baş.İm.Hat', 'Kur.Baş.Öğ']
-	#print(unvan, derece, ogrenim)
-
-	#Özel Hizmet Tazminatı = 9500 X Memur Maaş Katsayısı X Özel Hizmet Puanı / 100 formülüyle hesaplanır.
-	if unvan in unvanlar:
-		ozel_hizmet_taz = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece) & (df_3['ogrenim'] == ogrenim), 'oht_orani'].sum()
-		ozel_hizmet_tutari = df_1['aylik_katsayi'].iloc[-1] * ozel_hizmet_taz * 9500 / 100
-	elif unvan in uz_unvanlar:
-		ozel_hizmet_taz = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece) & (df_3['ogrenim'] == ogrenim), 'oht_orani'].sum()
-		#ozel_hizmet_taz_ek = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece) & (df_3['ogrenim'] == ogrenim), 'ek_1'].sum()
-		ozel_hizmet_tutari = df_1['aylik_katsayi'].iloc[-1] * ozel_hizmet_taz * 9500 / 100
-	elif unvan == "İl Müftüsü":
-		ozel_hizmet_tutari = 0
-	else:
-		ozel_hizmet_taz = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece), 'oht_orani'].sum()
-		ozel_hizmet_tutari = df_1['aylik_katsayi'].iloc[-1] * ozel_hizmet_taz * 9500 / 100
-
-	return ozel_hizmet_tutari
-
-def ek_odeme_666(unvan, derece, ogrenim):
-	unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp', 'Vekil M.K', 'Vekil İ-H']
-	uz_unvanlar = ['Uzman Vaiz', 'Uz.İm.Hat', 'Kur.Uz.Öğ', 'Baş Müez.Kayyı', 'Baş Vaiz', 'Baş.İm.Hat', 'Kur.Baş.Öğ']
-	#print(unvan, derece, ogrenim)
-
-	#Ek Öde.(666 KHK) = 9500 X Memur Maaş Katsayısı X Ek Ödeme Oranı / 100 formülüyle hesaplanır.
-	if unvan in unvanlar:
-		khk_666 = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece) & (df_3['ogrenim'] == ogrenim), 'ek_odeme_orani'].sum()
-		return df_1['aylik_katsayi'].iloc[-1] * khk_666 * 9500 / 100
-	elif unvan in uz_unvanlar:
-		khk_666 = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece) & (df_3['ogrenim'] == ogrenim), 'ek_odeme_orani'].sum()
-		return df_1['aylik_katsayi'].iloc[-1] * khk_666 * 9500 / 100
-	else:
-		khk_666 = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece), 'ek_odeme_orani'].sum()
-		return df_1['aylik_katsayi'].iloc[-1] * khk_666 * 9500 / 100
-
-def ek_odeme_666_orani(unvan, derece, ogrenim):
-	unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp', 'Vekil M.K', 'Vekil İ-H']
-	uz_unvanlar = ['Uzman Vaiz', 'Uz.İm.Hat', 'Kur.Uz.Öğ', 'Baş Müez.Kayyı', 'Baş Vaiz', 'Baş.İm.Hat', 'Kur.Baş.Öğ']
-	#print(unvan, derece, ogrenim)
-	if unvan in unvanlar:
-		khk_666 = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece) & (df_3['ogrenim'] == ogrenim), 'ek_odeme_orani'].sum()
-		return khk_666
-	elif unvan in uz_unvanlar:
-		khk_666 = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece) & (df_3['ogrenim'] == ogrenim), 'ek_odeme_orani'].sum()
-		return khk_666
-	else:
-		khk_666 = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece), 'ek_odeme_orani'].sum()
-		return khk_666
-
-def yan_odeme_puani(unvan, derece, hizmetyili):
-
-	if unvan == 'Şube Md.' or unvan == 'Din Hz.Uzm':
-		is_guclugu = df_2.loc[(df_2['unvan'] == unvan) & (df_2['derece'] == derece), 'is_guclugu'].sum()
-		is_riski = df_2.loc[(df_2['unvan'] == unvan) & (df_2['derece'] == derece), 'is_riski'].sum()
-		tem_gucluk = df_2.loc[(df_2['unvan'] == unvan) & (df_2['derece'] == derece), 'tem_gucluk'].sum()
-		mali_sorumluluk = df_2.loc[(df_2['unvan'] == unvan) & (df_2['derece'] == derece), 'mali_sorumluluk'].sum()
-		return is_guclugu + is_riski + tem_gucluk + mali_sorumluluk
-
-	elif unvan == 'Tekniker' or unvan == 'Teknisyen':
-		if hizmetyili <= 5:
-			is_guclugu = df_2.loc[(df_2['unvan'] == unvan) & (df_2['hizmetyili'] == "<5"), 'is_guclugu'].sum()
-			is_riski = df_2.loc[(df_2['unvan'] == unvan) & (df_2['hizmetyili'] == "<5"), 'is_riski'].sum()
-			tem_gucluk = df_2.loc[(df_2['unvan'] == unvan) & (df_2['hizmetyili'] == "<5"), 'tem_gucluk'].sum()
-			mali_sorumluluk = df_2.loc[(df_2['unvan'] == unvan) & (df_2['hizmetyili'] == "<5"), 'mali_sorumluluk'].sum()
-			return is_guclugu + is_riski + tem_gucluk + mali_sorumluluk
+		unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp', 'Vekil M.K', 'Vekil İ-H']
+		uz_unvanlar = ['Uzman Vaiz', 'Uz.İm.Hat', 'Kur.Uz.Öğ', 'Baş Müez.Kayyı', 'Baş Vaiz', 'Baş.İm.Hat', 'Kur.Baş.Öğ']
+		#print(unvan, derece, ogrenim)
+		if unvan in unvanlar:
+			ozel_hizmet_orani = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece) & (df_3['ogrenim'] == ogrenim), 'oht_orani'].sum()
+		elif unvan in uz_unvanlar:
+			ozel_hizmet_orani = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece) & (df_3['ogrenim'] == ogrenim), 'oht_orani'].sum()
+			#ozel_hizmet_orani_2 = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece) & (df_3['ogrenim'] == ogrenim), 'ek_1'].sum()
+			#ozel_hizmet_orani = ozel_hizmet_orani_1 + ozel_hizmet_orani_2
 		else:
-			is_guclugu = df_2.loc[(df_2['unvan'] == unvan) & (df_2['hizmetyili'] == "5>"), 'is_guclugu'].sum()
-			is_riski = df_2.loc[(df_2['unvan'] == unvan) & (df_2['hizmetyili'] == "5>"), 'is_riski'].sum()
-			tem_gucluk = df_2.loc[(df_2['unvan'] == unvan) & (df_2['hizmetyili'] == "5>"), 'tem_gucluk'].sum()
-			mali_sorumluluk = df_2.loc[(df_2['unvan'] == unvan) & (df_2['hizmetyili'] == "5>"), 'mali_sorumluluk'].sum()
-			return is_guclugu + is_riski + tem_gucluk + mali_sorumluluk			
+			ozel_hizmet_orani = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece), 'oht_orani'].sum()
+
+		return ozel_hizmet_orani
+
+def ozel_hizmet(unvan, derece, ogrenim, izin):
+	if izin == "Aylıksız İzin":
+		return 0
 	else:
-		is_guclugu = df_2.loc[df_2['unvan'] == unvan, 'is_guclugu'].sum()
-		is_riski = df_2.loc[df_2['unvan'] == unvan, 'is_riski'].sum()
-		tem_gucluk = df_2.loc[df_2['unvan'] == unvan, 'tem_gucluk'].sum()
-		mali_sorumluluk = df_2.loc[df_2['unvan'] == unvan, 'mali_sorumluluk'].sum()
-		return is_guclugu + is_riski + tem_gucluk + mali_sorumluluk
+		unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp', 'Vekil M.K', 'Vekil İ-H']
+		uz_unvanlar = ['Uzman Vaiz', 'Uz.İm.Hat', 'Kur.Uz.Öğ', 'Baş Müez.Kayyı', 'Baş Vaiz', 'Baş.İm.Hat', 'Kur.Baş.Öğ']
+		#print(unvan, derece, ogrenim)
+
+		#Özel Hizmet Tazminatı = 9500 X Memur Maaş Katsayısı X Özel Hizmet Puanı / 100 formülüyle hesaplanır.
+		if unvan in unvanlar:
+			ozel_hizmet_taz = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece) & (df_3['ogrenim'] == ogrenim), 'oht_orani'].sum()
+			ozel_hizmet_tutari = df_1['aylik_katsayi'].iloc[-1] * ozel_hizmet_taz * 9500 / 100
+		elif unvan in uz_unvanlar:
+			ozel_hizmet_taz = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece) & (df_3['ogrenim'] == ogrenim), 'oht_orani'].sum()
+			#ozel_hizmet_taz_ek = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece) & (df_3['ogrenim'] == ogrenim), 'ek_1'].sum()
+			ozel_hizmet_tutari = df_1['aylik_katsayi'].iloc[-1] * ozel_hizmet_taz * 9500 / 100
+		elif unvan == "İl Müftüsü":
+			ozel_hizmet_tutari = 0
+		else:
+			ozel_hizmet_taz = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece), 'oht_orani'].sum()
+			ozel_hizmet_tutari = df_1['aylik_katsayi'].iloc[-1] * ozel_hizmet_taz * 9500 / 100
+
+		return ozel_hizmet_tutari
+
+def ek_odeme_666(unvan, derece, ogrenim, izin):
+	if izin == "Aylıksız İzin":
+		return 0
+	else:
+		unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp', 'Vekil M.K', 'Vekil İ-H']
+		uz_unvanlar = ['Uzman Vaiz', 'Uz.İm.Hat', 'Kur.Uz.Öğ', 'Baş Müez.Kayyı', 'Baş Vaiz', 'Baş.İm.Hat', 'Kur.Baş.Öğ']
+		#print(unvan, derece, ogrenim)
+
+		#Ek Öde.(666 KHK) = 9500 X Memur Maaş Katsayısı X Ek Ödeme Oranı / 100 formülüyle hesaplanır.
+		if unvan in unvanlar:
+			khk_666 = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece) & (df_3['ogrenim'] == ogrenim), 'ek_odeme_orani'].sum()
+			return df_1['aylik_katsayi'].iloc[-1] * khk_666 * 9500 / 100
+		elif unvan in uz_unvanlar:
+			khk_666 = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece) & (df_3['ogrenim'] == ogrenim), 'ek_odeme_orani'].sum()
+			return df_1['aylik_katsayi'].iloc[-1] * khk_666 * 9500 / 100
+		else:
+			khk_666 = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece), 'ek_odeme_orani'].sum()
+			return df_1['aylik_katsayi'].iloc[-1] * khk_666 * 9500 / 100
+
+def ek_odeme_666_orani(unvan, derece, ogrenim, izin):
+	if izin == "Aylıksız İzin":
+		return 0
+	else:
+		unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp', 'Vekil M.K', 'Vekil İ-H']
+		uz_unvanlar = ['Uzman Vaiz', 'Uz.İm.Hat', 'Kur.Uz.Öğ', 'Baş Müez.Kayyı', 'Baş Vaiz', 'Baş.İm.Hat', 'Kur.Baş.Öğ']
+		#print(unvan, derece, ogrenim)
+		if unvan in unvanlar:
+			khk_666 = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece) & (df_3['ogrenim'] == ogrenim), 'ek_odeme_orani'].sum()
+			return khk_666
+		elif unvan in uz_unvanlar:
+			khk_666 = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece) & (df_3['ogrenim'] == ogrenim), 'ek_odeme_orani'].sum()
+			return khk_666
+		else:
+			khk_666 = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece), 'ek_odeme_orani'].sum()
+			return khk_666
+
+def yan_odeme_puani(unvan, derece, hizmetyili, izin):
+	if izin == "Aylıksız İzin":
+		return 0
+	else:
+		if unvan == 'Şube Md.' or unvan == 'Din Hz.Uzm':
+			is_guclugu = df_2.loc[(df_2['unvan'] == unvan) & (df_2['derece'] == derece), 'is_guclugu'].sum()
+			is_riski = df_2.loc[(df_2['unvan'] == unvan) & (df_2['derece'] == derece), 'is_riski'].sum()
+			tem_gucluk = df_2.loc[(df_2['unvan'] == unvan) & (df_2['derece'] == derece), 'tem_gucluk'].sum()
+			mali_sorumluluk = df_2.loc[(df_2['unvan'] == unvan) & (df_2['derece'] == derece), 'mali_sorumluluk'].sum()
+			return is_guclugu + is_riski + tem_gucluk + mali_sorumluluk
+
+		elif unvan == 'Tekniker' or unvan == 'Teknisyen':
+			if hizmetyili <= 5:
+				is_guclugu = df_2.loc[(df_2['unvan'] == unvan) & (df_2['hizmetyili'] == "<5"), 'is_guclugu'].sum()
+				is_riski = df_2.loc[(df_2['unvan'] == unvan) & (df_2['hizmetyili'] == "<5"), 'is_riski'].sum()
+				tem_gucluk = df_2.loc[(df_2['unvan'] == unvan) & (df_2['hizmetyili'] == "<5"), 'tem_gucluk'].sum()
+				mali_sorumluluk = df_2.loc[(df_2['unvan'] == unvan) & (df_2['hizmetyili'] == "<5"), 'mali_sorumluluk'].sum()
+				return is_guclugu + is_riski + tem_gucluk + mali_sorumluluk
+			else:
+				is_guclugu = df_2.loc[(df_2['unvan'] == unvan) & (df_2['hizmetyili'] == "5>"), 'is_guclugu'].sum()
+				is_riski = df_2.loc[(df_2['unvan'] == unvan) & (df_2['hizmetyili'] == "5>"), 'is_riski'].sum()
+				tem_gucluk = df_2.loc[(df_2['unvan'] == unvan) & (df_2['hizmetyili'] == "5>"), 'tem_gucluk'].sum()
+				mali_sorumluluk = df_2.loc[(df_2['unvan'] == unvan) & (df_2['hizmetyili'] == "5>"), 'mali_sorumluluk'].sum()
+				return is_guclugu + is_riski + tem_gucluk + mali_sorumluluk			
+		else:
+			is_guclugu = df_2.loc[df_2['unvan'] == unvan, 'is_guclugu'].sum()
+			is_riski = df_2.loc[df_2['unvan'] == unvan, 'is_riski'].sum()
+			tem_gucluk = df_2.loc[df_2['unvan'] == unvan, 'tem_gucluk'].sum()
+			mali_sorumluluk = df_2.loc[df_2['unvan'] == unvan, 'mali_sorumluluk'].sum()
+			return is_guclugu + is_riski + tem_gucluk + mali_sorumluluk
 
 # def yan_odeme_puani_kbs(tc):
 # 	is_guclugu = df_per.loc[df_per['TC Kimlik'] == tc, 'İş Güçlüğü Puanı'].sum()
