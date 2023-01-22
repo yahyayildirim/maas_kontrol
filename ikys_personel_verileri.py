@@ -3,6 +3,9 @@
 import sys
 sys.dont_write_bytecode = True
 
+import locale
+locale.setlocale(locale.LC_ALL, 'tr_TR.UTF-8')
+
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
@@ -91,6 +94,8 @@ def ikys_personel_verileri():
 
 	# KBS sistemindeki Kıdem Yılı ile İKYS Sistemindeki Hizmet Yılı birbirini tutmuyor. Yine de personelin Diyanete giriş tarihindeki yılı baz alarak, içinde bulunduğumuz yıldan çıkartıp Hizmet yılını buluyoruz.
 	bu_yil = datetime.now().year
+	bu_ay = datetime.now().strftime("%B")
+
 	df['Hizmet Süresi (Yıl)'] = bu_yil - pd.to_datetime(pd.Series(df['Diyanete Giriş Tarihi']), format='%d.%m.%Y').dt.year
 	#df['Hizmet Süresi (Yıl)'] = bu_yil - pd.to_datetime(pd.Series(df['İlk Memuriyete Başlama Tarihi']), format='%d.%m.%Y').dt.year
 
@@ -142,7 +147,7 @@ def ikys_personel_verileri():
 	df.sort_values(by=['TC Kimlik'], inplace=True, ignore_index=True)
 
 	# DataFrame içinde topladığımız ve sütunlarını belirlediğimiz verilerimizi excele xlsx formatında aktarıyoruz. freeze_panes değeri ile ilk satır ve ilk iki sütunu donduruyoruz.
-	df.to_excel('./ikys/ikys_personel_verileri.xlsx', index=False, freeze_panes=(1,2))
+	df.to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/ikys_personel_verileri.xlsx', index=False, freeze_panes=(1,2))
 	print('%30')
 
 if __name__ == "__main__":

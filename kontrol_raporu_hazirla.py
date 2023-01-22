@@ -3,13 +3,20 @@
 import sys
 sys.dont_write_bytecode = True
 
+import locale
+locale.setlocale(locale.LC_ALL, 'tr_TR.UTF-8')
+
 import numpy as np
 import pandas as pd
 import time
+from datetime import datetime
+
+bu_yil = datetime.now().year
+bu_ay = datetime.now().strftime("%B")
 
 # KBS ve İKYS verilerini DataFrame ekliyoruz.
-kbs_verisi = pd.DataFrame(pd.read_excel('./kbs/kbs_bordro_verileri.xlsx'))
-ikys_verisi = pd.DataFrame(pd.read_excel('./ikys/ikys_personel_verileri.xlsx'))
+kbs_verisi = pd.DataFrame(pd.read_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/kbs_bordro_verileri.xlsx'))
+ikys_verisi = pd.DataFrame(pd.read_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/ikys_personel_verileri.xlsx'))
 
 def kontrol_raporu_v1():
     if ikys_verisi.shape == kbs_verisi.shape:
@@ -22,7 +29,7 @@ def kontrol_raporu_v1():
             renk = 'background-color: {}'.format(color)
             veri = data.xs(key='ikys verisi', axis='columns', level=1)
             return pd.DataFrame(np.where(data.ne(veri, level=0), renk, ''), index=data.index, columns=data.columns)
-        df_final.style.apply(arkaplani_renklendir, axis=None).to_excel('./rapor/maas_kontrol_raporu_v1.xlsx', engine='openpyxl', freeze_panes=(2,1))
+        df_final.style.apply(arkaplani_renklendir, axis=None).to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/maas_kontrol_raporu_v1.xlsx', engine='openpyxl', freeze_panes=(2,1))
         print('%90')
     else:
         print('maas_kontrol_raporu_v1 hazırlanırken hata oluştu...\nLütfen telegramdan, yazılımcı ile iletişime geçin. @yahyayildirim')
@@ -49,7 +56,7 @@ def kontrol_raporu_v2():
             df_rapor = pd.DataFrame(np.where(data.ne(veri, level=0), renk, ''), index=data.index, columns=data.columns)
             return df_rapor
 
-        df_fark.style.apply(arkaplani_renklendir, axis=None).to_excel('./rapor/maas_kontrol_raporu_v2.xlsx', engine='openpyxl', freeze_panes=(2,1))
+        df_fark.style.apply(arkaplani_renklendir, axis=None).to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/maas_kontrol_raporu_v2.xlsx', engine='openpyxl', freeze_panes=(2,1))
         print('%100')
         x = input("İşleminiz başarılı bir şekilde tamamlanmıştır.\nPencereyi kapatmak için enter tuşa basın.")
         sys.exit(x)

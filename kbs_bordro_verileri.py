@@ -3,6 +3,9 @@
 import sys
 sys.dont_write_bytecode = True
 
+import locale
+locale.setlocale(locale.LC_ALL, 'tr_TR.UTF-8')
+
 import warnings
 warnings.filterwarnings(action='ignore', category=UserWarning, module='openpyxl')
 warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -14,6 +17,9 @@ import pandas as pd
 from pathlib import Path
 from glob import glob
 from datetime import datetime
+
+bu_yil = datetime.now().year
+bu_ay = datetime.now().strftime("%B")
 
 def kbs_temiz_veri():
 	#İKYSden indirdiğimiz dosya, html formatında olduğu için önce read_html metodu ile açıp, xlsx formatında tekrar kaydediyoruz.
@@ -44,11 +50,11 @@ def kbs_temiz_veri():
 		df_list.append(pd.DataFrame(df_say.values, columns=sutun))
 		say = say + 1
 	df = pd.concat(df_list, axis=1)
-	df.to_excel('./kbs/Bordro_Dokumu_Temiz.xlsx', index=False)
+	df.to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/Bordro_Dokumu_Temiz.xlsx', index=False)
 	print('%10')
 
 def kbs_bordro_verileri():
-	dosya = glob('./kbs/Bordro_Dokumu*', recursive=False)
+	dosya = glob('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/Bordro_Dokumu*', recursive=False)
 	data = [pd.read_excel(f) for f in dosya]
 	df = pd.DataFrame(data[0])
 
@@ -120,7 +126,7 @@ def kbs_bordro_verileri():
 	df.sort_values(by=['TC Kimlik'], inplace=True, ignore_index=True)
 
 	# DataFrame içinde topladığımız ve sütunlarını belirlediğimiz verilerimizi excele xlsx formatında aktarıyoruz. freeze_panes değeri ile ilk satır ve ilk iki sütunu donduruyoruz.
-	df.to_excel('./kbs/kbs_bordro_verileri.xlsx', index=False, freeze_panes=(1,2))
+	df.to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/kbs_bordro_verileri.xlsx', index=False, freeze_panes=(1,2))
 	print('%20')
 
 if __name__ == '__main__':

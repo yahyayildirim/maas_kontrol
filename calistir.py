@@ -3,6 +3,21 @@
 import sys
 sys.dont_write_bytecode = True
 
+import os
+from datetime import datetime as tarih
+import locale
+
+locale.setlocale(locale.LC_ALL, 'tr_TR.UTF-8')
+
+ana_dizin = os.getcwd()
+yil = ana_dizin + '/rapor/' + str(tarih.today().year)
+ay = ana_dizin + '/rapor/' + str(tarih.today().year) + '/' + str(tarih.today().strftime("%B"))
+
+arsiv_dizini = [yil, ay] # list of file paths
+for dizin in arsiv_dizini:
+    if not os.path.exists(dizin):
+        os.makedirs(dizin)
+
 print("Lütfen bekleyiniz...")
 
 if __name__ == "__main__":
