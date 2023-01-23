@@ -32,4 +32,3 @@ if __name__ == "__main__":
 	import kontrol_raporu_hazirla
 	kontrol_raporu_hazirla.kontrol_raporu_v1()
 	kontrol_raporu_hazirla.kontrol_raporu_v2()
-#deneme
