@@ -66,9 +66,9 @@ Masaüstünde bulunan **maas_kontrol/izle** klasöründeki **ornek_kbs_raporlar.
 
 # PROGRAMIN ÇALIŞTIRILMASI
 Programı iki yol ile çalıştırbiliriz.
-* **1. YOL:** maas_kontrol klasöründe uçbirim açıp, `./calistir.py` komutunu çalıştırmak
+* **1. YOL:** maas_kontrol klasöründe bulunan **calistir.py** dosyasına çift tıklayarak açılan menüden **Uçbirimde Çalıştır** butonuna tıklamak.
 
-* **2. YOL:** maas_kontrol klasöründe bulunan **calistir.py** dosyasına çift tıklayarak açılan menüden **Uçbirimde Çalıştır** butonuna tıklamak.
+* **2. YOL:** maas_kontrol klasöründe uçbirim açıp, `./calistir.py` komutunu çalıştırmak
 
 ##
 
