@@ -17,6 +17,9 @@ pd.options.mode.chained_assignment = None  # default='warn'
 from pathlib import Path
 from datetime import datetime
 
+bu_yil = datetime.now().year
+bu_ay = datetime.now().strftime("%B")
+
 def ikys_personel_verileri():
 	#İKYSden indirdiğimiz dosya, html formatında olduğu için önce read_html metodu ile açıp, xlsx formatında tekrar kaydediyoruz.
 	bu_dizin = Path.cwd() / "ikys"
@@ -25,8 +28,8 @@ def ikys_personel_verileri():
 	for rapor in ikys_raporlar:
 		dfs = pd.read_html(rapor)
 		df = df.append(dfs, ignore_index=True)
-	#df.to_excel('./ikys/Personel_Rapor_Temiz.xlsx', index=False)
-	
+	#df.to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/Personel_Raporu_Temiz.xlsx', index=False, freeze_panes=(0,1))
+
 	#xlsx formatına çevirdiğimiz dosyamızı read_excel metodu ile açıp, DataFrame aktarıyoruz.
 	#df = pd.DataFrame(pd.read_excel('./ikys/Personel_Rapor_Temiz.xlsx'))
 
@@ -91,10 +94,6 @@ def ikys_personel_verileri():
 
 	# Ödenilecek Derece/Kademe sütunundaki parantezleri siliyoruz
 	df['Ödenilecek Derece/Kademe'].replace(regex=True, inplace=True, to_replace=r'[()]', value=r'')
-
-	# KBS sistemindeki Kıdem Yılı ile İKYS Sistemindeki Hizmet Yılı birbirini tutmuyor. Yine de personelin Diyanete giriş tarihindeki yılı baz alarak, içinde bulunduğumuz yıldan çıkartıp Hizmet yılını buluyoruz.
-	bu_yil = datetime.now().year
-	bu_ay = datetime.now().strftime("%B")
 
 	df['Hizmet Süresi (Yıl)'] = bu_yil - pd.to_datetime(pd.Series(df['Diyanete Giriş Tarihi']), format='%d.%m.%Y').dt.year
 	#df['Hizmet Süresi (Yıl)'] = bu_yil - pd.to_datetime(pd.Series(df['İlk Memuriyete Başlama Tarihi']), format='%d.%m.%Y').dt.year

@@ -50,13 +50,13 @@ def kbs_temiz_veri():
 		df_list.append(pd.DataFrame(df_say.values, columns=sutun))
 		say = say + 1
 	df = pd.concat(df_list, axis=1)
-	df.to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/Bordro_Dokumu_Temiz.xlsx', index=False)
+	#df.to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/Bordro_Dokumu_Temiz.xlsx', index=False)
 	print('%10')
 
-def kbs_bordro_verileri():
-	dosya = glob('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/Bordro_Dokumu*', recursive=False)
-	data = [pd.read_excel(f) for f in dosya]
-	df = pd.DataFrame(data[0])
+#def kbs_bordro_verileri():
+	#dosya = glob('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/Bordro_Dokumu*', recursive=False)
+	#data = [pd.read_excel(f) for f in dosya]
+	#df = pd.DataFrame(data[0])
 
 	#df = df.dropna(how='all', axis=1)
 	if 'Ek Tazminat' in df.columns:
@@ -97,7 +97,7 @@ def kbs_bordro_verileri():
 	# Kıdem Ay-Kıdem Yıl sütununu 'Hizmet Süresi (Ay)' ve 'Hizmet Süresi (Yıl)' olarak iki sutüna ayırıyoruz.
 	df[['Hizmet Süresi (Ay)', 'Hizmet Süresi (Yıl)']] = df['Kıdem Ay-Kıdem Yıl'].str.split('-', expand=True)
 
-	df[['TC Kimlik', 'Derece', 'Kademe', 'Yan Ödeme', 'Ek Gösterge', 'Hizmet Süresi (Yıl)']] = df[['TC Kimlik', 'Derece', 'Kademe', 'Yan Ödeme', 'Ek Gösterge', 'Hizmet Süresi (Yıl)']].apply(pd.to_numeric).fillna(0)
+	df[['TC Kimlik', 'Derece', 'Kademe', 'Yan Ödeme', 'Ek Gösterge', 'Hizmet Süresi (Yıl)', 'Yan Ödeme Aylık', 'Ek Tazminat', 'Özel Hiz.Taz.', 'Ek Öde.(666 KHK']] = df[['TC Kimlik', 'Derece', 'Kademe', 'Yan Ödeme', 'Ek Gösterge', 'Hizmet Süresi (Yıl)', 'Yan Ödeme Aylık', 'Ek Tazminat', 'Özel Hiz.Taz.', 'Ek Öde.(666 KHK']].apply(pd.to_numeric).fillna(0)
 
 	#df = df.drop_duplicates(subset=['TC Kimlik'], ignore_index=True, keep=False, inplace=False)
 	df = df.sort_values('Net Ödenen', ascending=False).drop_duplicates('TC Kimlik').sort_index()
@@ -131,4 +131,4 @@ def kbs_bordro_verileri():
 
 if __name__ == '__main__':
 	kbs_temiz_veri()
-	kbs_bordro_verileri()
+	#kbs_bordro_verileri()
