@@ -4,6 +4,9 @@ test
 
 # Belirli bir dizini es geçmek için
 logs/
+ikys
+kbs/
+rapor/
 
 
 # Belirli bir uzantılı dosyaları es geçmek için
