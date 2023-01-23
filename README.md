@@ -74,3 +74,17 @@ Programı iki yol ile çalıştırbiliriz.
 
 # GÜNCELLEME
 * Programı devamlı güncelliyorum. Onun için programı çalıştırmadan önce mutlaka **maas_kontrol** klasörünün içinde uç birim açıp **git pull** ile güncelleme yapın.
+
+##
+
+# SSS
+<p>
+<details>
+<summary><strong>1. Sık sorulan sorular buraya eklenecektir.</strong></summary>
+
+Cevap: <em>Bu alanda</em> <strong>görünecek</strong> şekilde yazılacaktır.
+
+<pre><code>Eğer kod var ise burada görünecektir.</code></pre>
+
+</details>
+</p>
