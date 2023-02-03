@@ -97,11 +97,11 @@ def kbs_temiz_veri():
 	# Kıdem Ay-Kıdem Yıl sütununu 'Hizmet Süresi (Ay)' ve 'Hizmet Süresi (Yıl)' olarak iki sutüna ayırıyoruz.
 	df[['Hizmet Süresi (Ay)', 'Hizmet Süresi (Yıl)']] = df['Kıdem Ay-Kıdem Yıl'].str.split('-', expand=True)
 
-	df[['TC Kimlik', 'Derece', 'Kademe', 'Yan Ödeme', 'Ek Gösterge', 'Hizmet Süresi (Yıl)', 'Yan Ödeme Aylık', 'Ek Tazminat', 'Özel Hiz.Taz.', 'Ek Öde.(666 KHK']] = df[['TC Kimlik', 'Derece', 'Kademe', 'Yan Ödeme', 'Ek Gösterge', 'Hizmet Süresi (Yıl)', 'Yan Ödeme Aylık', 'Ek Tazminat', 'Özel Hiz.Taz.', 'Ek Öde.(666 KHK']].apply(pd.to_numeric).fillna(0)
+	df[['TC Kimlik', 'Derece', 'Kademe', 'Yan Ödeme', 'Ek Gösterge', 'Hizmet Süresi (Yıl)', 'Yan Ödeme Aylık', 'Ek Tazminat', 'Özel Hiz.Taz.', 'Ek Öde.(666 KHK', 'Net Ödenen']] = df[['TC Kimlik', 'Derece', 'Kademe', 'Yan Ödeme', 'Ek Gösterge', 'Hizmet Süresi (Yıl)', 'Yan Ödeme Aylık', 'Ek Tazminat', 'Özel Hiz.Taz.', 'Ek Öde.(666 KHK', 'Net Ödenen']].apply(pd.to_numeric).fillna(0)
 
-	#df = df.drop_duplicates(subset=['TC Kimlik'], ignore_index=True, keep=False, inplace=False)
-	df = df.sort_values('Net Ödenen', ascending=False).drop_duplicates('TC Kimlik').sort_index()
+	df = df.sort_values(by=['Yan Ödeme Aylık'], ascending=False).drop_duplicates('TC Kimlik').sort_index()
 	#df = df.groupby('TC Kimlik').agg('max').reset_index()
+	#df = df.drop_duplicates(subset=['TC Kimlik'], ignore_index=True, inplace=False)
 
 	#df['Gösterge Puanı'] = df.apply(lambda row: sabitler.yan_odeme_puani_kbs(row['TC Kimlik']), axis=1)
 	df['Gösterge Puanı'] = round(df.apply(lambda row: sabitler.tutardan_yan_odeme_puani_bul(row['Yan Ödeme Aylık']), axis=1))
