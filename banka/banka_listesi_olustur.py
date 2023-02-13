@@ -75,7 +75,7 @@ def bankaListesi():
 	df['ŞUBE KODU'] = ""
 	df['HESAP NUMARASI'] = ""
 	df['EK HESAP NUMARASI'] = ""
-	df['AÇIKLAMA'] = "2023 MAAŞ"
+	df['AÇIKLAMA'] = "MARDİN MÜF. MAAŞ/EKDERS ÖDEMESİ"
 
 	df = df[['ADI SOYADI', 'IBAN NO', 'ŞUBE KODU', 'HESAP NUMARASI', 'EK HESAP NUMARASI', 'AÇIKLAMA', 'MAAŞ TUTARI']]
 
