@@ -159,7 +159,7 @@ def yan_odeme_puani(unvan, derece, hizmetyili, izin):
 			mali_sorumluluk = df_2.loc[(df_2['unvan'] == unvan) & (df_2['derece'] == derece), 'mali_sorumluluk'].sum()
 			return is_guclugu + is_riski + tem_gucluk + mali_sorumluluk
 
-		elif unvan == 'Tekniker' or unvan == 'Teknisyen':
+		elif unvan == 'Tekniker' or unvan == 'Teknisyen' or unvan == 'Mühendis':
 			if hizmetyili <= 5:
 				is_guclugu = df_2.loc[(df_2['unvan'] == unvan) & (df_2['hizmetyili'] == "<5"), 'is_guclugu'].sum()
 				is_riski = df_2.loc[(df_2['unvan'] == unvan) & (df_2['hizmetyili'] == "<5"), 'is_riski'].sum()
@@ -211,3 +211,8 @@ def ek_tazminat_puani(unvan, derece, ogrenim):
 		ek_tazminat_puani = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece), 'ek_1'].sum()
 
 	return ek_tazminat_puani
+
+
+#Yapılacaklar
+def bolge_tazminati():
+	pass
