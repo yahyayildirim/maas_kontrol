@@ -74,7 +74,7 @@ def ozel_hizmet_orani(unvan, derece, ogrenim, izin):
 		return 0
 
 	else:
-		unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp', 'Vekil M.K', 'Vekil İ-H']
+		unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp', 'Tekniker', 'Teknisyen', 'Vekil M.K', 'Vekil İ-H']
 		uz_unvanlar = ['Uzman Vaiz', 'Uz.İm.Hat', 'Kur.Uz.Öğ', 'Baş Müez.Kayyı', 'Baş Vaiz', 'Baş.İm.Hat', 'Kur.Baş.Öğ']
 		#print(unvan, derece, ogrenim)
 		if unvan in unvanlar:
@@ -92,7 +92,7 @@ def ozel_hizmet(unvan, derece, ogrenim, izin):
 	if izin == "Aylıksız İzin":
 		return 0
 	else:
-		unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp', 'Vekil M.K', 'Vekil İ-H']
+		unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp',  'Tekniker', 'Teknisyen', 'Vekil M.K', 'Vekil İ-H']
 		uz_unvanlar = ['Uzman Vaiz', 'Uz.İm.Hat', 'Kur.Uz.Öğ', 'Baş Müez.Kayyı', 'Baş Vaiz', 'Baş.İm.Hat', 'Kur.Baş.Öğ']
 		#print(unvan, derece, ogrenim)
 
@@ -116,7 +116,7 @@ def ek_odeme_666(unvan, derece, ogrenim, izin):
 	if izin == "Aylıksız İzin":
 		return 0
 	else:
-		unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp', 'Vekil M.K', 'Vekil İ-H']
+		unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp',  'Tekniker', 'Teknisyen', 'Vekil M.K', 'Vekil İ-H']
 		uz_unvanlar = ['Uzman Vaiz', 'Uz.İm.Hat', 'Kur.Uz.Öğ', 'Baş Müez.Kayyı', 'Baş Vaiz', 'Baş.İm.Hat', 'Kur.Baş.Öğ']
 		#print(unvan, derece, ogrenim)
 
@@ -135,7 +135,7 @@ def ek_odeme_666_orani(unvan, derece, ogrenim, izin):
 	if izin == "Aylıksız İzin":
 		return 0
 	else:
-		unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp', 'Vekil M.K', 'Vekil İ-H']
+		unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp',  'Tekniker', 'Teknisyen', 'Vekil M.K', 'Vekil İ-H']
 		uz_unvanlar = ['Uzman Vaiz', 'Uz.İm.Hat', 'Kur.Uz.Öğ', 'Baş Müez.Kayyı', 'Baş Vaiz', 'Baş.İm.Hat', 'Kur.Baş.Öğ']
 		#print(unvan, derece, ogrenim)
 		if unvan in unvanlar:
@@ -211,7 +211,6 @@ def ek_tazminat_puani(unvan, derece, ogrenim):
 		ek_tazminat_puani = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece), 'ek_1'].sum()
 
 	return ek_tazminat_puani
-
 
 #Yapılacaklar
 def bolge_tazminati():
