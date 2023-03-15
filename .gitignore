@@ -20,4 +20,4 @@ rapor/
 # error.log dosyaları hariç.
 !errors.log
 !maas_verileri.xlsx
-!banka/OrnekMaasOdemeDosyasi.xlsx
+!banka/Albaraka_OrnekMaasOdemeDosyasi.xlsx
