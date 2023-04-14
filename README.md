@@ -84,7 +84,7 @@ Programı iki yol ile çalıştırbiliriz.
 <details>
 <summary><strong>1. Sık sorulan sorular buraya eklenecektir.</strong></summary>
 
-Cevap: <em>Bu alanda</em> <strong>görünecek</strong> şekilde yazılacaktır.
+<strong>Cevap:</strong> <em>Bu alanda</em> <strong>görünecek</strong> şekilde yazılacaktır.
 
 <pre><code>Eğer kod var ise burada görünecektir.</code></pre>
 
@@ -94,11 +94,8 @@ Cevap: <em>Bu alanda</em> <strong>görünecek</strong> şekilde yazılacaktır.
 <details>
 <summary><strong>Banka Listesi Hakkında</strong></summary>
 
-Cevap: <em>Bankaların çoğu KBS üzerinden listeyi direk bankaya aktarıyor. Ancak, şu anda sadece <strong>ALBARAKA</strong> bankası için banka listesi oluşturulabilmektedir.</em>
-```
-Eğer sizin çalıştığınız bankada internet üzerinden manuel olarak sisteme eklemenizi istiyor ise bana ilgili excel dosyasını gönderirseniz, ekleme yapmaya çalışırım.
-```
-<pre><code>Eğer sizin çalıştığınız bankada internet üzerinden manuel olarak sisteme eklemenizi istiyor ise bana ilgili excel dosyasını gönderirseniz, ekleme yapmaya çalışırım.</code></pre>
+<strong>Cevap:</strong> <em>Bankaların çoğu KBS üzerinden listeyi direk bankaya aktarıyor. Ancak, şu anda sadece <strong>ALBARAKA</strong> bankası için banka listesi oluşturulabilmektedir.</em>
+`Eğer sizin çalıştığınız bankada internet üzerinden manuel olarak sisteme eklemenizi istiyor ise bana ilgili excel dosyasını gönderirseniz, ekleme yapmaya çalışırım.`
 
 </details>
 </p>
