@@ -4,6 +4,8 @@ test
 
 # Belirli bir dizini es geçmek için
 /logs
+/izle
+/banka
 /ikys
 /kbs
 /rapor
@@ -14,6 +16,13 @@ test
 *.xls
 *.xlsx
 *.ods
+*.docx
+*.doc
+*.ppt
+*.pptx
+*.txt
+*.odt
+*.odp
 *.log
 
 
@@ -21,3 +30,4 @@ test
 !errors.log
 !maas_verileri.xlsx
 !banka/Albaraka_OrnekMaasOdemeDosyasi.xlsx
+!moduller.txt
