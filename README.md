@@ -75,7 +75,7 @@ Programı iki yol ile çalıştırbiliriz.
 ##
 
 # GÜNCELLEME
-* Programı devamlı güncelliyorum. Onun için programı çalıştırmadan önce mutlaka **maas_kontrol** klasörünün içinde uç birim açıp **git pull** ile güncelleme yapın.
+* Programı devamlı güncelliyorum. Onun için programı çalıştırmadan önce mutlaka **maas_kontrol** klasörünün içindeyken, sağ tıklayıp burada uç birim aç deyin ve **git pull** ile güncelleme yapın.
 
 ##
 
@@ -87,6 +87,16 @@ Programı iki yol ile çalıştırbiliriz.
 Cevap: <em>Bu alanda</em> <strong>görünecek</strong> şekilde yazılacaktır.
 
 <pre><code>Eğer kod var ise burada görünecektir.</code></pre>
+
+</details>
+</p>
+<p>
+<details>
+<summary><strong>Banka Listesi Hakkında</strong></summary>
+
+Cevap: <em>Bankaların çoğu KBS üzerinden listeyi direk bankaya aktarıyor. Ancak, şu anda sadece <strong>ALBARAKA</strong> bankası için banka listesi oluşturulabilmektedir.</em>
+
+<pre><code>Eğer sizin çalıştığınız bankada internet üzerinden manuel olarak sisteme eklemenizi istiyor ise bana ilgili excel dosyasını gönderirseniz, ekleme yapmaya çalışırım.</code></pre>
 
 </details>
 </p>
