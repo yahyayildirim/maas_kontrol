@@ -52,7 +52,7 @@ sudo python3 -m pip install --trusted-host pypi.org --trusted-host pypi.python.o
 ## 
 
 # İKYS ÜZERİNDEN YAPILACAKLAR
-**[Buradan](test/-/raw/main/maas_kontrol_ornek_video/ornek_ikys_personel_sorgulama.webm)** videoyu izleyerek raporu Masaüstünde bulunan **maas_kontrol/ikys** klasörüne kopyalayın.
+**[Buradan](https://gitlab.com/yahyayildirim/test/-/raw/main/maas_kontrol_ornek_video/ornek_ikys_personel_sorgulama.webm)** videoyu izleyerek raporu Masaüstünde bulunan **maas_kontrol/ikys** klasörüne kopyalayın.
 
 **ÖNEMLİ NOT:** İndirdiğiniz dosyayı hiç açmayın, olduğu gibi ikys klasörüne taşıyın/kopyalayın. Eğer dosyanın ismi sadece **Personel** ise **Personel Rapor.xls** olarak değiştirin, bunun dışında hiçbir şekilde ismini veya dosya uzantısını değiştirmeyin.
 
@@ -60,7 +60,7 @@ sudo python3 -m pip install --trusted-host pypi.org --trusted-host pypi.python.o
 ## 
 
 # KBS ÜZERİNDEN YAPILACAKLAR
-**[Buradan](test/-/raw/main/maas_kontrol_ornek_video/ornek_kbs_raporlar.webm)** videoyu izleyerek raporu Masaüstünde bulunan **maas_kontrol/kbs** klasörüne kopyalayın.
+**[Buradan](https://gitlab.com/yahyayildirim/test/-/raw/main/maas_kontrol_ornek_video/ornek_kbs_raporlar.webm)** videoyu izleyerek raporu Masaüstünde bulunan **maas_kontrol/kbs** klasörüne kopyalayın.
 
 **ÖNEMLİ NOT:** Dosya ismini değiştirmenize gerek yoktur. Burada dikkat etmeniz gereken, kbs klasörüne en son indirdiğiniz rapor tek kalsın.
 
