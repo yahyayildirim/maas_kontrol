@@ -6,7 +6,7 @@ test
 logs/
 ikys
 kbs/
-rapor/
+/rapor/
 
 
 # Belirli bir uzantılı dosyaları es geçmek için
