@@ -69,7 +69,7 @@ def bankaListesi():
 			df['AÇIKLAMA'] = "EK-DERS"
 			df_list.append(df)
 
-		else:
+		elif 'BankaListesi.xlsx' in rapor:
 			sutun = ['SIRA NO', 'TC KIMLIK NO', 'ADI SOYADI', 'IBAN NO', 'AGİ', 'ÜCRET', 'MAAŞ TUTARI']
 			dfs = pd.read_excel(rapor, skiprows=10)
 			dfs.dropna(axis=0, how='all', inplace=True)
@@ -83,8 +83,26 @@ def bankaListesi():
 			df.columns = sutun
 			#df = df.set_axis(sutun_ad, axis=1, inplace=False)
 			df['ADI SOYADI'] = df['ADI SOYADI'].str.title()
-			#aciklama = input(f"Lütfen {rapor} dosyası için açıklama giriniz: ")
-			df['AÇIKLAMA'] = "GEÇİCİ EK-DERS"
+			aciklama = input(f"Lütfen {rapor} dosyası için açıklama giriniz: ")
+			df['AÇIKLAMA'] = f"{aciklama}"
+			df_list.append(df)
+
+		else:
+			sutun = ['SIRA NO', 'TC KIMLIK NO', 'ADI SOYADI', 'IBAN NO', 'MAAŞ TUTARI']
+			dfs = pd.read_excel(rapor, skiprows=10)
+			dfs.dropna(axis=0, how='all', inplace=True)
+			dfs.dropna(axis=0, thresh=5, inplace=True)
+			dfs.dropna(axis=1, how='all', inplace=True)
+			sutun_ad = dfs.columns
+			#print(dfs)
+			df = pd.DataFrame(dfs.values, columns=sutun_ad)
+			if 'Unvan' in df.columns:
+				df.drop(['Unvan'], axis=1, inplace=True)
+			df.columns = sutun
+			#df = df.set_axis(sutun_ad, axis=1, inplace=False)
+			df['ADI SOYADI'] = df['ADI SOYADI'].str.title()
+			aciklama = input(f"Lütfen {rapor} dosyası için açıklama giriniz: ")
+			df['AÇIKLAMA'] = f"{aciklama}"
 			df_list.append(df)
 
 	df = pd.concat(df_list, axis=0)
