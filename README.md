@@ -95,7 +95,9 @@ Cevap: <em>Bu alanda</em> <strong>görünecek</strong> şekilde yazılacaktır.
 <summary><strong>Banka Listesi Hakkında</strong></summary>
 
 Cevap: <em>Bankaların çoğu KBS üzerinden listeyi direk bankaya aktarıyor. Ancak, şu anda sadece <strong>ALBARAKA</strong> bankası için banka listesi oluşturulabilmektedir.</em>
-
+```
+Eğer sizin çalıştığınız bankada internet üzerinden manuel olarak sisteme eklemenizi istiyor ise bana ilgili excel dosyasını gönderirseniz, ekleme yapmaya çalışırım.
+```
 <pre><code>Eğer sizin çalıştığınız bankada internet üzerinden manuel olarak sisteme eklemenizi istiyor ise bana ilgili excel dosyasını gönderirseniz, ekleme yapmaya çalışırım.</code></pre>
 
 </details>
