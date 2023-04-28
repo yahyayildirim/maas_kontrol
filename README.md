@@ -43,7 +43,7 @@ git clone https://gitlab.com/yahyayildirim/maas_kontrol.git
 ```
 5- Şimdi Masaüstünde **maas_kontrol** adında bir klasör oluşmuş olması gerekiyor. `cd maas_kontrol` komutu ile klasöre geçiş yapın.
 
-6- Aşağıdaki kodu uçbirime yazın/kopyalayın ve enter yapın.
+6- Aşağıdaki kodu uçbirime yazın/kopyalayın ve enter yapın. Bu aşama 12-15 dakika sürecektir, sabredip bitmesini bekleyin.
 ```
 sudo python3 -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org -U -r moduller.txt
 ```
