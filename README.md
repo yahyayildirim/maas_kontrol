@@ -43,7 +43,7 @@ git clone https://gitlab.com/yahyayildirim/maas_kontrol.git
 ```
 5- Şimdi Masaüstünde **maas_kontrol** adında bir klasör oluşmuş olması gerekiyor. `cd maas_kontrol` komutu ile klasöre geçiş yapın.
 
-6- Aşağıdaki kodu uçbirime yazın/kopyalayın ve enter yapın.
+6- Aşağıdaki kodu uçbirime yazın/kopyalayın ve enter yapın. Bu aşama 12-15 dakika sürecektir, sabredip bitmesini bekleyin.
 ```
 sudo python3 -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org -U -r moduller.txt
 ```
@@ -52,7 +52,7 @@ sudo python3 -m pip install --trusted-host pypi.org --trusted-host pypi.python.o
 ## 
 
 # İKYS ÜZERİNDEN YAPILACAKLAR
-**[Buradan](https://gitlab.com/yahyayildirim/test/-/raw/main/maas_kontrol_ornek_video/ornek_ikys_personel_sorgulama.webm)** videoyu izleyerek raporu Masaüstünde bulunan **maas_kontrol/ikys** klasörüne kopyalayın.
+**[Buradan](https://gitlab.com/yahyayildirim/test/-/raw/main/video_and_picture/maas_kontrol/ornek_ikys_personel_sorgulama.webm)** videoyu izleyerek raporu Masaüstünde bulunan **maas_kontrol/ikys** klasörüne kopyalayın.
 
 **ÖNEMLİ NOT:** İndirdiğiniz dosyayı hiç açmayın, olduğu gibi ikys klasörüne taşıyın/kopyalayın. Eğer dosyanın ismi sadece **Personel** ise **Personel Rapor.xls** olarak değiştirin, bunun dışında hiçbir şekilde ismini veya dosya uzantısını değiştirmeyin.
 
@@ -60,7 +60,7 @@ sudo python3 -m pip install --trusted-host pypi.org --trusted-host pypi.python.o
 ## 
 
 # KBS ÜZERİNDEN YAPILACAKLAR
-**[Buradan](https://gitlab.com/yahyayildirim/test/-/raw/main/maas_kontrol_ornek_video/ornek_kbs_raporlar.webm)** videoyu izleyerek raporu Masaüstünde bulunan **maas_kontrol/kbs** klasörüne kopyalayın.
+**[Buradan](https://gitlab.com/yahyayildirim/test/-/raw/main/video_and_picture/maas_kontrol/ornek_kbs_raporlar.webm)** videoyu izleyerek raporu Masaüstünde bulunan **maas_kontrol/kbs** klasörüne kopyalayın.
 
 **ÖNEMLİ NOT:** Dosya ismini değiştirmenize gerek yoktur. Burada dikkat etmeniz gereken, kbs klasörüne en son indirdiğiniz rapor tek kalsın.
 
