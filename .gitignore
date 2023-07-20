@@ -3,12 +3,11 @@
 test
 
 # Belirli bir dizini es geçmek için
-/logs
-/banka
-/ikys
-/kbs
+#/banka
+#/ikys
+#/kbs
 /rapor
-
+/logs
 
 # Belirli bir uzantılı dosyaları es geçmek için
 *.styl
@@ -28,5 +27,5 @@ test
 # error.log dosyaları hariç.
 !errors.log
 !maas_verileri.xlsx
-!Albaraka_MaasOdemeDosyasi.xlsx
+!/banka/Albaraka_MaasOdemeDosyasi.xlsx
 !moduller.txt
