@@ -29,5 +29,5 @@ test
 # error.log dosyaları hariç.
 !errors.log
 !maas_verileri.xlsx
-!banka/.Albaraka_OrnekMaasOdemeDosyasi.xlsx
+!banka/Albaraka_OrnekMaasOdemeDosyasi.xlsx
 !moduller.txt
