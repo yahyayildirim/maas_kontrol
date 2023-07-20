@@ -11,7 +11,7 @@ import locale
 locale.setlocale(locale.LC_ALL, 'tr_TR.UTF-8')
 
 # Taslak Excel Dosyamız
-excel_dosyasi = openpyxl.load_workbook('Albaraka_OrnekMaasOdemeDosyasi.xlsx')
+excel_dosyasi = openpyxl.load_workbook('.Albaraka_OrnekMaasOdemeDosyasi.xlsx')
 
 # Excel dosyamızda bulunan sayfa adımız
 excel_sayfasi = excel_dosyasi['Sheet1']
@@ -37,6 +37,7 @@ def bankaListesi():
 			dfs.drop(dfs.head(4).index, inplace=True)
 			dfs.dropna(axis=1, how='all', inplace=True)
 			df = pd.DataFrame(dfs.values, columns=sutun_adi)
+			df.drop(df[(df['MAAŞ TUTARI'] == "MAAŞ TUTARI")].index, inplace=True)
 			df['MAAŞ TUTARI'] = df['MAAŞ TUTARI'].str.replace(".", "", regex=False)
 			df['MAAŞ TUTARI'] = df['MAAŞ TUTARI'].str.replace(",", ".", regex=False).astype(float)
 			#aciklama = input(f"Lütfen {rapor} dosyası için açıklama giriniz: ")
@@ -52,6 +53,7 @@ def bankaListesi():
 			dfs.drop(dfs.tail(1).index, inplace=True)
 			dfs.dropna(axis=0, how='all', inplace=True)
 			df = pd.DataFrame(dfs.values, columns=sutun_adi)
+			df.drop(df[(df['MAAŞ TUTARI'] == "MAAŞ TUTARI")].index, inplace=True)
 			df['MAAŞ TUTARI'] = df['MAAŞ TUTARI'].str.replace(".", "", regex=False)
 			df['MAAŞ TUTARI'] = df['MAAŞ TUTARI'].str.replace(",", ".", regex=False).astype(float)
 			#aciklama = input(f"Lütfen {rapor} dosyası için açıklama giriniz: ")
