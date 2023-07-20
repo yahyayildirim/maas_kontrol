@@ -11,7 +11,7 @@ import locale
 locale.setlocale(locale.LC_ALL, 'tr_TR.UTF-8')
 
 # Taslak Excel Dosyamız
-excel_dosyasi = openpyxl.load_workbook('.Albaraka_OrnekMaasOdemeDosyasi.xlsx')
+excel_dosyasi = openpyxl.load_workbook('Albaraka_MaasOdemeDosyasi.xlsx')
 
 # Excel dosyamızda bulunan sayfa adımız
 excel_sayfasi = excel_dosyasi['Sheet1']
