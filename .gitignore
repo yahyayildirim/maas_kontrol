@@ -4,7 +4,6 @@ test
 
 # Belirli bir dizini es geçmek için
 /logs
-/izle
 /banka
 /ikys
 /kbs
@@ -29,5 +28,5 @@ test
 # error.log dosyaları hariç.
 !errors.log
 !maas_verileri.xlsx
-!banka/Albaraka_MaasOdemeDosyasi.xlsx
+!Albaraka_MaasOdemeDosyasi.xlsx
 !moduller.txt
