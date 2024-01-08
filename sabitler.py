@@ -1,18 +1,17 @@
 #!/usr/bin/env python3
 
+import os
 import sys
+import pandas as pd
 sys.dont_write_bytecode = True
 
-import pandas as pd
-#import kbs_personel_verileri
-
 # maas_verileri.xlsx dosyasında bulunan herbir sayfayı ayrı ayrı DataFramelere aktardık.
-df_0 = pd.DataFrame(pd.read_excel('maas_verileri.xlsx', sheet_name=0))
-df_1 = pd.DataFrame(pd.read_excel('maas_verileri.xlsx', sheet_name=1))
-df_2 = pd.DataFrame(pd.read_excel('maas_verileri.xlsx', sheet_name=2))
-df_3 = pd.DataFrame(pd.read_excel('maas_verileri.xlsx', sheet_name=3))
+bu_dizin = os.path.dirname(__file__) + '/'
+df_0 = pd.DataFrame(pd.read_excel(f'{bu_dizin}maas_verileri.xlsx'.format(bu_dizin), sheet_name=0))
+df_1 = pd.DataFrame(pd.read_excel(f'{bu_dizin}maas_verileri.xlsx'.format(bu_dizin), sheet_name=1))
+df_2 = pd.DataFrame(pd.read_excel(f'{bu_dizin}maas_verileri.xlsx'.format(bu_dizin), sheet_name=2))
+df_3 = pd.DataFrame(pd.read_excel(f'{bu_dizin}maas_verileri.xlsx'.format(bu_dizin), sheet_name=3))
 #df_per = pd.DataFrame(pd.read_excel('./kbs/kbs_personel_verileri.xlsx', sheet_name=0))
-
 
 def gosterge_puani(derece,kademe):
 	puan = int(df_0.loc[derece-1].iloc[kademe-1])
