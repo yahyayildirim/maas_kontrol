@@ -1,5 +1,14 @@
 #!/usr/bin/env python3
 
+import re
+import os
+import time
+import sabitler
+import pandas as pd
+from glob import glob
+from pathlib import Path
+from datetime import datetime
+
 import sys
 sys.dont_write_bytecode = True
 
@@ -9,25 +18,18 @@ locale.setlocale(locale.LC_ALL, 'tr_TR.UTF-8')
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
-import re
-import time
-import sabitler
-import pandas as pd
 pd.options.mode.chained_assignment = None  # default='warn'
-from pathlib import Path
-from datetime import datetime
 
 bu_yil = datetime.now().year
 bu_ay = datetime.now().strftime("%B")
 
 def ikys_personel_verileri():
 	#İKYSden indirdiğimiz dosya, html formatında olduğu için önce read_html metodu ile açıp, xlsx formatında tekrar kaydediyoruz.
-	bu_dizin = Path.cwd() / "ikys"
-	ikys_raporlar = list(Path(bu_dizin).glob("Personel Rapor*.xls"))
-	df = pd.DataFrame()
-	for rapor in ikys_raporlar:
-		dfs = pd.read_html(rapor)
-		df = df.append(dfs, ignore_index=True)
+	bu_dizin = os.path.dirname(__file__) + '/ikys/'
+	dosya =glob(bu_dizin + "Personel Rapor*.xls")
+	
+	df = pd.read_html(''.join(dosya))
+	df = pd.DataFrame(df[0])
 	#df.to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/Personel_Raporu_Temiz.xlsx', index=False, freeze_panes=(0,1))
 
 	#xlsx formatına çevirdiğimiz dosyamızı read_excel metodu ile açıp, DataFrame aktarıyoruz.
