@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
 
+import re
+import os
+import time
+import sabitler
+import pandas as pd
+from glob import glob
+from datetime import datetime
+
 import sys
 sys.dont_write_bytecode = True
 
@@ -7,32 +15,21 @@ import locale
 locale.setlocale(locale.LC_ALL, 'tr_TR.UTF-8')
 
 import warnings
-warnings.filterwarnings(action='ignore', category=UserWarning, module='openpyxl')
 warnings.simplefilter(action='ignore', category=FutureWarning)
-
-import re
-import time
-import sabitler
-import pandas as pd
-from pathlib import Path
-from glob import glob
-from datetime import datetime
+warnings.filterwarnings(action='ignore', category=UserWarning, module='openpyxl')
 
 bu_yil = datetime.now().year
 bu_ay = datetime.now().strftime("%B")
 
 def kbs_temiz_veri():
 	#İKYSden indirdiğimiz dosya, html formatında olduğu için önce read_html metodu ile açıp, xlsx formatında tekrar kaydediyoruz.
-	bu_dizin = Path.cwd() / "kbs"
-	kbs_raporlar = list(Path(bu_dizin).glob("BordroDokumu*.xlsx"))
-	df = pd.DataFrame()
-
-	for rapor in kbs_raporlar:
-		dfs = pd.read_excel(rapor, sheet_name=1, skiprows=6)
-		df = df.append(dfs, ignore_index=True)
-		df.dropna(axis=0, thresh=5, inplace=True)
-		df.dropna(axis=1, thresh=2, inplace=True)
-		df.drop(df.tail(2).index,inplace=True)		
+	bu_dizin = os.path.dirname(__file__) + '/kbs/'
+	dosya =glob(bu_dizin + "BordroDokumu*.xlsx")
+	
+	df = pd.read_excel(''.join(dosya), sheet_name=1, skiprows=6)
+	df.dropna(axis=0, thresh=5, inplace=True)
+	df.dropna(axis=1, thresh=2, inplace=True)
+	df.drop(df.tail(2).index,inplace=True)		
 
 	say = 0
 	df_list = []
