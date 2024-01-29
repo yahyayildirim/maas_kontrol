@@ -44,12 +44,14 @@ git clone https://gitlab.com/yahyayildirim/maas_kontrol.git
 5- Şimdi Masaüstünde **maas_kontrol** adında bir klasör oluşmuş olması gerekiyor. `cd maas_kontrol` komutu ile klasöre geçiş yapın.
 
 6- Aşağıdaki kodu uçbirime yazın/kopyalayın ve enter yapın. Bu aşama bilgisayar özelliklerine göre uzun sürebilir, sabredip bitmesini bekleyin.
+
 Python versiyonunuz 3.10'nun altında ise `--break-system-packages` ibaresini aşağıdaki koddan çıkartmayı unutmayın.
 ```
 for i in $(cat moduller.txt);do sudo python3 -m pip install --break-system-packages --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org -U $i;done
 ```
-**Önemli Not1: _Domain kullanıcılarında 6. madde hata verecektir. Bu sebeple harici bir internet ile işlem yapmanız gerekmektedir._**
-**Önemli Not2: _Domain kullanıcıları harici internete bağlandıkları halde gitlab'a bağlanamıyorlarsa /etc/resolv.conf dosyasını açıp nameserver 8.8.8.8 olarak düzenleme yapmaları gerekmektedir._**
+**Önemli Not-1: _Domain kullanıcılarında 6. madde hata verecektir. Bu sebeple harici bir internet ile işlem yapmanız gerekmektedir._**
+
+**Önemli Not-2: _Domain kullanıcıları harici internete bağlandıkları halde gitlab'a bağlanamıyorlarsa /etc/resolv.conf dosyasını açıp nameserver 8.8.8.8 olarak düzenleme yapmaları gerekmektedir._**
 
 ## 
 
