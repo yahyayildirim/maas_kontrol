@@ -57,9 +57,7 @@ def kontrol_raporu_v2():
             return df_rapor
 
         df_fark.style.apply(arkaplani_renklendir, axis=None).to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/maas_kontrol_raporu_v2.xlsx', engine='openpyxl', freeze_panes=(2,1))
-        print('%100')
-        x = input("İşleminiz başarılı bir şekilde tamamlanmıştır.\nPencereyi kapatmak için enter tuşa basın.")
-        sys.exit(x)
+        print('%95')
 
     else:
         print('maas_kontrol_raporu_v2 hazırlanırken hata oluştu...\nLütfen telegramdan, yazılımcı ile iletişime geçin. @yahyayildirim')
