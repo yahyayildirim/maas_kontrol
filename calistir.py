@@ -5,8 +5,8 @@ sys.dont_write_bytecode = True
 
 import os
 from datetime import datetime as tarih
-import locale
 
+import locale
 locale.setlocale(locale.LC_ALL, 'tr_TR.UTF-8')
 
 ana_dizin = os.getcwd()
@@ -28,7 +28,11 @@ if __name__ == "__main__":
 	ikys_personel_verileri.ikys_personel_verileri()
 	
 	import verileri_raporla
+	verileri_raporla.raporla()
 
 	import kontrol_raporu_hazirla
 	kontrol_raporu_hazirla.kontrol_raporu_v1()
 	kontrol_raporu_hazirla.kontrol_raporu_v2()
+
+	import hatalar_icin_aciklama_ekle
+	hatalar_icin_aciklama_ekle.aciklama_ekle()
