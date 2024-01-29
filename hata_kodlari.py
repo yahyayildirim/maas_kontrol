@@ -32,7 +32,7 @@ kademe_hata ="""MUHTEMEL HATA SEBEPLERİ:
 """
 
 gosterge_puani_hata ="""MUHTEMEL HATA SEBEPLERİ:
-1- Gösterge Puanı derece/kademeye göre belirlenmektedir. Dereceyi/Kademeyi düzeltiniz.
+1- Gösterge Puanı derece/kademeye göre belirlenmektedir. Dereceyi/Kademeyi kontrol düzeltiniz.
 2- vb.
 """
 
