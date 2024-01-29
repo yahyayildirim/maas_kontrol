@@ -86,7 +86,7 @@ def kbs_temiz_veri():
 	df[['Derece', 'Kademe']] = df['Derece-Kademe'].str.split('-', expand=True).apply(pd.to_numeric).fillna(0)
 
 	# derece ve kademeyi alarak gösterge puanını maas_verileri.xlsx dosyasından çekiyoruz.
-	df['Yan Ödeme'] = df.apply(lambda row: sabitler.gosterge_puani(row["Derece"], row["Kademe"]), axis=1)
+	df['Gösterge Puanı'] = df.apply(lambda row: sabitler.gosterge_puani(row["Derece"], row["Kademe"]), axis=1)
 
 	# Öd.Ekgös-Em.Ekgös sütununu 'Ek Gösterge' ve 'Em-EkGösterge' olarak iki sutüna ayırıyoruz.
 	df[['Ek Gösterge', 'Em-EkGösterge']] = df['Öd.Ekgös-Em.Ekgös'].str.split('-', expand=True)
@@ -94,14 +94,14 @@ def kbs_temiz_veri():
 	# Kıdem Ay-Kıdem Yıl sütununu 'Hizmet Süresi (Ay)' ve 'Hizmet Süresi (Yıl)' olarak iki sutüna ayırıyoruz.
 	df[['Hizmet Süresi (Ay)', 'Hizmet Süresi (Yıl)']] = df['Kıdem Ay-Kıdem Yıl'].str.split('-', expand=True)
 
-	df[['TC Kimlik', 'Derece', 'Kademe', 'Yan Ödeme', 'Ek Gösterge', 'Hizmet Süresi (Yıl)', 'Yan Ödeme Aylık', 'Taban Aylık', 'Ek Tazminat', 'Özel Hiz.Taz.', 'Ek Öde.(666 KHK', 'Net Ödenen']] = df[['TC Kimlik', 'Derece', 'Kademe', 'Yan Ödeme', 'Ek Gösterge', 'Hizmet Süresi (Yıl)', 'Yan Ödeme Aylık', 'Taban Aylık', 'Ek Tazminat', 'Özel Hiz.Taz.', 'Ek Öde.(666 KHK', 'Net Ödenen']].apply(pd.to_numeric).fillna(0)
+	df[['TC Kimlik', 'Derece', 'Kademe', 'Gösterge Puanı', 'Ek Gösterge', 'Hizmet Süresi (Yıl)', 'Yan Ödeme Aylık', 'Taban Aylık', 'Ek Tazminat', 'Özel Hiz.Taz.', 'Ek Öde.(666 KHK', 'Net Ödenen']] = df[['TC Kimlik', 'Derece', 'Kademe', 'Gösterge Puanı', 'Ek Gösterge', 'Hizmet Süresi (Yıl)', 'Yan Ödeme Aylık', 'Taban Aylık', 'Ek Tazminat', 'Özel Hiz.Taz.', 'Ek Öde.(666 KHK', 'Net Ödenen']].apply(pd.to_numeric).fillna(0)
 
 	df = df.sort_values(by=['Yan Ödeme Aylık'], ascending=False).drop_duplicates('TC Kimlik').sort_index()
 	#df = df.groupby('TC Kimlik').agg('max').reset_index()
 	#df = df.drop_duplicates(subset=['TC Kimlik'], ignore_index=True, inplace=False)
 
 	#df['Gösterge Puanı'] = df.apply(lambda row: sabitler.yan_odeme_puani_kbs(row['TC Kimlik']), axis=1)
-	df['Gösterge Puanı'] = round(df.apply(lambda row: sabitler.tutardan_yan_odeme_puani_bul(row['Yan Ödeme Aylık'], row['Taban Aylık']), axis=1))
+	df['Yan Ödeme'] = round(df.apply(lambda row: sabitler.tutardan_yan_odeme_puani_bul(row['Yan Ödeme Aylık'], row['Taban Aylık']), axis=1))
 
 	df['Ek Tazminat Puanı'] = round(df.apply(lambda row: sabitler.tutardan_ek_tazminat_puani_bul(row['Ek Tazminat']), axis=1))
 
@@ -114,8 +114,8 @@ def kbs_temiz_veri():
 	#  		'Gösterge Puanı', 'Hizmet Süresi (Yıl)', 'Ek Gös.Ay.', 'Yan Ödeme Aylık',
 	#  		'Kıdem Aylık', 'Özel Hiz.Taz.', 'Ek Öde.(666 KHK'
 	#  		]]
-	df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Unvan', 'Derece', 'Kademe', 'Yan Ödeme', 'Aylık Tutar',
-	'Ek Gösterge', 'Ek Gös.Ay.', 'Gösterge Puanı', 'Yan Ödeme Aylık', 'Ek Tazminat Puanı', 'Özel Hiz. Taz. Puanı',
+	df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Unvan', 'Derece', 'Kademe', 'Gösterge Puanı', 'Aylık Tutar',
+	'Ek Gösterge', 'Ek Gös.Ay.', 'Yan Ödeme', 'Yan Ödeme Aylık', 'Ek Tazminat Puanı', 'Özel Hiz. Taz. Puanı',
 	'Özel Hiz.Taz.', '666 KHK Oranı', 'Ek Öde.(666 KHK']].fillna(0)
 
 	# Listeyi TC veya Adı-Soyadına göre sıralayabilirsiniz, dikkat etmeniz gereken ise ikys_personel ve kbs_personelde de aynı değişikliği yapmanızdır.

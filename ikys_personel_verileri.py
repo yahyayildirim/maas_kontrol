@@ -105,19 +105,19 @@ def ikys_personel_verileri():
 	df[['Derece', 'Kademe', 'Ek Gösterge']] = df['Ödenilecek Derece/Kademe'].str.split('-', expand=True).fillna(0).astype(int)
 
 	# Personelin Derece ve Kademesini alarak yan ödemesini sabitler.py dosyasındaki fonksiyon aracılığı ile maas_verileri.xlsx içerisinden çekiyoruz. 1/4 --> 1500 gibi
-	df['Yan Ödeme'] = df.apply(lambda row: sabitler.gosterge_puani(row["Derece"], row["Kademe"]), axis=1)
+	df['Gösterge Puanı'] = df.apply(lambda row: sabitler.gosterge_puani(row["Derece"], row["Kademe"]), axis=1)
 
 	# Personelin İş Güçlüğü, İş Riski, Teminde Güçlük ve Mali Sorumluluk puanlarını, unvan ve dereceye göre sabitler.py dosyasındaki fonksiyon aracılığı ile maas_verileri.xlsx içerisinden çekiyoruz.
-	df['Gösterge Puanı'] = df.apply(lambda row: sabitler.yan_odeme_puani(row["Unvan"], row["Derece"], row["Hizmet Süresi (Yıl)"], row["İzin Adı"]), axis=1)
+	df['Yan Ödeme'] = df.apply(lambda row: sabitler.yan_odeme_puani(row["Unvan"], row["Derece"], row["Hizmet Süresi (Yıl)"], row["İzin Adı"]), axis=1)
 
 	# df['Yan Ödeme'] ile aldığımız oran ile unvan bilgisini alarak sabitler.py dosyasındaki fonksiyon aracılığı TL tutarı hesaplıyoruz.
-	df['Aylık Tutar'] = round(df.apply(lambda row: sabitler.aylik_katsayi(row["Yan Ödeme"], row["Unvan"], row["İzin Adı"]), axis=1), 2)
+	df['Aylık Tutar'] = round(df.apply(lambda row: sabitler.aylik_katsayi(row["Gösterge Puanı"], row["Unvan"], row["İzin Adı"]), axis=1), 2)
 	
 	# Aynı şekilde İKYSden çektiğimiz ek gösterge miktarını ve unvan bilgisini sabitler.py dosyasındaki fonksiyon aracılığı ile hesaplıyoruz.
 	df['Ek Gös.Ay.'] = round(df.apply(lambda row: sabitler.ek_gosterge(row["Ek Gösterge"], row["Unvan"], row["İzin Adı"]), axis=1), 2)
 
 	# df['Gösterge Puanı'] ile aldığımız oran ile unvan bilgisini alarak sabitler.py dosyasındaki fonksiyon aracılığı TL tutarı hesaplıyoruz. 
-	df['Yan Ödeme Aylık'] = round(df.apply(lambda row: sabitler.yan_odeme(row["Gösterge Puanı"], row["Unvan"]), axis=1), 2)
+	df['Yan Ödeme Aylık'] = round(df.apply(lambda row: sabitler.yan_odeme(row["Yan Ödeme"], row["Unvan"]), axis=1), 2)
 
 	# hizmet yılı baz alınarak kıdem aylığını fonksiyon aracılığı ile hesaplıyoruz.
 	# burada maalesef çok hata alıyoruz. çümkü kbs ve ikys kıdem yılları birbirini tutmuyor.
@@ -141,7 +141,7 @@ def ikys_personel_verileri():
 	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Vekil.*H)', value=r'İmam-Hat.')
 
 	# Son olarak excele aktaracağımız sütunları belirliyoruz.
-	df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Unvan', 'Derece', 'Kademe', 'Yan Ödeme', 'Aylık Tutar', 'Ek Gösterge', 'Ek Gös.Ay.', 'Gösterge Puanı', 'Yan Ödeme Aylık', 'Ek Tazminat Puanı', 'Özel Hiz. Taz. Puanı',
+	df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Unvan', 'Derece', 'Kademe', 'Gösterge Puanı', 'Aylık Tutar', 'Ek Gösterge', 'Ek Gös.Ay.', 'Yan Ödeme', 'Yan Ödeme Aylık', 'Ek Tazminat Puanı', 'Özel Hiz. Taz. Puanı',
 	'Özel Hiz.Taz.', '666 KHK Oranı', 'Ek Öde.(666 KHK']]
 
 	# Listeyi TC veya Adı-Soyadına göre sıralayabilirsiniz, dikkat etmeniz gereken ise kbs_bordro ve kbs_personelde de aynı değişikliği yapmanızdır.
