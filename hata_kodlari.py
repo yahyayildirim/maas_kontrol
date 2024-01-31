@@ -79,6 +79,16 @@ ozel_hiz_taz_puani_hata ="""MUHTEMEL HATA SEBEPLERİ:
 1- Personelin derecesini ve eğitim durumunu kontrol ediniz.
 2- Toplu Sözleşme ile bazı unvanlara ek özel hizmet tazminatı puanı verilmektedir. İlgili dönem toplu sözleşmeye göre verilen puanlar KBS'ye merkez tarafından yüklenmektedir. Buna göre bu oranı KBS üzerinden kontrol ediniz.
 3- Bu tutar 5510'a tabi personelin emekli keseneğini etkilediği için titizlikle kontrol edilmelidir.
+4- Diğer durumlarda aşağıdaki linkten II SAYILI CETVEL ile TOPLU SÖZLEŞME metinlerini kontrol ediniz.
+
+Devlet Memurlarına Ödenecek Zam ve Tazminatlara İlişkin Karar
+https://www.resmigazete.gov.tr/eskiler/2006/05/20060505-1.htm
+
+1,2,3,4,5,6,7. DÖNEM TOPLU SÖZLEŞME METİNLERİ:
+https://pdb.ibu.edu.tr/mevzuat/toplu-sozlesmeler
+
+7. DÖNEM HAKEM KURULU KARARI:
+https://www.resmigazete.gov.tr/eskiler/2023/09/20230903-18.pdf
 """
 
 ozel_hiz_taz_tutar_hata ="Özel Hizmet Tazminat Puanı hatalı olunca bu alanda hata vermektedir. Puanı düzeltirseniz, bu alanda düzelecektir."
@@ -87,6 +97,8 @@ khk_666_puani_hata ="""MUHTEMEL HATA SEBEPLERİ:
 1- Toplu Sözleşme ile bazı unvanlara ek puanlar verilmektedir.İlgili dönem toplu sözleşmeye göre verilen puanlar KBS'ye merkez tarafından yüklenmektedir. Buna göre bu oranı KBS üzerinden kontrol ediniz.
 2- KBS'den indirdiğimiz ve maas_kontrol/kbs/ klasörüne kopyaladığımız excel dosyasının son satırında bulunan personelin bilgileri eksik olduğu için bu hatayı vermiş olabilir. Bu durum sadece (bordronun) son satırdaki personel için geçerlidir ve hata olarak görmeyiniz.
 3- KBS, naklen gelen personelin Ek 666 KHK tazminatını silmektedir. Naklen gelen personelde bu özellikle kontrol edilmelidir. kontrol edilmesi için KBS ön yüzden Diğer Tazminatlar menüsüne bakılmalıdır, eğer bu menü boş ise KBS ön yüzden bütün veriler seçilerek ön yüzden kaydet yapılmalıdır.
+4- Diğer durumlarda 375 Sayılı Kararnameye bakarak ilgili unvanın alması gerektiği tazminat oranını kontrol ediniz.
+https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=375&MevzuatTur=4&MevzuatTertip=5
 """
 
 khk_666_tutar_hata ="666 Sayılı KHK ile personele verilen puan hatalı olunca bu alanda hata vermektedir. Puanı düzeltirseniz, bu alanda düzelecektir."
