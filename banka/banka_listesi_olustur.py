@@ -29,13 +29,12 @@ def bankaListesi():
 	df_list = []
 	for rapor in natsort.os_sorted(kbs_raporlar):
 		if '4BKKRaporlar_BankaListesi' in rapor:
-			dfs = pd.read_excel(rapor, skiprows=1)
-			#dfs.dropna(axis=0, how='all', inplace=True)
-			dfs.dropna(axis=0, thresh=6, inplace=True)
-			dfs.dropna(axis=1, how='all', inplace=True)	
-			dfs.dropna(axis=1, thresh=2, inplace=True)		
-			dfs.drop(dfs.head(4).index, inplace=True)
-			dfs.dropna(axis=1, how='all', inplace=True)
+			dfs = pd.read_excel(rapor)
+			dfs = dfs.drop(range(0, 16))
+			dfs = dfs.dropna(axis=1, how='all')
+			dfs = dfs.dropna(axis=0, thresh=(7,))
+			dfs = dfs.dropna(axis=0, how='all')
+			dfs = dfs.dropna(axis=1, thresh=(3,))
 			df = pd.DataFrame(dfs.values, columns=sutun_adi)
 			df.drop(df[(df['MAAŞ TUTARI'] == "MAAŞ TUTARI")].index, inplace=True)
 			df['MAAŞ TUTARI'] = df['MAAŞ TUTARI'].str.replace(".", "", regex=False)
