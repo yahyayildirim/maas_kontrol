@@ -25,12 +25,15 @@ def kbs_temiz_veri():
 	#İKYSden indirdiğimiz dosya, html formatında olduğu için önce read_html metodu ile açıp, xlsx formatında tekrar kaydediyoruz.
 	bu_dizin = os.path.dirname(__file__) + '/kbs/'
 	dosya =glob(bu_dizin + "BordroDokumu*.xlsx")
-	
-	df = pd.read_excel(''.join(dosya), sheet_name=1, skiprows=6)
-	df.dropna(axis=0, thresh=5, inplace=True)
-	df.dropna(axis=1, thresh=2, inplace=True)
-	df.drop(df.tail(2).index,inplace=True)		
-
+	if dosya:
+		df = pd.read_excel(''.join(dosya), sheet_name=1, skiprows=6)
+		df.dropna(axis=0, thresh=5, inplace=True)
+		df.dropna(axis=1, thresh=2, inplace=True)
+		df.drop(df.tail(2).index,inplace=True)		
+	else:
+		print("/kbs klasöründe BordroDokumu dosyası yok. Lütfen tekrar deneyin.")
+		sys.exit()
+		
 	say = 0
 	df_list = []
 	for c in range(len(df.columns)):
