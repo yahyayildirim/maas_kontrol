@@ -27,16 +27,21 @@ def ikys_personel_verileri():
 	#İKYSden indirdiğimiz dosya, html formatında olduğu için önce read_html metodu ile açıp, xlsx formatında tekrar kaydediyoruz.
 	bu_dizin = os.path.dirname(__file__) + '/ikys/'
 	dosya =glob(bu_dizin + "Personel Rapor*.xls")
-	
-	df = pd.read_html(''.join(dosya))
-	df = pd.DataFrame(df[0])
+	if dosya:
+		df = pd.read_html(''.join(dosya))
+		df = pd.DataFrame(df[0])
+
+	else:
+		print("/ikys klasöründe Personel Rapor dosyası yok. Lütfen tekrar deneyin.")
+		sys.exit()
+
 	#df.to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/Personel_Raporu_Temiz.xlsx', index=False, freeze_panes=(0,1))
 
 	#xlsx formatına çevirdiğimiz dosyamızı read_excel metodu ile açıp, DataFrame aktarıyoruz.
 	#df = pd.DataFrame(pd.read_excel('./ikys/Personel_Rapor_Temiz.xlsx'))
 
-	# Boş olan ve değeri bulunmayan satır ve sütunları siliyoruz.
-	df = df.dropna(how='all', axis=1)
+	# Boş olan ve değeri bulunmayan satırları siliyoruz.
+	df = df.dropna(how='all', axis=0)
 
 	# Sadece memur ve vekil personel ile işlem yapacağımız için onları alıyoruz ve sözleşmelileri çıkarıyoruz.
 	df = df[df['Personel Tipi'].isin(['Memur', 'Vekil'])]
