@@ -45,7 +45,7 @@ def tutardan_yan_odeme_puani_bul(tutar, tabanaylik_tutar):
 		oran = tutar / df_1['yan_odeme_katsayi'].iloc[-2]
 
 	elif yeni_katsayi == tabanaylik_tutar:
-		oran = tutar / df_1['yan_odeme_katsayi'].iloc[-2]
+		oran = tutar / df_1['yan_odeme_katsayi'].iloc[-1]
 
 	else:
 		oran = tutar / df_1['yan_odeme_katsayi'].iloc[-1]
@@ -56,12 +56,12 @@ def yan_odeme(gosterge_puani, unvan):
 	if unvan == "İl Müftüsü":
 		gosterge_puani = 0
 
-	vekilper = ['Vekil M.K', 'Vekil İ-H']	
+	vekilper = ['Vekil M.K', 'Vekil İ-H']
 	if unvan in vekilper:
 		if bu_ay == "Ocak":
 			yan_odeme_tutar = df_1['yan_odeme_katsayi'].iloc[-2] * gosterge_puani
 		else:
-			yan_odeme_tutar = df_1['yan_odeme_katsayi'].iloc[-2] * gosterge_puani
+			yan_odeme_tutar = df_1['yan_odeme_katsayi'].iloc[-1] * gosterge_puani
 	else:
 		yan_odeme_tutar = df_1['yan_odeme_katsayi'].iloc[-1] * gosterge_puani
 
@@ -235,10 +235,13 @@ def tutardan_ozel_hizmet_orani_bul(tutar, tabanaylik_tutar):
 
 	if eski_katsayi == tabanaylik_tutar:
 		oran = tutar / (9500 * df_1['aylik_katsayi'].iloc[-2]) * 100
+		#print(f"tutardan_ozel_hizmet_orani_bul if bloğu   (Yeni Katsayı: {yeni_katsayi})(Eski Katsayı: {eski_katsayi}) == ({tabanaylik_tutar}) --> (Tutar: {tutar}) {oran}")
 	elif yeni_katsayi == tabanaylik_tutar:
-		oran = tutar / (9500 * df_1['aylik_katsayi'].iloc[-2]) * 100
+		oran = tutar / (9500 * df_1['aylik_katsayi'].iloc[-1]) * 100
+		#print(f"tutardan_ozel_hizmet_orani_bul elif bloğu {df_1['aylik_katsayi'].iloc[-2]} (Yeni Katsayı: {yeni_katsayi})(Eski Katsayı: {eski_katsayi}) == ({tabanaylik_tutar}) --> (Tutar: {tutar}){oran}")
 	else:
 		oran = tutar / (9500 * df_1['aylik_katsayi'].iloc[-1]) * 100
+		#print(f"tutardan_ozel_hizmet_orani_bul else bloğu (Yeni Katsayı: {yeni_katsayi})(Eski Katsayı: {eski_katsayi}) == ({tabanaylik_tutar}) --> (Tutar: {tutar}){oran}")
 
 	return oran
 
