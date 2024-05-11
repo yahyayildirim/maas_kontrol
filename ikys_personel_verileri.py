@@ -129,7 +129,7 @@ def ikys_personel_verileri():
 	df['Kıdem Aylık'] = round(df.apply(lambda row: sabitler.kidem_ayligi(row["Hizmet Süresi (Yıl)"], row["Unvan"]), axis=1), 2)
 
 	# maas_verileri.xlsx içerisindeki bilgileri, sabitler.py dosyasındaki fonksiyon ile unvan, derece ve ogrenim bilgisi değerlerini göndererek çekiyoruz.
-	df['Özel Hiz. Taz. Puanı'] = df.apply(lambda row: sabitler.ozel_hizmet_orani(row["Unvan"], row["Derece"], row["ogrenim"], row["İzin Adı"]), axis=1)
+	df['Özel Hiz. Taz. Puanı'] = round(df.apply(lambda row: sabitler.ozel_hizmet_orani(row["Unvan"], row["Derece"], row["ogrenim"], row["İzin Adı"]), axis=1))
 
 	# aynı şekilde özel hizmet tazmınatı tutarını sabitler.py dosyasındaki fonsiyona gerekli parametreleri göndererek hesaplıyoruz.	
 	df['Özel Hiz.Taz.'] = round(df.apply(lambda row: sabitler.ozel_hizmet(row["Unvan"], row["Derece"], row["ogrenim"], row["İzin Adı"]), axis=1), 2)
