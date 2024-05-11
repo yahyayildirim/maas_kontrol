@@ -57,6 +57,7 @@ yan_odeme_hata ="""MUHTEMEL HATA SEBEPLERİ:
 3- VHKİ olarak görev yapmakta iken, ŞEF unvanına geçen biri, VHKİ görevini de yürütüyor ise 2250 puan alır. Bunu göz önünde bulundurunuz.
 4- Diğer durumlarda Yan Ödeme Kararnamesine bakarak ilgili personelin alması gerektiği tazminat oranını kontrol ediniz.
    https://www.resmigazete.gov.tr/eskiler/2006/05/20060505-1.htm
+5- Tekniker ve Teknisyen unvanlarında sadece MYO olarak sorgulama yapılmaktadır. Personeliniz Meslek lisesi mezunu ise kontrolünü tazminat cetveline göre yapınız.
 """
 
 yan_odeme_aylik_hata ="Yan Ödeme Puanı hatalı olunca bu alanda hata vermektedir. Puanı düzeltirseniz, bu alanda düzelecektir."
