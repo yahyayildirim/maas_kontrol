@@ -21,7 +21,7 @@ def bankaListesi(banka_listesi, data):
 	excel_dosyasi = openpyxl.load_workbook(f'{data["dosya"]}')
 
 	# Excel dosyamızda bulunan sayfa adımız
-	excel_sayfasi = excel_dosyasi['Sheet1']
+	excel_sayfasi = excel_dosyasi.worksheets[1]
 
 	sutun_adi = ['SIRA NO', 'TC KIMLIK NO', 'ADI SOYADI', 'UNVANI', 'BANKA HESAP NO', 'IBAN NO', 'MAAŞ TUTARI']
 	df_list = []
@@ -107,18 +107,21 @@ def bankaListesi(banka_listesi, data):
 
 	df = pd.concat(df_list, axis=0)
 	if "ziraat" in f'{data["dosya_adi"]}'.lower():
+		df['CARİ KODU'] = ""
+		df['BANKA NO'] = ""
+		df['SUBE NO'] = ""
+		df['HESAP NO'] = ""	
 		df['IBAN NO'] = df['IBAN NO'].astype(str)
-		df['ŞUBE KODU'] = ""
-		df['HESAP NUMARASI'] = df['IBAN NO'].str[13:22].apply(pd.to_numeric)
-		df['EK HESAP NUMARASI'] = df['IBAN NO'].str[22:].apply(pd.to_numeric)
-		df['FIRMA REF'] = "bu" # BU ALANI MUTLAKA KENDİNİZE GÖRE DÜZENLEYİN
-		df['VERGI NO'] = "alanı" # BU ALANI MUTLAKA KENDİNİZE GÖRE DÜZENLEYİN
-		df['TC KIMLIK NO'] = df['TC KIMLIK NO'].astype(str)
-		df['KURUM SUBE KODU'] = "banka_listesi_olustur.py" # BU ALANI MUTLAKA KENDİNİZE GÖRE DÜZENLEYİN
-		df['KURUM HESAP NO'] = "dosyasından" # BU ALANI MUTLAKA KENDİNİZE GÖRE DÜZENLEYİN
-		df['KURUM EK HESAP NO'] = "değiştir." # BU ALANI MUTLAKA KENDİNİZE GÖRE DÜZENLEYİN
-		df['HESAP DOVIZ KODU KODU'] = "TRY" # BU ALANI MUTLAKA KENDİNİZE GÖRE DÜZENLEYİN
-		df = df[['ADI SOYADI', 'IBAN NO', 'ŞUBE KODU', 'HESAP NUMARASI', 'EK HESAP NUMARASI', 'MAAŞ TUTARI', 'AÇIKLAMA', 'FIRMA REF','VERGI NO','TC KIMLIK NO','KURUM SUBE KODU','KURUM HESAP NO','KURUM EK HESAP NO','HESAP DOVIZ KODU KODU']]
+		df['VERGI NO'] = ""
+		df['ALICI EMAIL ADRESI'] = ""#df['IBAN NO'].str[13:22].apply(pd.to_numeric)
+		df['OPSIYON GÜN SAYISI'] = "" #df['IBAN NO'].str[22:].apply(pd.to_numeric)
+		df['ÖDEME SEBEBİ'] = "P-Personel Ödemeleri"
+		df['Alıcı Yerleşik Bilgisi'] = "Yurtiçi Yerleşik"
+		df['Ödeme Amacı Kategorisi'] = ""
+		#df['TC KIMLIK NO'] = df['TC KIMLIK NO'].astype(str)
+		df = df[['CARİ KODU', 'ADI SOYADI', 'BANKA NO', 'SUBE NO', 'HESAP NO', 'IBAN NO', 
+		'MAAŞ TUTARI', 'VERGI NO', 'AÇIKLAMA', 'ALICI EMAIL ADRESI', 'OPSIYON GÜN SAYISI',
+		'ÖDEME SEBEBİ', 'Alıcı Yerleşik Bilgisi', 'Ödeme Amacı Kategorisi']]
 
 	elif "albaraka" in f'{data["dosya_adi"]}'.lower():
 		# Albraka Türk kurum hesap numarası için albaraka_turk.xlsx excel dosyasını açıp
