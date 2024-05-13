@@ -3,6 +3,7 @@
 import pandas as pd
 import natsort
 import glob
+import re
 from datetime import datetime
 import openpyxl
 from openpyxl.utils.dataframe import dataframe_to_rows
@@ -23,27 +24,28 @@ def bankaListesi(banka_listesi, data):
 	# Excel dosyamızda bulunan sayfa adımız
 	excel_sayfasi = excel_dosyasi.worksheets[1]
 
-	sutun_adi = ['SIRA NO', 'TC KIMLIK NO', 'ADI SOYADI', 'UNVANI', 'BANKA HESAP NO', 'IBAN NO', 'MAAŞ TUTARI']
 	df_list = []
 	for rapor in natsort.os_sorted(banka_listesi):
-		print("Dosya Adı: ", rapor)
+		sutun_adi = ['SIRA NO', 'TC KIMLIK NO', 'ADI SOYADI', 'UNVANI', 'BANKA HESAP NO', 'IBAN NO', 'MAAŞ TUTARI']
 		if '4BKKRaporlar_BankaListesi' in rapor:
+			print("4/B SÖZLEŞMELİ MAAŞ DOSYASI: ", rapor)
 			dfs = pd.read_excel(rapor)
 			dfs = dfs.drop(range(0, 16))
 			dfs = dfs.dropna(axis=1, how='all')
-			dfs = dfs.dropna(axis=0, thresh=(7,))
 			dfs = dfs.dropna(axis=0, how='all')
-			dfs = dfs.dropna(axis=1, thresh=(3,))
+			dfs = dfs.dropna(axis=0, thresh=(7,))
+			dfs = dfs.dropna(axis=1, thresh=(2,))
 			df = pd.DataFrame(dfs.values, columns=sutun_adi)
 			df.drop(df[(df['MAAŞ TUTARI'] == "MAAŞ TUTARI")].index, inplace=True)
 			df['ADI SOYADI'] = df['ADI SOYADI'].str.upper()
 			df['MAAŞ TUTARI'] = df['MAAŞ TUTARI'].str.replace(".", "", regex=False)
 			df['MAAŞ TUTARI'] = df['MAAŞ TUTARI'].str.replace(",", ".", regex=False).astype(float)
 			#aciklama = input(f"Lütfen {rapor} dosyası için açıklama giriniz: ")
-			df['AÇIKLAMA'] = "SÖZ. MAAŞ ÖDEMESİ"
+			df['AÇIKLAMA'] = "MAAŞ ÖDEMESİ (4/B)"
 			df_list.append(df)
 
 		elif 'MemurRaporlar_BankaListesi' in rapor:
+			print("KADROLU MAAŞ DOSYASI: ", rapor)
 			dfs = pd.read_excel(rapor, skiprows=1)
 			dfs.dropna(axis=0, how='all', inplace=True)
 			dfs.dropna(axis=0, thresh=6, inplace=True)
@@ -57,10 +59,11 @@ def bankaListesi(banka_listesi, data):
 			df['MAAŞ TUTARI'] = df['MAAŞ TUTARI'].str.replace(".", "", regex=False)
 			df['MAAŞ TUTARI'] = df['MAAŞ TUTARI'].str.replace(",", ".", regex=False).astype(float)
 			#aciklama = input(f"Lütfen {rapor} dosyası için açıklama giriniz: ")
-			df['AÇIKLAMA'] ="KAD. MAAŞ ÖDEMESİ"
+			df['AÇIKLAMA'] ="MAAŞ ÖDEMESİ (KADROLU)"
 			df_list.append(df)
 
 		elif 'edBankaListe' in rapor:
+			print("EK-DERS ÖDEME DOSYASI: ", rapor)
 			dfs = pd.read_excel(rapor, skiprows=6)
 			dfs.dropna(axis=0, how='all', inplace=True)
 			dfs.dropna(axis=0, thresh=6, inplace=True)
@@ -68,10 +71,24 @@ def bankaListesi(banka_listesi, data):
 			df['IBAN NO'] = df['BANKA HESAP NO'].values
 			df['ADI SOYADI'] = df['ADI SOYADI'].str.upper()
 			#aciklama = input(f"Lütfen {rapor} dosyası için açıklama giriniz: ")
-			df['AÇIKLAMA'] = "EK-DERS"
+			df['AÇIKLAMA'] = "EK-DERS ÖDEMESİ (KBS)"
+			df_list.append(df)
+
+		elif 'fcBankaListe' in rapor:
+			print("FAZLA ÇALIŞMA DOSYASI: ", rapor)
+			sutun_adi = ['SIRA NO', 'TC KIMLIK NO', 'ADI SOYADI', 'BANKA HESAP NO', 'IBAN NO', 'MAAŞ TUTARI']
+			dfs = pd.read_excel(rapor, skiprows=6)
+			dfs.drop(dfs.tail(1).index, inplace=True)
+			#dfs.dropna(axis=0, how='all', inplace=True)
+			#dfs.dropna(axis=0, thresh=6, inplace=True)
+			df = pd.DataFrame(dfs.values, columns=sutun_adi)
+			df['ADI SOYADI'] = df['ADI SOYADI'].str.upper()
+			#aciklama = input(f"Lütfen {rapor} dosyası için açıklama giriniz: ")
+			df['AÇIKLAMA'] = "FAZLA MESAİ ÖDEMESİ (KBS)"
 			df_list.append(df)
 
 		elif 'BankaListesi.xlsx' in rapor:
+			print("DİBBYS/İKYS BANKA DOSYASI: ", rapor)
 			sutun = ['SIRA NO', 'TC KIMLIK NO', 'ADI SOYADI', 'IBAN NO', 'AGİ', 'ÜCRET', 'MAAŞ TUTARI']
 			dfs = pd.read_excel(rapor, skiprows=10)
 			dfs.dropna(axis=0, how='all', inplace=True)
@@ -84,11 +101,13 @@ def bankaListesi(banka_listesi, data):
 			df.columns = sutun
 			#df = df.set_axis(sutun_ad, axis=1, inplace=False)
 			df['ADI SOYADI'] = df['ADI SOYADI'].str.upper()
-			aciklama = input(f"Lütfen {rapor} dosyası için açıklama giriniz: ")
-			df['AÇIKLAMA'] = f"{aciklama}"
+			#aciklama = input(f"Lütfen {rapor} dosyası için açıklama giriniz: ")
+			#df['AÇIKLAMA'] = f"{aciklama}"
+			df['AÇIKLAMA'] = "EK-DERS ÖDEMESİ (DİBBYS)"
 			df_list.append(df)
 
-		else:
+		elif 'BankaListesi2022.xlsx' in rapor:
+			print("DİBBYS/İKYS BANKA DOSYASI: ", rapor)
 			sutun = ['SIRA NO', 'TC KIMLIK NO', 'ADI SOYADI', 'IBAN NO', 'MAAŞ TUTARI']
 			dfs = pd.read_excel(rapor, skiprows=10)
 			dfs.dropna(axis=0, how='all', inplace=True)
@@ -102,8 +121,26 @@ def bankaListesi(banka_listesi, data):
 			#df = df.set_axis(sutun_ad, axis=1, inplace=False)
 			df['ADI SOYADI'] = df['ADI SOYADI'].str.upper()
 			#aciklama = input(f"Lütfen {rapor} dosyası için açıklama giriniz: ")
-			df['AÇIKLAMA'] = "İŞÇİ ÖDEMESİ"
+			#df['AÇIKLAMA'] = f"{aciklama}"
+			df['AÇIKLAMA'] = "4/D İŞÇİ ÖDEMESİ"
 			df_list.append(df)
+
+		#else:
+			#sutun = ['SIRA NO', 'TC KIMLIK NO', 'ADI SOYADI', 'IBAN NO', 'MAAŞ TUTARI']
+			#dfs = pd.read_excel(rapor, skiprows=10)
+			#dfs.dropna(axis=0, how='all', inplace=True)
+			#dfs.dropna(axis=0, thresh=5, inplace=True)
+			#dfs.dropna(axis=1, how='all', inplace=True)
+			#sutun_ad = dfs.columns
+			#df = pd.DataFrame(dfs.values, columns=sutun_ad)
+			#if 'Unvan' in df.columns:
+				#df.drop(['Unvan'], axis=1, inplace=True)
+			#df.columns = sutun
+			##df = df.set_axis(sutun_ad, axis=1, inplace=False)
+			#df['ADI SOYADI'] = df['ADI SOYADI'].str.upper()
+			##aciklama = input(f"Lütfen {rapor} dosyası için açıklama giriniz: ")
+			#df['AÇIKLAMA'] = "İŞÇİ ÖDEMESİ"
+			#df_list.append(df)
 
 	df = pd.concat(df_list, axis=0)
 	if "ziraat" in f'{data["dosya_adi"]}'.lower():
