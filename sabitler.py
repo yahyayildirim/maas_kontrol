@@ -263,6 +263,15 @@ def ek_tazminat_puani(unvan, derece, ogrenim):
 
 	return ek_tazminat_puani
 
+
+def ilave_odeme_97(izin):
+	if izin == "Aylıksız İzin":
+		ilave_odeme_tutari = 0
+	else:
+		ilave_odeme_tutari = df_1['aylik_katsayi'].iloc[-1] * 15965
+	return ilave_odeme_tutari
+
+
 #Yapılacaklar
 def bolge_tazminati():
 	pass

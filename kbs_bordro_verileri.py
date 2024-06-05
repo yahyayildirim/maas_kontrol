@@ -50,7 +50,7 @@ def kbs_temiz_veri():
 		df_list.append(pd.DataFrame(df_say.values, columns=sutun))
 		say = say + 1
 	df = pd.concat(df_list, axis=1)
-	#df.to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/Bordro_Dokumu_Temiz.xlsx', index=False)
+	df.to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/Bordro_Dokumu_Temiz.xlsx', index=False, freeze_panes=(1,0))
 	print('%10')
 
 #def kbs_bordro_verileri():
@@ -67,7 +67,7 @@ def kbs_temiz_veri():
 	df = df[['Personel No TC.Kimlik No','Adı Soyadı','Hizmet Sın.-Ünvan','Öd.Es.D.-K. Em.Es.D.-K.',
 	 		'Öd.Ekgös-Em.Ekgös','Kıdem Ay-Kıdem Yıl','Aylık Tutar', 'Taban Aylık', 'Ek Gös.Ay.','Yan Ödeme Aylık',
 	 		'Kıdem Aylık', 'Özel Hiz.Taz.',	'Makam Taz.','Dil Tazminatı','Ek Öde.(666 KHK', 'Ek Tazminat',
-	 		'Sendika Aidatı', 'Net Ödenen']]
+	 		'Sendika Aidatı', 'İlaveÖd.(375.40', 'Net Ödenen']]
 	#df.rename(columns={'Personel No TC.Kimlik No': 'TC Kimlik'}, inplace = True)
 	#df.rename(columns={'Hizmet Sın.-Ünvan': 'Sınıf'}, inplace = True)
 
@@ -119,7 +119,7 @@ def kbs_temiz_veri():
 	#  		]]
 	df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Unvan', 'Derece', 'Kademe', 'Gösterge Puanı', 'Aylık Tutar',
 	'Ek Gösterge', 'Ek Gös.Ay.', 'Yan Ödeme', 'Yan Ödeme Aylık', 'Ek Tazminat Puanı', 'Özel Hiz. Taz. Puanı',
-	'Özel Hiz.Taz.', '666 KHK Oranı', 'Ek Öde.(666 KHK']].fillna(0)
+	'Özel Hiz.Taz.', '666 KHK Oranı', 'Ek Öde.(666 KHK', 'İlaveÖd.(375.40']].fillna(0)
 
 	# Listeyi TC veya Adı-Soyadına göre sıralayabilirsiniz, dikkat etmeniz gereken ise ikys_personel ve kbs_personelde de aynı değişikliği yapmanızdır.
 	#df.sort_values(by=['TC Kimlik'], inplace=True, ignore_index=True)

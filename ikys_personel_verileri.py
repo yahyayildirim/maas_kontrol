@@ -35,7 +35,7 @@ def ikys_personel_verileri():
 		print("/ikys klasöründe Personel Rapor dosyası yok. Lütfen tekrar deneyin.")
 		sys.exit()
 
-	#df.to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/Personel_Raporu_Temiz.xlsx', index=False, freeze_panes=(0,1))
+	df.to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/Personel_Raporu_Temiz.xlsx', index=False, freeze_panes=(1,0))
 
 	#xlsx formatına çevirdiğimiz dosyamızı read_excel metodu ile açıp, DataFrame aktarıyoruz.
 	#df = pd.DataFrame(pd.read_excel('./ikys/Personel_Rapor_Temiz.xlsx'))
@@ -140,6 +140,9 @@ def ikys_personel_verileri():
 	# Ek Ödeme oranını maas_verileri.xlsx dosyasından fonksiyon ile çekiyoruz.
 	df['666 KHK Oranı'] = df.apply(lambda row: sabitler.ek_odeme_666_orani(row["Unvan"], row["Derece"], row["ogrenim"], row["İzin Adı"]), axis=1)
 
+	# Ek Ödeme oranını maas_verileri.xlsx dosyasından fonksiyon ile çekiyoruz.
+	df['İlaveÖd.(375.40'] = round(df.apply(lambda row: sabitler.ilave_odeme_97(row["İzin Adı"]), axis=1), 2)
+
 	# aynı şekilde ek ödeme 666 khk tutarını sabitler.py dosyasındaki fonsiyona gerekli parametreleri göndererek hesaplıyoruz.
 	df['Ek Öde.(666 KHK'] = round(df.apply(lambda row: sabitler.ek_odeme_666(row["Unvan"], row["Derece"], row["ogrenim"], row["İzin Adı"]), axis=1), 2)
 	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Vekil.*K)', value=r'Müez.Kayyı')
@@ -147,7 +150,7 @@ def ikys_personel_verileri():
 
 	# Son olarak excele aktaracağımız sütunları belirliyoruz.
 	df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Unvan', 'Derece', 'Kademe', 'Gösterge Puanı', 'Aylık Tutar', 'Ek Gösterge', 'Ek Gös.Ay.', 'Yan Ödeme', 'Yan Ödeme Aylık', 'Ek Tazminat Puanı', 'Özel Hiz. Taz. Puanı',
-	'Özel Hiz.Taz.', '666 KHK Oranı', 'Ek Öde.(666 KHK']]
+	'Özel Hiz.Taz.', '666 KHK Oranı', 'Ek Öde.(666 KHK', 'İlaveÖd.(375.40']]
 
 	# Listeyi TC veya Adı-Soyadına göre sıralayabilirsiniz, dikkat etmeniz gereken ise kbs_bordro ve kbs_personelde de aynı değişikliği yapmanızdır.
 	#df.sort_values(by=['TC Kimlik'], inplace=True, ignore_index=True)
