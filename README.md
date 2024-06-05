@@ -23,6 +23,7 @@ Bu program ile; İKYS ve KBS sistemlerinde bulunan aşağıdaki veriler karşıl
 * Özel Hizmet Tazminatı Tutarı
 * 666 KHK Puanı
 * 666 KHK Tutarı
+* 97-İlave Ödeme (375 KHK Ek M.40)
 
 Şimdilik bunlar, Kıdem Yılını ve buna bağlı olarak ödenen Kıdem Aylık Tutarını maalesef ekleyemiyorum. Çünkü; İKYS ve KBS'deki hizmet süreleri bir birini tutmuyor. Diyanete Başlama Tarihi ve İlk Göreve Başlama Tarihlerini ayrı ayrı denememe rağmen, olumlu sonuç alamadım.
 
