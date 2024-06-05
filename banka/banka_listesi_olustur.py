@@ -7,6 +7,10 @@ import re
 from datetime import datetime
 import openpyxl
 from openpyxl.utils.dataframe import dataframe_to_rows
+import iban_kontrol
+
+import sys
+sys.dont_write_bytecode = True
 
 import locale
 locale.setlocale(locale.LC_ALL, 'tr_TR.UTF-8')
@@ -17,13 +21,7 @@ tarih = datetime.strftime(bugun, '%d%m%Y_%H%M')
 bu_yil = str(datetime.now().year)
 bu_ay = str(datetime.now().strftime("%B")).upper()
 
-def bankaListesi(banka_listesi, data):
-	# Taslak Excel Dosyamız
-	excel_dosyasi = openpyxl.load_workbook(f'{data["dosya"]}')
-
-	# Excel dosyamızda bulunan sayfa adımız
-	excel_sayfasi = excel_dosyasi.worksheets[1]
-
+def BankaListesi(banka_listesi, data):
 	df_list = []
 	for rapor in natsort.os_sorted(banka_listesi):
 		sutun_adi = ['SIRA NO', 'TC KIMLIK NO', 'ADI SOYADI', 'UNVANI', 'BANKA HESAP NO', 'IBAN NO', 'MAAŞ TUTARI']
@@ -38,6 +36,7 @@ def bankaListesi(banka_listesi, data):
 			df = pd.DataFrame(dfs.values, columns=sutun_adi)
 			df.drop(df[(df['MAAŞ TUTARI'] == "MAAŞ TUTARI")].index, inplace=True)
 			df['ADI SOYADI'] = df['ADI SOYADI'].str.upper()
+			df['TC KIMLIK NO'] = df['TC KIMLIK NO'].str.replace("\'", "", regex=False).astype(int)
 			df['MAAŞ TUTARI'] = df['MAAŞ TUTARI'].str.replace(".", "", regex=False)
 			df['MAAŞ TUTARI'] = df['MAAŞ TUTARI'].str.replace(",", ".", regex=False).astype(float)
 			#aciklama = input(f"Lütfen {rapor} dosyası için açıklama giriniz: ")
@@ -56,6 +55,7 @@ def bankaListesi(banka_listesi, data):
 			df = pd.DataFrame(dfs.values, columns=sutun_adi)
 			df.drop(df[(df['MAAŞ TUTARI'] == "MAAŞ TUTARI")].index, inplace=True)
 			df['ADI SOYADI'] = df['ADI SOYADI'].str.upper()
+			df['TC KIMLIK NO'] = df['TC KIMLIK NO'].str.replace("\'", "", regex=False).astype(int)
 			df['MAAŞ TUTARI'] = df['MAAŞ TUTARI'].str.replace(".", "", regex=False)
 			df['MAAŞ TUTARI'] = df['MAAŞ TUTARI'].str.replace(",", ".", regex=False).astype(float)
 			#aciklama = input(f"Lütfen {rapor} dosyası için açıklama giriniz: ")
@@ -122,26 +122,37 @@ def bankaListesi(banka_listesi, data):
 			df['ADI SOYADI'] = df['ADI SOYADI'].str.upper()
 			#aciklama = input(f"Lütfen {rapor} dosyası için açıklama giriniz: ")
 			#df['AÇIKLAMA'] = f"{aciklama}"
-			df['AÇIKLAMA'] = "4/D İŞÇİ ÖDEMESİ"
+			df['AÇIKLAMA'] = "2024 MAYIS AYI İŞÇİ MAAŞI"
 			df_list.append(df)
 
 	df = pd.concat(df_list, axis=0)
-	if "ziraat" in f'{data["dosya_adi"]}'.lower():
+	if "ziraat_katilim_maas" in f'{data["dosya_adi"]}'.lower():
+		df['REF'] = ""
+		df['SUBE NO'] = ""
+		df['HESAP NO'] = df['IBAN NO'].str[13:20].apply(pd.to_numeric)
+		df['EK NO'] = df['IBAN NO'].str[22:].apply(pd.to_numeric)
+		df['VERGI NO'] = ""
+		df['KURUM ŞUBE KODU'] = 20900115047
+		df['KURUM HESAP NO'] = 1748399
+		df['KURUM EK NO'] = 1
+		df['PARA BIRIMI'] = "TRY"
+		#df['TC KIMLIK NO'] = df['TC KIMLIK NO'].astype(str)
+		#df['DENEME'] = df.apply(lambda row: iban_kontrol.musteri_no(row['IBAN NO']), axis=1).apply(pd.to_numeric)
+		df = df[['ADI SOYADI', 'IBAN NO', 'SUBE NO', 'HESAP NO', 'EK NO', 'MAAŞ TUTARI', 'AÇIKLAMA', 'REF', 'VERGI NO', 'TC KIMLIK NO', 'KURUM ŞUBE KODU', 'KURUM HESAP NO', 'KURUM EK NO', 'PARA BIRIMI']]
+
+	if "ziraat_katilim_diger" in f'{data["dosya_adi"]}'.lower():
 		df['CARİ KODU'] = ""
 		df['BANKA NO'] = ""
 		df['SUBE NO'] = ""
-		df['HESAP NO'] = ""	
+		df['HESAP NO'] = ""
 		df['IBAN NO'] = df['IBAN NO'].astype(str)
 		df['VERGI NO'] = ""
 		df['ALICI EMAIL ADRESI'] = ""#df['IBAN NO'].str[13:22].apply(pd.to_numeric)
 		df['OPSIYON GÜN SAYISI'] = "" #df['IBAN NO'].str[22:].apply(pd.to_numeric)
 		df['ÖDEME SEBEBİ'] = "P-Personel Ödemeleri"
-		df['Alıcı Yerleşik Bilgisi'] = "Yurtiçi Yerleşik"
-		df['Ödeme Amacı Kategorisi'] = ""
-		#df['TC KIMLIK NO'] = df['TC KIMLIK NO'].astype(str)
-		df = df[['CARİ KODU', 'ADI SOYADI', 'BANKA NO', 'SUBE NO', 'HESAP NO', 'IBAN NO', 
-		'MAAŞ TUTARI', 'VERGI NO', 'AÇIKLAMA', 'ALICI EMAIL ADRESI', 'OPSIYON GÜN SAYISI',
-		'ÖDEME SEBEBİ', 'Alıcı Yerleşik Bilgisi', 'Ödeme Amacı Kategorisi']]
+		df['ALICI YERLEŞİK BİLGİSİ'] = "Yurtiçi Yerleşik"
+		df['ÖDEME AMACI KATEGORİSİ'] = ""
+		df = df[['CARİ KODU', 'ADI SOYADI', 'BANKA NO', 'SUBE NO', 'HESAP NO', 'IBAN NO', 'MAAŞ TUTARI', 'VERGI NO', 'AÇIKLAMA', 'ALICI EMAIL ADRESI', 'OPSIYON GÜN SAYISI','ÖDEME SEBEBİ', 'ALICI YERLEŞİK BİLGİSİ', 'ÖDEME AMACI KATEGORİSİ']]
 
 	elif "albaraka" in f'{data["dosya_adi"]}'.lower():
 		# Albraka Türk kurum hesap numarası için albaraka_turk.xlsx excel dosyasını açıp
@@ -154,6 +165,12 @@ def bankaListesi(banka_listesi, data):
 		df['BOŞ VERİ 3'] = ""
 		df = df[['ADI SOYADI', 'IBAN NO', 'BOŞ VERİ 1', 'BOŞ VERİ 2', 'BOŞ VERİ 3', 'AÇIKLAMA', 'MAAŞ TUTARI']]
 
+	# Taslak Excel Dosyamız
+	excel_dosyasi = openpyxl.load_workbook(f'{data["dosya"]}')
+
+	# Excel dosyamızda bulunan sayfa adımız
+	excel_sayfasi = excel_dosyasi.worksheets[0]
+
 	for veri in dataframe_to_rows(df, index=False, header=False):
 		excel_sayfasi.append(veri)
 	excel_dosyasi.save(f'{data["dosya_adi"]}_banka_listesi_{tarih}.xlsx')
@@ -161,8 +178,9 @@ def bankaListesi(banka_listesi, data):
 
 if __name__ == '__main__':
 	banka_listesi = glob.glob('*BankaListe*')
-	data = [{'sira': 1, 'banka_adi': 'Ziraat Katılım', 'dosya_adi': 'ziraat_katilim', 'dosya': 'ziraat_katilim.xlsx'},
-			{'sira': 2, 'banka_adi': 'Albaraka Türk', 'dosya_adi': 'albarakaturk', 'dosya': 'albaraka_turk.xlsx'}]
+	data = [{'sira': 1, 'banka_adi': 'Ziraat Katılım (Maaş)', 'dosya_adi': 'ziraat_katilim_maas', 'dosya': 'ziraat_katilim_maas.xlsx'},
+			{'sira': 2, 'banka_adi': 'Ziraat Katılım (Diğer)', 'dosya_adi': 'ziraat_katilim_diger', 'dosya': 'ziraat_katilim_diger.xlsx'},
+			{'sira': 3, 'banka_adi': 'Albaraka Türk', 'dosya_adi': 'albarakaturk', 'dosya': 'albaraka_turk.xlsx'}]
 
 	datalist = [x for x in data]
 	for n,i in enumerate(datalist, 1):
@@ -171,6 +189,6 @@ if __name__ == '__main__':
 	secim = input("\nHangi bankanın listesini almak istiyorsanız,\nsıra numarasını yazıp enter yapın.\nSeçiminiz: ")
 
 	if int(secim) in [d['sira'] for d in datalist] and len([x for x in banka_listesi]) > 0:
-		bankaListesi(banka_listesi, data[int(secim) - 1])
+		BankaListesi(banka_listesi, data[int(secim) - 1])
 	else:
 		print("Lütfen banka listesini /banka klasörüne kopyalayın ve sonra tekrar deneyin...")
