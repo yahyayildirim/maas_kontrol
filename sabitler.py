@@ -264,8 +264,11 @@ def ek_tazminat_puani(unvan, derece, ogrenim):
 	return ek_tazminat_puani
 
 
-def ilave_odeme_97(izin):
+def ilave_odeme_97(unvan, izin):
+	vekilper = ['Vekil M.K', 'Vekil İ-H']
 	if izin == "Aylıksız İzin":
+		ilave_odeme_tutari = 0
+	elif unvan in vekilper:
 		ilave_odeme_tutari = 0
 	else:
 		ilave_odeme_tutari = df_1['aylik_katsayi'].iloc[-1] * 15965

@@ -141,7 +141,7 @@ def ikys_personel_verileri():
 	df['666 KHK Oranı'] = df.apply(lambda row: sabitler.ek_odeme_666_orani(row["Unvan"], row["Derece"], row["ogrenim"], row["İzin Adı"]), axis=1)
 
 	# Ek Ödeme oranını maas_verileri.xlsx dosyasından fonksiyon ile çekiyoruz.
-	df['İlaveÖd.(375.40'] = round(df.apply(lambda row: sabitler.ilave_odeme_97(row["İzin Adı"]), axis=1), 2)
+	df['İlaveÖd.(375.40'] = round(df.apply(lambda row: sabitler.ilave_odeme_97(row["Unvan"], row["İzin Adı"]), axis=1), 2)
 
 	# aynı şekilde ek ödeme 666 khk tutarını sabitler.py dosyasındaki fonsiyona gerekli parametreleri göndererek hesaplıyoruz.
 	df['Ek Öde.(666 KHK'] = round(df.apply(lambda row: sabitler.ek_odeme_666(row["Unvan"], row["Derece"], row["ogrenim"], row["İzin Adı"]), axis=1), 2)
