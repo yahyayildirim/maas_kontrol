@@ -22,7 +22,7 @@ test
 *.odt
 *.odp
 *.log
-
+*.csv
 
 # error.log dosyaları hariç.
 !errors.log
