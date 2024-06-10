@@ -177,6 +177,14 @@ def BankaListesi(banka_listesi, data):
 	print("\nBanka Listesi başarılı bir şekilde oluşturulmuştur.")
 
 if __name__ == '__main__':
+	print("##################################################################################")	
+	print("# LÜTFEN DİKKATLİ OKUYALIM!!!                                                    #")
+	print("# Ziraat Katılım Bankası kullananlar, /banka/banka_listesi_olustur.py dosyasında #")
+	print("# bulunan 135, 136 ve 137. satırlardaki verileri                                 #")
+	print("# ------------------------------------------------------------------------------ #")	
+	print("# Albaraka Türk Bankası kullananlar ise /banka/albaraka_turk.xlsx dosyasındaki   #")
+	print("# c7, c8 ve c9 hücrelerindeki verileri kendi kurumlarına göre değiştirsinler!!!  #")
+	print("##################################################################################")
 	banka_listesi = glob.glob('*BankaListe*')
 	data = [{'sira': 1, 'banka_adi': 'Ziraat Katılım (Maaş)', 'dosya_adi': 'ziraat_katilim_maas', 'dosya': 'ziraat_katilim_maas.xlsx'},
 			{'sira': 2, 'banka_adi': 'Ziraat Katılım (Diğer)', 'dosya_adi': 'ziraat_katilim_diger', 'dosya': 'ziraat_katilim_diger.xlsx'},
