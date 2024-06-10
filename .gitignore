@@ -24,7 +24,7 @@ test
 *.odp
 *.log
 *.csv
-.env
+*.env
 
 # error.log dosyaları hariç.
 !errors.log
