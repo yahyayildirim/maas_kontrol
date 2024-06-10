@@ -8,6 +8,7 @@ test
 #/kbs
 /rapor
 /logs
+*/__pycache__
 
 # Belirli bir uzantılı dosyaları es geçmek için
 *.styl
@@ -22,7 +23,8 @@ test
 *.odt
 *.odp
 *.log
-
+*.csv
+.env
 
 # error.log dosyaları hariç.
 !errors.log
