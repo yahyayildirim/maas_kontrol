@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import sys
+sys.dont_write_bytecode = True
 
 import pandas as pd
 import natsort
@@ -8,9 +12,6 @@ from datetime import datetime
 import openpyxl
 from openpyxl.utils.dataframe import dataframe_to_rows
 import iban_kontrol
-
-import sys
-sys.dont_write_bytecode = True
 
 import locale
 locale.setlocale(locale.LC_ALL, 'tr_TR.UTF-8')
