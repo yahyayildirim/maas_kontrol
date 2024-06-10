@@ -24,10 +24,7 @@ test
 *.odp
 *.log
 *.csv
-<<<<<<< HEAD
 .env
-=======
->>>>>>> 93a0c0681c9f03dae7bcb1dff26ad4f0c877035f
 
 # error.log dosyaları hariç.
 !errors.log
