@@ -34,5 +34,10 @@ if __name__ == "__main__":
 	kontrol_raporu_hazirla.kontrol_raporu_v1()
 	kontrol_raporu_hazirla.kontrol_raporu_v2()
 
+	import emsan_veri_hazirla
+	emsan_veri_hazirla.emsan_veri()
+
 	import hatalar_icin_aciklama_ekle
 	hatalar_icin_aciklama_ekle.aciklama_ekle()
+
+
