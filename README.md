@@ -25,6 +25,8 @@ Bu program ile; İKYS ve KBS sistemlerinde bulunan aşağıdaki veriler karşıl
 * 666 KHK Tutarı
 * 97-İlave Ödeme (375 KHK Ek M.40)
 
+* Beta/deneme/test amaçlı olarak rapor klasöründe ilgili yıl ve ayın içinde emsan veri için txt oluşturma eklenmiştir. Lütfen bu listeleri baz alarak emsan veri göndermeyin sadece test amaçlı üretilmektedir.
+
 Şimdilik bunlar, Kıdem Yılını ve buna bağlı olarak ödenen Kıdem Aylık Tutarını maalesef ekleyemiyorum. Çünkü; İKYS ve KBS'deki hizmet süreleri bir birini tutmuyor. Diyanete Başlama Tarihi ve İlk Göreve Başlama Tarihlerini ayrı ayrı denememe rağmen, olumlu sonuç alamadım.
 
 ## 
