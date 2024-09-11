@@ -109,6 +109,7 @@ def ikys_personel_verileri():
 
 	# Ödenilecek Derece/Kademe sütununu Derece, Kademe ve Ek Gösterge olarak üç sutüna ayırıyoruz. NaN olan değerleri 0 olarak değiştiriyoruz ve tipini integer olarak belirliyoruz.
 	df[['Derece', 'Kademe', 'Ek Gösterge']] = df['Ödenilecek Derece/Kademe'].str.split('-', expand=True).fillna(0).astype(int)
+	df['Derece/Kademe'] = df['Ödenilecek Derece/Kademe'].map(lambda v: '-'.join(v.split('-')[0:2])).fillna(0)
 
 	# Personelin Derece ve Kademesini alarak yan ödemesini sabitler.py dosyasındaki fonksiyon aracılığı ile maas_verileri.xlsx içerisinden çekiyoruz. 1/4 --> 1500 gibi
 	df['Gösterge Puanı'] = df.apply(lambda row: sabitler.gosterge_puani(row["Derece"], row["Kademe"]), axis=1)
@@ -150,7 +151,7 @@ def ikys_personel_verileri():
 	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Vekil.*H)', value=r'İmam-Hat.')
 
 	# Son olarak excele aktaracağımız sütunları belirliyoruz.
-	df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Ünvan', 'Derece', 'Kademe', 'Gösterge Puanı', 'Aylık Tutar', 'Ek Gösterge', 'Ek Gös.Ay.', 'Yan Ödeme', 'Yan Ödeme Aylık', 'Ek Tazminat Puanı', 'Özel Hiz. Taz. Puanı',
+	df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Ünvan', 'Derece/Kademe', 'Gösterge Puanı', 'Aylık Tutar', 'Ek Gösterge', 'Ek Gös.Ay.', 'Yan Ödeme', 'Yan Ödeme Aylık', 'Ek Tazminat Puanı', 'Özel Hiz. Taz. Puanı',
 	'Özel Hiz.Taz.', '666 KHK Oranı', 'Ek Öde.(666 KHK', 'İlaveÖd.(375.40']]
 
 	# Listeyi TC veya Adı-Soyadına göre sıralayabilirsiniz, dikkat etmeniz gereken ise kbs_bordro ve kbs_personelde de aynı değişikliği yapmanızdır.
