@@ -52,8 +52,8 @@ def ikys_personel_verileri():
 	for i in df.index:
 		Ünvan = df.iloc[i]['Ünvan']
 		if pd.isna(Ünvan):
-			#print(df.iloc[i]['Görevlendirme Ünvanı'])
-			df['Ünvan'][i] = df.iloc[i]['Görevlendirme Ünvanı']
+			#print(df.iloc[i]['Hizmet Cetveli Son Satır Unvanı'])
+			df['Ünvan'][i] = df.iloc[i]['Hizmet Cetveli Son Satır Unvanı']
 
 	# Bize lazım olan sütunları çekiyoruz.
 	df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Ünvan', 'Öğrenim Durumu-Okul-Fakülte-Bölüm', 'Sendika', 'Diyanete Giriş Tarihi', 'İlk Memuriyete Başlama Tarihi', 'Ödenilecek Derece/Kademe',
