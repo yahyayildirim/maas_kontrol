@@ -47,14 +47,11 @@ def aciklama_ekle():
                 if sh[f'{_get_column_letter(j-1)}1'].value == 'Sınıf':
                     sh.cell(row=i, column=j).comment = Comment(f'{hata_kodlari.sinif_hata}', '')
 
-                if sh[f'{_get_column_letter(j-1)}1'].value == 'Unvan':
+                if sh[f'{_get_column_letter(j-1)}1'].value == 'Ünvan':
                     sh.cell(row=i, column=j).comment = Comment(f'{hata_kodlari.unvan_hata}', '')
 
-                if sh[f'{_get_column_letter(j-1)}1'].value == 'Derece':
-                    sh.cell(row=i, column=j).comment = Comment(f'{hata_kodlari.derece_hata}', '')
-
-                if sh[f'{_get_column_letter(j-1)}1'].value == 'Kademe':
-                    sh.cell(row=i, column=j).comment = Comment(f'{hata_kodlari.kademe_hata}','')
+                if sh[f'{_get_column_letter(j-1)}1'].value == 'Derece/Kademe':
+                    sh.cell(row=i, column=j).comment = Comment(f'{hata_kodlari.derece_kademe_hata}', '')
 
                 if sh[f'{_get_column_letter(j-1)}1'].value == 'Gösterge Puanı':
                     sh.cell(row=i, column=j).comment =Comment(f'{hata_kodlari.gosterge_puani_hata}','')
@@ -88,6 +85,9 @@ def aciklama_ekle():
 
                 if sh[f'{_get_column_letter(j-1)}1'].value == 'Ek Öde.(666 KHK':
                     sh.cell(row=i, column=j).comment = Comment(f'{hata_kodlari.khk_666_tutar_hata}','')
+
+                if sh[f'{_get_column_letter(j-1)}1'].value == 'İlaveÖd.(375.40':
+                    sh.cell(row=i, column=j).comment = Comment(f'{hata_kodlari.ilave_odeme_hata}','')
 
     wb.save('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/maas_kontrol_raporu_v3_test.xlsx')
     print('%100')
