@@ -21,14 +21,8 @@ unvan_hata ="""MUHTEMEL HATA SEBEPLERİ:
 3- vb.
 """
 
-derece_hata ="""MUHTEMEL HATA SEBEPLERİ:
-1- Personel, İKYS üzerinden derece terfi almış ama KBS'ye işlenmemiş olabilir.
-2- Terfi tarihini kontrol ediniz, terfi tarihi bir sonraki maaş dönemi olabilir, 
-   Örnek: 15.01.2024 terfi tarihi olan bir personelin terfisi, Şubat maaşında KBS'ye işlenir.
-"""
-
-kademe_hata ="""MUHTEMEL HATA SEBEPLERİ:
-1- Personel, İKYS üzerinden derece terfi almış ama KBS'ye işlenmemiş olabilir.
+derece_kademe_hata ="""MUHTEMEL HATA SEBEPLERİ:
+1- Personel, İKYS üzerinden derece/kademe terfi almış ama KBS'ye işlenmemiş olabilir.
 2- Terfi tarihini kontrol ediniz, terfi tarihi bir sonraki maaş dönemi olabilir, 
    Örnek: 15.01.2024 terfi tarihi olan bir personelin terfisi, Şubat maaşında KBS'ye işlenir.
 """
@@ -103,3 +97,8 @@ https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=375&MevzuatTur=4&MevzuatTertip=5
 """
 
 khk_666_tutar_hata ="666 Sayılı KHK ile personele verilen puan hatalı olunca bu alanda hata vermektedir. Puanı düzeltirseniz, bu alanda düzelecektir."
+
+ilave_odeme_hata ="""AÇIKLAMA:
+1- Herhangi bir nedenle 97-İlave Ödeme (375 KHK Ek M.40) kodlu tazminat yüklenmemiş olanlar için; mutemetlerce maaş/ücret bilgi girişi ekranından ilgili kişinin bilgileri ekrana getirilerek Diğer Tazminat ekranından "97-İlave Ödeme (375 KHK Ek M.40)" tazminat kodunun eklenmesi gerekmektedir.
+2- 7456 sayılı Kanunun 28 inci Maddesi ile 375 sayılı Kanun Hükmünde Kararnameye eklenen Ek 40 ıncı maddede sayılmaması nedeniyle ilave ödemeden yararlandırılmayacak personelin bilgileri mutemetlerce maaş/ücret bilgi girişi ekranından ekrana getirilerek Diğer Tazminat ekranından "97-İlave Ödeme (375 KHK Ek M.40)" tazminat kodunun silinmesi gerekmektedir.
+"""
