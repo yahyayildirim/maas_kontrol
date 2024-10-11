@@ -9,3 +9,5 @@ odfpy
 xlrd
 lxml
 Jinja2
+natsort
+ansicolors
