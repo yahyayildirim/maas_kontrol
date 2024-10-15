@@ -130,15 +130,14 @@ def BankaListesi(banka_listesi, data):
 	if "ziraat_katilim_maas" in f'{data["dosya_adi"]}'.lower():
 		df['REF'] = ""
 		df['SUBE NO'] = ""
-		df['HESAP NO'] = df['IBAN NO'].str[13:20].apply(pd.to_numeric)
-		df['EK NO'] = df['IBAN NO'].str[22:].apply(pd.to_numeric)
+		df['HESAP NO'] = df.apply(lambda row: iban_kontrol.musteri_no(row['IBAN NO']), axis=1).apply(pd.to_numeric)
+		df['EK NO'] = df.apply(lambda row: iban_kontrol.hesap_ek_no(row['IBAN NO']), axis=1).apply(pd.to_numeric)
 		df['VERGI NO'] = ""
 		df['KURUM ŞUBE KODU'] = 20900115047
 		df['KURUM HESAP NO'] = 1748399
 		df['KURUM EK NO'] = 1
 		df['PARA BIRIMI'] = "TRY"
 		#df['TC KIMLIK NO'] = df['TC KIMLIK NO'].astype(str)
-		#df['DENEME'] = df.apply(lambda row: iban_kontrol.musteri_no(row['IBAN NO']), axis=1).apply(pd.to_numeric)
 		df = df[['ADI SOYADI', 'IBAN NO', 'SUBE NO', 'HESAP NO', 'EK NO', 'MAAŞ TUTARI', 'AÇIKLAMA', 'REF', 'VERGI NO', 'TC KIMLIK NO', 'KURUM ŞUBE KODU', 'KURUM HESAP NO', 'KURUM EK NO', 'PARA BIRIMI']]
 
 	elif "ziraat_katilim_diger" in f'{data["dosya_adi"]}'.lower():
@@ -167,8 +166,10 @@ def BankaListesi(banka_listesi, data):
 		df = df[['ADI SOYADI', 'IBAN NO', 'BOŞ VERİ 1', 'BOŞ VERİ 2', 'BOŞ VERİ 3', 'AÇIKLAMA', 'MAAŞ TUTARI']]
 
 	elif "kuveytturk" in f'{data["dosya_adi"]}'.lower():
-		df['HESAP NO'] = df['IBAN NO'].str[13:20].apply(pd.to_numeric)
-		df['EK NO'] = df['IBAN NO'].str[22:].apply(pd.to_numeric)
+		#df['HESAP NO'] = df['IBAN NO'].str[13:20].apply(pd.to_numeric)
+		df['HESAP NO'] = df.apply(lambda row: iban_kontrol.musteri_no(row['IBAN NO']), axis=1).apply(pd.to_numeric)
+		#df['EK NO'] = df['IBAN NO'].str[22:].apply(pd.to_numeric)
+		df['EK NO'] = df.apply(lambda row: iban_kontrol.hesap_ek_no(row['IBAN NO']), axis=1).apply(pd.to_numeric)
 		df = df[['SIRA NO', 'TC KIMLIK NO', 'HESAP NO', 'EK NO', 'ADI SOYADI', 'MAAŞ TUTARI']]
 
 	# Taslak Excel Dosyamız
