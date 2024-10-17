@@ -50,18 +50,18 @@ def ikys_personel_verileri():
 	df = df.drop_duplicates(subset=['Sicil'], ignore_index=True)
 
 	for i in df.index:
-		unvan = df.iloc[i]['Unvan']
-		if pd.isna(unvan):
-			#print(df.iloc[i]['Görevlendirme Unvanı'])
-			df['Unvan'][i] = df.iloc[i]['Görevlendirme Unvanı']
+		Ünvan = df.iloc[i]['Ünvan']
+		if pd.isna(Ünvan):
+			#print(df.iloc[i]['Hizmet Cetveli Son Satır Unvanı'])
+			df['Ünvan'][i] = df.iloc[i]['Hizmet Cetveli Son Satır Unvanı']
 
 	# Bize lazım olan sütunları çekiyoruz.
-	df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Unvan', 'Öğrenim Durumu-Okul-Fakülte-Bölüm', 'Sendika', 'Diyanete Giriş Tarihi', 'İlk Memuriyete Başlama Tarihi', 'Ödenilecek Derece/Kademe',
+	df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Ünvan', 'Öğrenim Durumu-Okul-Fakülte-Bölüm', 'Sendika', 'Diyanete Giriş Tarihi', 'İlk Memuriyete Başlama Tarihi', 'Ödenilecek Derece/Kademe',
 	'Hizmet Süresi (Ay)', 'Hizmet Süresi (Yıl)', 'İzin Adı']]
 
-	# Eğer unvan sütunu boş ise Vekil olarak değiştirmesini sağlıyoruz.
-	#df['Unvan'] = df['Unvan'].fillna('Vekil')
-	df.fillna({'Sınıf': 'DH', 'Unvan': 'Vekil'}, inplace=True)
+	# Eğer Ünvan sütunu boş ise Vekil olarak değiştirmesini sağlıyoruz.
+	#df['Ünvan'] = df['Ünvan'].fillna('Vekil')
+	df.fillna({'Sınıf': 'DH', 'Ünvan': 'Vekil'}, inplace=True)
 
 	# İKYS raporundaki öğrenim durumu çok uzun ve karmaşık olduğu için, regex ve replace metodları ile istediğimiz formata çeviriyoruz.
 	for i in df["Öğrenim Durumu-Okul-Fakülte-Bölüm"].tolist():
@@ -81,24 +81,25 @@ def ikys_personel_verileri():
 	# Sınıf sütunundaki büyük harfler hariç herşeyi siliyoruz ve geriye sadece GİH,DH,TH,YH ibarelerini bırakıyoruz.
 	df['Sınıf'].replace(regex=True, inplace=True, to_replace=r'([a-z]|\s|ı|ü|ş|ç|ğ|ö|)', value=r'')
 
-	# Unvan sütunundaki ikys sisteminde bulunan unvanları kbs sistemindekine uyarlıyoruz.
-	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(.*Yar.*)', value=r'İl Müft.Yr')
-	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(İlçe.*)', value=r'İlçe Müft.')
-	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Şube.*)', value=r'Şube Md.')
-	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Veri.*)', value=r'V.H.K.İ.')
-	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Memur.*Ş.*)', value=r'Memur(Ş)')
-	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Hiz.*Ş.*)', value=r'Hzmetli(Ş)')
-	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Kaloriferci)', value=r'Kaloriferc')
-	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Vaiz.*)', value=r'Vaiz')
-	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Cez.*)', value=r'Cezv.Vaizi')
-	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Din.*)', value=r'Din Hz.Uzm')
-	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(İma.*)', value=r'İmam-Hat.')
-	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Baş.*İma.*)', value=r'Başimam')
-	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Kur.*Öğre.*)', value=r'Kur.Krs.Öğ')
-	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Kur.*Uz.*)', value=r'Kur.Uz.Öğ')
-	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Müez.*)', value=r'Müez.Kayyı')
-	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Uzman.*İmam.*)', value=r'Uz.İm.Hat')
-	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Ayniyat Saymanı)', value=r'Ayn.Saym.')	
+	# Ünvan sütunundaki ikys sisteminde bulunan Ünvanları kbs sistemindekine uyarlıyoruz.
+	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(.*Yar.*)', value=r'İl Müft.Yr')
+	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(İlçe.*)', value=r'İlçe Müft.')
+	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Şube.*)', value=r'Şube Md.')
+	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Veri.*)', value=r'V.H.K.İ.')
+	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Memur.*Ş.*)', value=r'Memur(Ş)')
+	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Hiz.*Ş.*)', value=r'Hzmetli(Ş)')
+	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Kaloriferci)', value=r'Kaloriferc')
+	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Vaiz.*)', value=r'Vaiz')
+	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Cez.*)', value=r'Cezv.Vaizi')
+	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Din.*)', value=r'Din Hz.Uzm')
+	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Eğitim.*)', value=r'Eğt.Uzmanı')
+	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(İma.*)', value=r'İmam-Hat.')
+	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Baş.*İma.*)', value=r'Başimam')
+	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Kur.*Öğre.*)', value=r'Kur.Krs.Öğ')
+	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Kur.*Uz.*)', value=r'Kur.Uz.Öğ')
+	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Müez.*)', value=r'Müez.Kayyı')
+	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Uzman.*İmam.*)', value=r'Uz.İm.Hat')
+	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Ayniyat Saymanı)', value=r'Ayn.Saym.')	
 
 	# Ödenilecek Derece/Kademe sütunundaki parantezleri siliyoruz
 	df['Ödenilecek Derece/Kademe'].replace(regex=True, inplace=True, to_replace=r'[()]', value=r'')
@@ -108,48 +109,49 @@ def ikys_personel_verileri():
 
 	# Ödenilecek Derece/Kademe sütununu Derece, Kademe ve Ek Gösterge olarak üç sutüna ayırıyoruz. NaN olan değerleri 0 olarak değiştiriyoruz ve tipini integer olarak belirliyoruz.
 	df[['Derece', 'Kademe', 'Ek Gösterge']] = df['Ödenilecek Derece/Kademe'].str.split('-', expand=True).fillna(0).astype(int)
+	df['Derece/Kademe'] = df['Ödenilecek Derece/Kademe'].map(lambda v: '-'.join(v.split('-')[0:2])).fillna(0)
 
 	# Personelin Derece ve Kademesini alarak yan ödemesini sabitler.py dosyasındaki fonksiyon aracılığı ile maas_verileri.xlsx içerisinden çekiyoruz. 1/4 --> 1500 gibi
 	df['Gösterge Puanı'] = df.apply(lambda row: sabitler.gosterge_puani(row["Derece"], row["Kademe"]), axis=1)
 
-	# Personelin İş Güçlüğü, İş Riski, Teminde Güçlük ve Mali Sorumluluk puanlarını, unvan ve dereceye göre sabitler.py dosyasındaki fonksiyon aracılığı ile maas_verileri.xlsx içerisinden çekiyoruz.
-	df['Yan Ödeme'] = df.apply(lambda row: sabitler.yan_odeme_puani(row["Unvan"], row["Derece"], row["Hizmet Süresi (Yıl)"], row["İzin Adı"]), axis=1)
+	# Personelin İş Güçlüğü, İş Riski, Teminde Güçlük ve Mali Sorumluluk puanlarını, Ünvan ve dereceye göre sabitler.py dosyasındaki fonksiyon aracılığı ile maas_verileri.xlsx içerisinden çekiyoruz.
+	df['Yan Ödeme'] = df.apply(lambda row: sabitler.yan_odeme_puani(row["Ünvan"], row["Derece"], row["Hizmet Süresi (Yıl)"], row["İzin Adı"]), axis=1)
 
-	# df['Yan Ödeme'] ile aldığımız oran ile unvan bilgisini alarak sabitler.py dosyasındaki fonksiyon aracılığı TL tutarı hesaplıyoruz.
-	df['Aylık Tutar'] = round(df.apply(lambda row: sabitler.aylik_katsayi(row["Gösterge Puanı"], row["Unvan"], row["İzin Adı"]), axis=1), 2)
+	# df['Yan Ödeme'] ile aldığımız oran ile Ünvan bilgisini alarak sabitler.py dosyasındaki fonksiyon aracılığı TL tutarı hesaplıyoruz.
+	df['Aylık Tutar'] = round(df.apply(lambda row: sabitler.aylik_katsayi(row["Gösterge Puanı"], row["Ünvan"], row["İzin Adı"]), axis=1), 2)
 	
-	# Aynı şekilde İKYSden çektiğimiz ek gösterge miktarını ve unvan bilgisini sabitler.py dosyasındaki fonksiyon aracılığı ile hesaplıyoruz.
-	df['Ek Gös.Ay.'] = round(df.apply(lambda row: sabitler.ek_gosterge(row["Ek Gösterge"], row["Unvan"], row["İzin Adı"]), axis=1), 2)
+	# Aynı şekilde İKYSden çektiğimiz ek gösterge miktarını ve Ünvan bilgisini sabitler.py dosyasındaki fonksiyon aracılığı ile hesaplıyoruz.
+	df['Ek Gös.Ay.'] = round(df.apply(lambda row: sabitler.ek_gosterge(row["Ek Gösterge"], row["Ünvan"], row["İzin Adı"]), axis=1), 2)
 
-	# df['Gösterge Puanı'] ile aldığımız oran ile unvan bilgisini alarak sabitler.py dosyasındaki fonksiyon aracılığı TL tutarı hesaplıyoruz. 
-	df['Yan Ödeme Aylık'] = round(df.apply(lambda row: sabitler.yan_odeme(row["Yan Ödeme"], row["Unvan"]), axis=1), 2)
+	# df['Gösterge Puanı'] ile aldığımız oran ile Ünvan bilgisini alarak sabitler.py dosyasındaki fonksiyon aracılığı TL tutarı hesaplıyoruz. 
+	df['Yan Ödeme Aylık'] = round(df.apply(lambda row: sabitler.yan_odeme(row["Yan Ödeme"], row["Ünvan"]), axis=1), 2)
 
 	# hizmet yılı baz alınarak kıdem aylığını fonksiyon aracılığı ile hesaplıyoruz.
 	# burada maalesef çok hata alıyoruz. çümkü kbs ve ikys kıdem yılları birbirini tutmuyor.
-	df['Kıdem Aylık'] = round(df.apply(lambda row: sabitler.kidem_ayligi(row["Hizmet Süresi (Yıl)"], row["Unvan"]), axis=1), 2)
+	df['Kıdem Aylık'] = round(df.apply(lambda row: sabitler.kidem_ayligi(row["Hizmet Süresi (Yıl)"], row["Ünvan"]), axis=1), 2)
 
-	# maas_verileri.xlsx içerisindeki bilgileri, sabitler.py dosyasındaki fonksiyon ile unvan, derece ve ogrenim bilgisi değerlerini göndererek çekiyoruz.
-	df['Özel Hiz. Taz. Puanı'] = round(df.apply(lambda row: sabitler.ozel_hizmet_orani(row["Unvan"], row["Derece"], row["ogrenim"], row["İzin Adı"]), axis=1))
+	# maas_verileri.xlsx içerisindeki bilgileri, sabitler.py dosyasındaki fonksiyon ile Ünvan, derece ve ogrenim bilgisi değerlerini göndererek çekiyoruz.
+	df['Özel Hiz. Taz. Puanı'] = round(df.apply(lambda row: sabitler.ozel_hizmet_orani(row["Ünvan"], row["Derece"], row["ogrenim"], row["İzin Adı"]), axis=1))
 
 	# aynı şekilde özel hizmet tazmınatı tutarını sabitler.py dosyasındaki fonsiyona gerekli parametreleri göndererek hesaplıyoruz.	
-	df['Özel Hiz.Taz.'] = round(df.apply(lambda row: sabitler.ozel_hizmet(row["Unvan"], row["Derece"], row["ogrenim"], row["İzin Adı"]), axis=1), 2)
+	df['Özel Hiz.Taz.'] = round(df.apply(lambda row: sabitler.ozel_hizmet(row["Ünvan"], row["Derece"], row["ogrenim"], row["İzin Adı"]), axis=1), 2)
 
-	# maas_verileri.xlsx içerisindeki bilgileri, sabitler.py dosyasındaki fonksiyon ile unvan, derece ve ogrenim bilgisi değerlerini göndererek çekiyoruz.
-	df['Ek Tazminat Puanı'] = df.apply(lambda row: sabitler.ek_tazminat_puani(row["Unvan"], row["Derece"], row["ogrenim"]), axis=1)
-
-	# Ek Ödeme oranını maas_verileri.xlsx dosyasından fonksiyon ile çekiyoruz.
-	df['666 KHK Oranı'] = df.apply(lambda row: sabitler.ek_odeme_666_orani(row["Unvan"], row["Derece"], row["ogrenim"], row["İzin Adı"]), axis=1)
+	# maas_verileri.xlsx içerisindeki bilgileri, sabitler.py dosyasındaki fonksiyon ile Ünvan, derece ve ogrenim bilgisi değerlerini göndererek çekiyoruz.
+	df['Ek Tazminat Puanı'] = df.apply(lambda row: sabitler.ek_tazminat_puani(row["Ünvan"], row["Derece"], row["ogrenim"]), axis=1)
 
 	# Ek Ödeme oranını maas_verileri.xlsx dosyasından fonksiyon ile çekiyoruz.
-	df['İlaveÖd.(375.40'] = round(df.apply(lambda row: sabitler.ilave_odeme_97(row["Unvan"], row["İzin Adı"]), axis=1), 2)
+	df['666 KHK Oranı'] = df.apply(lambda row: sabitler.ek_odeme_666_orani(row["Ünvan"], row["Derece"], row["ogrenim"], row["İzin Adı"]), axis=1)
+
+	# Ek Ödeme oranını maas_verileri.xlsx dosyasından fonksiyon ile çekiyoruz.
+	df['İlaveÖd.(375.40'] = round(df.apply(lambda row: sabitler.ilave_odeme_97(row["Ünvan"], row["İzin Adı"]), axis=1), 2)
 
 	# aynı şekilde ek ödeme 666 khk tutarını sabitler.py dosyasındaki fonsiyona gerekli parametreleri göndererek hesaplıyoruz.
-	df['Ek Öde.(666 KHK'] = round(df.apply(lambda row: sabitler.ek_odeme_666(row["Unvan"], row["Derece"], row["ogrenim"], row["İzin Adı"]), axis=1), 2)
-	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Vekil.*K)', value=r'Müez.Kayyı')
-	df['Unvan'].replace(regex=True, inplace=True, to_replace=r'^(Vekil.*H)', value=r'İmam-Hat.')
+	df['Ek Öde.(666 KHK'] = round(df.apply(lambda row: sabitler.ek_odeme_666(row["Ünvan"], row["Derece"], row["ogrenim"], row["İzin Adı"]), axis=1), 2)
+	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Vekil.*K)', value=r'Müez.Kayyı')
+	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Vekil.*H)', value=r'İmam-Hat.')
 
 	# Son olarak excele aktaracağımız sütunları belirliyoruz.
-	df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Unvan', 'Derece', 'Kademe', 'Gösterge Puanı', 'Aylık Tutar', 'Ek Gösterge', 'Ek Gös.Ay.', 'Yan Ödeme', 'Yan Ödeme Aylık', 'Ek Tazminat Puanı', 'Özel Hiz. Taz. Puanı',
+	df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Ünvan', 'Derece/Kademe', 'Gösterge Puanı', 'Aylık Tutar', 'Ek Gösterge', 'Ek Gös.Ay.', 'Yan Ödeme', 'Yan Ödeme Aylık', 'Ek Tazminat Puanı', 'Özel Hiz. Taz. Puanı',
 	'Özel Hiz.Taz.', '666 KHK Oranı', 'Ek Öde.(666 KHK', 'İlaveÖd.(375.40']]
 
 	# Listeyi TC veya Adı-Soyadına göre sıralayabilirsiniz, dikkat etmeniz gereken ise kbs_bordro ve kbs_personelde de aynı değişikliği yapmanızdır.

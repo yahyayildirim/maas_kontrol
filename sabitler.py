@@ -189,7 +189,7 @@ def yan_odeme_puani(unvan, derece, hizmetyili, izin):
 	if izin == "Aylıksız İzin":
 		return 0
 	else:
-		if unvan == 'Şube Md.' or unvan == 'Din Hz.Uzm':
+		if unvan == 'Şube Md.' or unvan == 'Din Hz.Uzm' or unvan == 'Eğt.Uzmanı':
 			is_guclugu = df_2.loc[(df_2['unvan'] == unvan) & (df_2['derece'] == derece), 'is_guclugu'].sum()
 			is_riski = df_2.loc[(df_2['unvan'] == unvan) & (df_2['derece'] == derece), 'is_riski'].sum()
 			tem_gucluk = df_2.loc[(df_2['unvan'] == unvan) & (df_2['derece'] == derece), 'tem_gucluk'].sum()

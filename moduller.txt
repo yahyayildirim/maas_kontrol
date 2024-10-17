@@ -2,10 +2,12 @@ pip
 setuptools
 pandas
 numexpr
-numpy
+numpy==1.26.4
 openpyxl
 Bottleneck
 odfpy
 xlrd
 lxml
 Jinja2
+natsort
+ansicolors

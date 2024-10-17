@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-
-from colorama import *
-import os
+# -*- coding: utf-8 -*-
 
 import sys
 sys.dont_write_bytecode = True
+
+from colors import red, green, yellow # pip install ansicolors
+import os
 
 import locale
 locale.setlocale(locale.LC_ALL, 'tr_TR.UTF-8')
@@ -18,7 +19,7 @@ def country_detect (raw_1):
         country_number = raw_1[0] + raw_1[1]
         country_number = country_number.upper()
     except Exception:
-        print(f"{Fore.RED}Eksik veri.!{Style.RESET_ALL}")
+        print(red(f"Eksik veri.!"))
         return exit(1)
 
     if country_number == "TR":
@@ -49,7 +50,7 @@ def iban_parametres(iban_1):
             hesap_ek_no = iban_1[22:]
 
         except Exception:
-            print(f"{Fore.RED}Eksik veri.!{Style.RESET_ALL}")
+            print(red(f"Eksik veri.!"))
             return exit(1)
 
         if bank_code_local == "00001":
@@ -183,6 +184,7 @@ def iban_parametres(iban_1):
         musteri_no = "DESTEKLENMİYOR"
         hesap_ek_no = "DESTEKLENMİYOR"
         bank_name = "DESTEKLENMİYOR"
+
     return control_number_global, bank_code_local, rezerve_code, account_number, bank_name, sube_kodu, musteri_no, hesap_ek_no
 
 def banka_adi(iban_1):

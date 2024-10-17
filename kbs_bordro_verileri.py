@@ -80,13 +80,13 @@ def kbs_temiz_veri():
 	# Hizmet Sın.-Ünvan sütununu Sınıf ve Unvan olarak iki sutüna ayırıyoruz.
 	#df['Hizmet Sın.-Ünvan'].replace(regex=True, inplace=True, to_replace=r'-Hat.', value=r'.Hat.')
 	
-	df[['Sınıf', 'Unvan']] = df['Hizmet Sın.-Ünvan'].str.split('-', n=1, expand=True)
+	df[['Sınıf', 'Ünvan']] = df['Hizmet Sın.-Ünvan'].str.split('-', n=1, expand=True)
 
 	# Öd.Es.D.-K. Em.Es.D.-K. sütununu 'Derece-Kademe' ve 'Yan Ödeme' olarak iki sutüna ayırıyoruz.
-	df[['Derece-Kademe', 'Yan Ödeme']] = df['Öd.Es.D.-K. Em.Es.D.-K.'].str.split(' ', n=1, expand=True)
+	df[['Derece/Kademe', 'Yan Ödeme']] = df['Öd.Es.D.-K. Em.Es.D.-K.'].str.split(' ', n=1, expand=True)
 
 	# Derece-Kademe sütununu 'Derece' ve 'Kademe' olarak iki sutüna ayırıyoruz.
-	df[['Derece', 'Kademe']] = df['Derece-Kademe'].str.split('-', expand=True).apply(pd.to_numeric).fillna(0)
+	df[['Derece', 'Kademe']] = df['Derece/Kademe'].str.split('-', expand=True).apply(pd.to_numeric).fillna(0)
 
 	# derece ve kademeyi alarak gösterge puanını maas_verileri.xlsx dosyasından çekiyoruz.
 	df['Gösterge Puanı'] = df.apply(lambda row: sabitler.gosterge_puani(row["Derece"], row["Kademe"]), axis=1)
@@ -117,7 +117,7 @@ def kbs_temiz_veri():
 	#  		'Gösterge Puanı', 'Hizmet Süresi (Yıl)', 'Ek Gös.Ay.', 'Yan Ödeme Aylık',
 	#  		'Kıdem Aylık', 'Özel Hiz.Taz.', 'Ek Öde.(666 KHK'
 	#  		]]
-	df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Unvan', 'Derece', 'Kademe', 'Gösterge Puanı', 'Aylık Tutar',
+	df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Ünvan', 'Derece/Kademe', 'Gösterge Puanı', 'Aylık Tutar',
 	'Ek Gösterge', 'Ek Gös.Ay.', 'Yan Ödeme', 'Yan Ödeme Aylık', 'Ek Tazminat Puanı', 'Özel Hiz. Taz. Puanı',
 	'Özel Hiz.Taz.', '666 KHK Oranı', 'Ek Öde.(666 KHK', 'İlaveÖd.(375.40']].fillna(0)
 

@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import sys
+sys.dont_write_bytecode = True
 
 import pandas as pd
 import natsort
@@ -8,9 +12,6 @@ from datetime import datetime
 import openpyxl
 from openpyxl.utils.dataframe import dataframe_to_rows
 import iban_kontrol
-
-import sys
-sys.dont_write_bytecode = True
 
 import locale
 locale.setlocale(locale.LC_ALL, 'tr_TR.UTF-8')
@@ -129,18 +130,17 @@ def BankaListesi(banka_listesi, data):
 	if "ziraat_katilim_maas" in f'{data["dosya_adi"]}'.lower():
 		df['REF'] = ""
 		df['SUBE NO'] = ""
-		df['HESAP NO'] = df['IBAN NO'].str[13:20].apply(pd.to_numeric)
-		df['EK NO'] = df['IBAN NO'].str[22:].apply(pd.to_numeric)
+		df['HESAP NO'] = df.apply(lambda row: iban_kontrol.musteri_no(row['IBAN NO']), axis=1).apply(pd.to_numeric)
+		df['EK NO'] = df.apply(lambda row: iban_kontrol.hesap_ek_no(row['IBAN NO']), axis=1).apply(pd.to_numeric)
 		df['VERGI NO'] = ""
 		df['KURUM ŞUBE KODU'] = 20900115047
 		df['KURUM HESAP NO'] = 1748399
 		df['KURUM EK NO'] = 1
 		df['PARA BIRIMI'] = "TRY"
 		#df['TC KIMLIK NO'] = df['TC KIMLIK NO'].astype(str)
-		#df['DENEME'] = df.apply(lambda row: iban_kontrol.musteri_no(row['IBAN NO']), axis=1).apply(pd.to_numeric)
 		df = df[['ADI SOYADI', 'IBAN NO', 'SUBE NO', 'HESAP NO', 'EK NO', 'MAAŞ TUTARI', 'AÇIKLAMA', 'REF', 'VERGI NO', 'TC KIMLIK NO', 'KURUM ŞUBE KODU', 'KURUM HESAP NO', 'KURUM EK NO', 'PARA BIRIMI']]
 
-	if "ziraat_katilim_diger" in f'{data["dosya_adi"]}'.lower():
+	elif "ziraat_katilim_diger" in f'{data["dosya_adi"]}'.lower():
 		df['CARİ KODU'] = ""
 		df['BANKA NO'] = ""
 		df['SUBE NO'] = ""
@@ -165,6 +165,13 @@ def BankaListesi(banka_listesi, data):
 		df['BOŞ VERİ 3'] = ""
 		df = df[['ADI SOYADI', 'IBAN NO', 'BOŞ VERİ 1', 'BOŞ VERİ 2', 'BOŞ VERİ 3', 'AÇIKLAMA', 'MAAŞ TUTARI']]
 
+	elif "kuveytturk" in f'{data["dosya_adi"]}'.lower():
+		#df['HESAP NO'] = df['IBAN NO'].str[13:20].apply(pd.to_numeric)
+		df['HESAP NO'] = df.apply(lambda row: iban_kontrol.musteri_no(row['IBAN NO']), axis=1).apply(pd.to_numeric)
+		#df['EK NO'] = df['IBAN NO'].str[22:].apply(pd.to_numeric)
+		df['EK NO'] = df.apply(lambda row: iban_kontrol.hesap_ek_no(row['IBAN NO']), axis=1).apply(pd.to_numeric)
+		df = df[['SIRA NO', 'TC KIMLIK NO', 'HESAP NO', 'EK NO', 'ADI SOYADI', 'MAAŞ TUTARI']]
+
 	# Taslak Excel Dosyamız
 	excel_dosyasi = openpyxl.load_workbook(f'{data["dosya"]}')
 
@@ -177,10 +184,19 @@ def BankaListesi(banka_listesi, data):
 	print("\nBanka Listesi başarılı bir şekilde oluşturulmuştur.")
 
 if __name__ == '__main__':
+	print("##################################################################################")	
+	print("# LÜTFEN DİKKATLİ OKUYALIM!!!                                                    #")
+	print("# Ziraat Katılım Bankası kullananlar, /banka/banka_listesi_olustur.py dosyasında #")
+	print("# bulunan 135, 136 ve 137. satırlardaki verileri                                 #")
+	print("# ------------------------------------------------------------------------------ #")	
+	print("# Albaraka Türk Bankası kullananlar ise /banka/albaraka_turk.xlsx dosyasındaki   #")
+	print("# c7, c8 ve c9 hücrelerindeki verileri kendi kurumlarına göre değiştirsinler!!!  #")
+	print("##################################################################################")
 	banka_listesi = glob.glob('*BankaListe*')
 	data = [{'sira': 1, 'banka_adi': 'Ziraat Katılım (Maaş)', 'dosya_adi': 'ziraat_katilim_maas', 'dosya': 'ziraat_katilim_maas.xlsx'},
 			{'sira': 2, 'banka_adi': 'Ziraat Katılım (Diğer)', 'dosya_adi': 'ziraat_katilim_diger', 'dosya': 'ziraat_katilim_diger.xlsx'},
-			{'sira': 3, 'banka_adi': 'Albaraka Türk', 'dosya_adi': 'albarakaturk', 'dosya': 'albaraka_turk.xlsx'}]
+			{'sira': 3, 'banka_adi': 'Albaraka Türk', 'dosya_adi': 'albarakaturk', 'dosya': 'albaraka_turk.xlsx'},
+			{'sira': 4, 'banka_adi': 'Kuveyt Türk', 'dosya_adi': 'kuveytturk', 'dosya': 'kuveytturk.xlsx'}]
 
 	datalist = [x for x in data]
 	for n,i in enumerate(datalist, 1):
