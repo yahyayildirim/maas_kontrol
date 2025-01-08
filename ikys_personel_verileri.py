@@ -26,10 +26,11 @@ bu_ay = datetime.now().strftime("%B")
 def ikys_personel_verileri():
 	#İKYSden indirdiğimiz dosya, html formatında olduğu için önce read_html metodu ile açıp, xlsx formatında tekrar kaydediyoruz.
 	bu_dizin = os.path.dirname(__file__) + '/ikys/'
-	dosya =glob(bu_dizin + "Personel Rapor*.xls")
+	dosya = glob(bu_dizin + "Personel Rapor*.xls")
 	if dosya:
-		df = pd.read_html(''.join(dosya))
-		df = pd.DataFrame(df[0])
+		for d in dosya:
+			df = pd.read_html(''.join(d))
+			df = pd.DataFrame(df[0])
 
 	else:
 		print("/ikys klasöründe Personel Rapor dosyası yok. Lütfen tekrar deneyin.")
@@ -56,8 +57,7 @@ def ikys_personel_verileri():
 			df['Ünvan'][i] = df.iloc[i]['Hizmet Cetveli Son Satır Unvanı']
 
 	# Bize lazım olan sütunları çekiyoruz.
-	df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Ünvan', 'Öğrenim Durumu-Okul-Fakülte-Bölüm', 'Sendika', 'Diyanete Giriş Tarihi', 'İlk Memuriyete Başlama Tarihi', 'Ödenilecek Derece/Kademe',
-	'Hizmet Süresi (Ay)', 'Hizmet Süresi (Yıl)', 'İzin Adı']]
+	df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Ünvan', 'Öğrenim Durumu-Okul-Fakülte-Bölüm', 'Diyanete Giriş Tarihi', 'Ödenilecek Derece/Kademe', 'Hizmet Süresi (Ay)', 'Hizmet Süresi (Yıl)', 'İzin Adı']]
 
 	# Eğer Ünvan sütunu boş ise Vekil olarak değiştirmesini sağlıyoruz.
 	#df['Ünvan'] = df['Ünvan'].fillna('Vekil')
