@@ -26,23 +26,34 @@ bu_ay = datetime.now().strftime("%B")
 def ikys_personel_verileri():
 	#İKYSden indirdiğimiz dosya, html formatında olduğu için önce read_html metodu ile açıp, xlsx formatında tekrar kaydediyoruz.
 	bu_dizin = os.path.dirname(__file__) + '/ikys/'
-	dosya = glob(bu_dizin + "Personel Rapor*.xls")
-	if dosya:
-		for d in dosya:
-			df = pd.read_html(''.join(d))
-			df = pd.DataFrame(df[0])
 
-	else:
-		print("/ikys klasöründe Personel Rapor dosyası yok. Lütfen tekrar deneyin.")
-		sys.exit()
+	# Klasördeki tüm Excel dosyalarını listele
+	dosyalar = glob(f"{bu_dizin}/*.xls")
 
-	df.to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/Personel_Raporu_Temiz.xlsx', index=False, freeze_panes=(1,0))
+	# Dosyaların varlığını kontrol et
+	if not dosyalar:
+	    raise FileNotFoundError("Klasörde hiçbir HTML barındıran dosya bulunamadı!")
+
+	# İlk dosyanın ilk tablosunu okuyarak başlangıç noktası yap
+	ilk_tablo = pd.read_html(dosyalar[0])  # Tablolar listesi döner
+	birlesik_df = ilk_tablo[0]  # İlk tabloyu al
+
+	# Diğer dosyaların tablolarını sırayla birleştir
+	for dosya in dosyalar[1:]:
+	    tablolar = pd.read_html(dosya)  # Dosyadaki tüm tablolar
+	    df = tablolar[0]  # İlk tabloyu al
+	    if "Sicil" not in df.columns:
+	        raise KeyError(f"Dosyada 'Sicil No' sütunu bulunamadı: {dosya}")
+	    birlesik_df = pd.merge(birlesik_df, df, on="Sicil", how="inner")  # Birleştirme işlemi
+
+	# Sonuçları yeni bir Excel dosyasına kaydet
+	birlesik_df.to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/Personel_Raporu_Temiz.xlsx', index=False, freeze_panes=(1,0))
 
 	#xlsx formatına çevirdiğimiz dosyamızı read_excel metodu ile açıp, DataFrame aktarıyoruz.
 	#df = pd.DataFrame(pd.read_excel('./ikys/Personel_Rapor_Temiz.xlsx'))
 
 	# Boş olan ve değeri bulunmayan satırları siliyoruz.
-	df = df.dropna(how='all', axis=0)
+	df = birlesik_df.dropna(how='all', axis=0)
 
 	# Sadece memur ve vekil personel ile işlem yapacağımız için onları alıyoruz ve sözleşmelileri çıkarıyoruz.
 	df = df[df['Personel Tipi'].isin(['Memur', 'Vekil'])]
