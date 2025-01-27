@@ -36,8 +36,7 @@ def ikys_personel_verileri():
 
 	# İlk dosyanın ilk tablosunu okuyarak başlangıç noktası yap
 	# İKYS Sistemi -> Personel Sorgulama alanından alınan Rapor
-	# Birinci Liste : Sicil, TC Kimlik, Adı Soyadı, Sınıf, Ünvan, Diyanete Giriş Tarihi, Ödenilecek Derece/Kademe, İzin Adı
-	# İkinci  Liste : Sicil, Öğrenim Durumu-Okul-Fakülte-Bölüm, Hizmet Cetveli Son Satır Unvanı
+	# Sicil, TC Kimlik, Adı Soyadı, Ünvan, Sınıf, Öğrenim Durumu-Okul-Fakülte-Bölüm, Diyanete Giriş Tarihi, Personel Tipi, Ödenilecek Derece/Kademe, İzin Adı
 
 	ilk_tablo = pd.read_html(dosyalar[0])  # Tablolar listesi döner
 	birlesik_df = ilk_tablo[0]  # İlk tabloyu al
@@ -91,7 +90,7 @@ def ikys_personel_verileri():
 	# Sadece memur ve vekil personel ile işlem yapacağımız için onları alıyoruz ve sözleşmelileri çıkarıyoruz.
 	df = df[df['Personel Tipi'].isin(['Memur', 'Vekil'])]
 
-	# Mükerrer kayıtlarıda çıkarıyoruz.
+	# Mükerrer kayıtları çıkarıyoruz.
 	df = df.drop_duplicates(subset=['Sicil'], ignore_index=True)
 
 	#for i in df.index:
