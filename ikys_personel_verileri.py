@@ -35,6 +35,10 @@ def ikys_personel_verileri():
 	    raise FileNotFoundError("Klasörde hiçbir HTML barındıran dosya bulunamadı!")
 
 	# İlk dosyanın ilk tablosunu okuyarak başlangıç noktası yap
+	# İKYS Sistemi -> Personel Sorgulama alanından alınan Rapor
+	# Birinci Liste : Sicil, TC Kimlik, Adı Soyadı, Sınıf, Ünvan, Diyanete Giriş Tarihi, Ödenilecek Derece/Kademe, İzin Adı
+	# İkinci  Liste : Sicil, Öğrenim Durumu-Okul-Fakülte-Bölüm, Hizmet Cetveli Son Satır Unvanı
+
 	ilk_tablo = pd.read_html(dosyalar[0])  # Tablolar listesi döner
 	birlesik_df = ilk_tablo[0]  # İlk tabloyu al
 
@@ -43,11 +47,11 @@ def ikys_personel_verileri():
 	    tablolar = pd.read_html(dosya)  # Dosyadaki tüm tablolar
 	    df = tablolar[0]  # İlk tabloyu al
 	    if "Sicil" not in df.columns:
-	        raise KeyError(f"Dosyada 'Sicil No' sütunu bulunamadı: {dosya}")
+	        raise KeyError(f"Dosyada 'Sicil' sütunu bulunamadı: {dosya}")
 	    birlesik_df = pd.merge(birlesik_df, df, on="Sicil", how="inner")  # Birleştirme işlemi
 
-	# Sonuçları yeni bir Excel dosyasına kaydet
-	birlesik_df.to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/Personel_Raporu_Temiz.xlsx', index=False, freeze_panes=(1,0))
+	# Sonuçları yeni bir Excel dosyasına kaydetmek
+	#birlesik_df.to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/Personel_Raporu_Temiz.xlsx', index=False, freeze_panes=(1,0))
 
 	#xlsx formatına çevirdiğimiz dosyamızı read_excel metodu ile açıp, DataFrame aktarıyoruz.
 	#df = pd.DataFrame(pd.read_excel('./ikys/Personel_Rapor_Temiz.xlsx'))
@@ -55,24 +59,54 @@ def ikys_personel_verileri():
 	# Boş olan ve değeri bulunmayan satırları siliyoruz.
 	df = birlesik_df.dropna(how='all', axis=0)
 
+	#########################################################################################
+	# Sicil sütunundaki birleşik hücreleri doldurmak için ffill kullanın
+	df["Sicil"] = df["Sicil"].fillna(method="ffill")
+
+	# Regex kullanarak öğrenim verisinde tarih ile biten kayıtları ayrı bir satır olarak ayırma
+	expanded_rows = []
+
+	for _, row in df.iterrows():
+	    sicil = row["Sicil"]
+	    details = row["Öğrenim Durumu-Okul-Fakülte-Bölüm"]
+	    other_columns = row.drop(["Sicil", "Öğrenim Durumu-Okul-Fakülte-Bölüm"]).to_dict()
+
+	    # Tarihler ile biten kayıtları yakalayın
+	    matches = re.findall(r".*?\d{2}\.\d{2}\.\d{4}", details)
+
+	    # Her eşleşmeyi detay olarak ekle
+	    for match in matches:
+	        expanded_row = {"Sicil": sicil, "Öğrenim Durumu-Okul-Fakülte-Bölüm": match.strip()}
+	        expanded_row.update(other_columns)  # Diğer sütunları ekleyin
+	        expanded_rows.append(expanded_row)
+
+	# Yeni DataFrame oluştur
+	new_df = pd.DataFrame(expanded_rows)
+
+	# En yüksek dereceli eğitimi seçme: Her Sicil için son satırı al
+	df = new_df.groupby("Sicil").tail(1).reset_index(drop=True)
+
+	#########################################################################################
+
 	# Sadece memur ve vekil personel ile işlem yapacağımız için onları alıyoruz ve sözleşmelileri çıkarıyoruz.
 	df = df[df['Personel Tipi'].isin(['Memur', 'Vekil'])]
 
 	# Mükerrer kayıtlarıda çıkarıyoruz.
 	df = df.drop_duplicates(subset=['Sicil'], ignore_index=True)
 
-	for i in df.index:
-		Ünvan = df.iloc[i]['Ünvan']
-		if pd.isna(Ünvan):
-			#print(df.iloc[i]['Hizmet Cetveli Son Satır Unvanı'])
-			df['Ünvan'][i] = df.iloc[i]['Hizmet Cetveli Son Satır Unvanı']
+	#for i in df.index:
+	#	Ünvan = df.iloc[i]['Ünvan']
+	#	if pd.isna(Ünvan):
+	#		#print(df.iloc[i]['Hizmet Cetveli Son Satır Unvanı'])
+	#		df['Ünvan'][i] = df.iloc[i]['Hizmet Cetveli Son Satır Unvanı']
 
 	# Bize lazım olan sütunları çekiyoruz.
-	df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Ünvan', 'Öğrenim Durumu-Okul-Fakülte-Bölüm', 'Diyanete Giriş Tarihi', 'Ödenilecek Derece/Kademe', 'Hizmet Süresi (Ay)', 'Hizmet Süresi (Yıl)', 'İzin Adı']]
+	df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Ünvan', 'Öğrenim Durumu-Okul-Fakülte-Bölüm', 'Diyanete Giriş Tarihi', 'Ödenilecek Derece/Kademe', 'İzin Adı']]
 
 	# Eğer Ünvan sütunu boş ise Vekil olarak değiştirmesini sağlıyoruz.
 	#df['Ünvan'] = df['Ünvan'].fillna('Vekil')
-	df.fillna({'Sınıf': 'DH', 'Ünvan': 'Vekil'}, inplace=True)
+	df.fillna({'Sınıf': 'Din Hizmetleri', 'Ünvan': 'Vekil'}, inplace=True)
+	#df.to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/Personel_Raporu_Temiz.xlsx', index=False, freeze_panes=(1,0))
 
 	# İKYS raporundaki öğrenim durumu çok uzun ve karmaşık olduğu için, regex ve replace metodları ile istediğimiz formata çeviriyoruz.
 	for i in df["Öğrenim Durumu-Okul-Fakülte-Bölüm"].tolist():
