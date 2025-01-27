@@ -21,7 +21,7 @@ warnings.filterwarnings(action='ignore', category=UserWarning, module='openpyxl'
 bu_yil = datetime.now().year
 bu_ay = datetime.now().strftime("%B")
 
-def kbs_temiz_veri():
+def kbs_bordro_verileri():
 	#İKYSden indirdiğimiz dosya, html formatında olduğu için önce read_html metodu ile açıp, xlsx formatında tekrar kaydediyoruz.
 	bu_dizin = os.path.dirname(__file__) + '/kbs/'
 	dosya =glob(bu_dizin + "BordroDokumu*.xlsx")
@@ -50,7 +50,7 @@ def kbs_temiz_veri():
 		df_list.append(pd.DataFrame(df_say.values, columns=sutun))
 		say = say + 1
 	df = pd.concat(df_list, axis=1)
-	df.to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/Bordro_Dokumu_Temiz.xlsx', index=False, freeze_panes=(1,0))
+	#df.to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/Bordro_Dokumu_Temiz.xlsx', index=False, freeze_panes=(1,0))
 	print('%10')
 
 #def kbs_bordro_verileri():
@@ -130,5 +130,4 @@ def kbs_temiz_veri():
 	print('%20')
 
 if __name__ == '__main__':
-	kbs_temiz_veri()
-	#kbs_bordro_verileri()
+	kbs_bordro_verileri()
