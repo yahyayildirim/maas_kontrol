@@ -15,7 +15,7 @@ locale.setlocale(locale.LC_ALL, 'tr_TR.UTF-8')
 def personel_aile_bilgileri(tcno):
 	#df = pd.read_csv("/home/yahya/PersonellerinAileBilgileri.csv")
 	bu_dizin = os.path.dirname(__file__) + '/ikys/'
-	dosya =glob(bu_dizin + "*PersonellerinAileBilgileri*")
+	dosya = glob(bu_dizin + "*PersonellerinAileBilgileri*")
 	if dosya:
 		df = pd.read_csv(''.join(dosya))
 	else:
