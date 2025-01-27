@@ -22,7 +22,7 @@ print("Lütfen bekleyiniz...")
 
 if __name__ == "__main__":
 	import kbs_bordro_verileri
-	kbs_bordro_verileri.kbs_temiz_veri()
+	kbs_bordro_verileri.kbs_bordro_verileri()
 
 	import ikys_personel_verileri
 	ikys_personel_verileri.ikys_personel_verileri()
@@ -31,11 +31,11 @@ if __name__ == "__main__":
 	verileri_raporla.raporla()
 
 	import kontrol_raporu_hazirla
-	kontrol_raporu_hazirla.kontrol_raporu_v1()
+	#kontrol_raporu_hazirla.kontrol_raporu_v1()
 	kontrol_raporu_hazirla.kontrol_raporu_v2()
 
-	import emsan_veri_hazirla
-	emsan_veri_hazirla.emsan_veri()
+	#import emsan_veri_hazirla
+	#emsan_veri_hazirla.emsan_veri()
 
 	import hatalar_icin_aciklama_ekle
 	hatalar_icin_aciklama_ekle.aciklama_ekle()
