@@ -134,6 +134,7 @@ def ikys_personel_verileri():
 	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Memur.*Ş.*)', value=r'Memur(Ş)')
 	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Hiz.*Ş.*)', value=r'Hzmetli(Ş)')
 	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Kaloriferci)', value=r'Kaloriferc')
+	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Uzman\sVaiz.*)', value=r'Uzman Vaiz')
 	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Vaiz.*)', value=r'Vaiz')
 	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Cez.*)', value=r'Cezv.Vaizi')
 	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Din.*)', value=r'Din Hz.Uzm')
