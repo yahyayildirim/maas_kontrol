@@ -63,27 +63,27 @@ def ikys_personel_verileri():
 	df["Sicil"] = df["Sicil"].fillna(method="ffill")
 
 	# Regex kullanarak öğrenim verisinde tarih ile biten kayıtları ayrı bir satır olarak ayırma
-	expanded_rows = []
+	ayrilan_satirlar = []
 
-	for _, row in df.iterrows():
-	    sicil = row["Sicil"]
-	    details = row["Öğrenim Durumu-Okul-Fakülte-Bölüm"]
-	    other_columns = row.drop(["Sicil", "Öğrenim Durumu-Okul-Fakülte-Bölüm"]).to_dict()
+	for _, satir in df.iterrows():
+	    sicil = satir["Sicil"]
+	    ogrenim = satir["Öğrenim Durumu-Okul-Fakülte-Bölüm"]
+	    diger_sutunlar = satir.drop(["Sicil", "Öğrenim Durumu-Okul-Fakülte-Bölüm"]).to_dict()
 
 	    # Tarihler ile biten kayıtları yakalayın
-	    matches = re.findall(r".*?\d{2}\.\d{2}\.\d{4}", details)
+	    eslesenler = re.findall(r".*?\d{2}\.\d{2}\.\d{4}", ogrenim)
 
 	    # Her eşleşmeyi detay olarak ekle
-	    for match in matches:
-	        expanded_row = {"Sicil": sicil, "Öğrenim Durumu-Okul-Fakülte-Bölüm": match.strip()}
-	        expanded_row.update(other_columns)  # Diğer sütunları ekleyin
-	        expanded_rows.append(expanded_row)
+	    for eslesen in eslesenler:
+	        ayrilan_satir = {"Sicil": sicil, "Öğrenim Durumu-Okul-Fakülte-Bölüm": eslesen.strip()}
+	        ayrilan_satir.update(diger_sutunlar)  # Diğer sütunları ekleyin
+	        ayrilan_satirlar.append(ayrilan_satir)
 
 	# Yeni DataFrame oluştur
-	new_df = pd.DataFrame(expanded_rows)
+	yeni_df = pd.DataFrame(ayrilan_satirlar)
 
 	# En yüksek dereceli eğitimi seçme: Her Sicil için son satırı al
-	df = new_df.groupby("Sicil").tail(1).reset_index(drop=True)
+	df = yeni_df.groupby("Sicil").tail(1).reset_index(drop=True)
 
 	#########################################################################################
 
@@ -95,6 +95,7 @@ def ikys_personel_verileri():
 
 	#for i in df.index:
 	#	Ünvan = df.iloc[i]['Ünvan']
+	#	print(Ünvan)
 	#	if pd.isna(Ünvan):
 	#		#print(df.iloc[i]['Hizmet Cetveli Son Satır Unvanı'])
 	#		df['Ünvan'][i] = df.iloc[i]['Hizmet Cetveli Son Satır Unvanı']
