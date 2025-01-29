@@ -22,6 +22,7 @@ pd.options.mode.chained_assignment = None  # default='warn'
 
 bu_yil = datetime.now().year
 bu_ay = datetime.now().strftime("%B")
+unvan_df = pd.DataFrame(pd.read_excel(f'{os.path.dirname(__file__)}/maas_verileri.xlsx', sheet_name=4))
 
 def ikys_personel_verileri():
 	#İKYSden indirdiğimiz dosya, html formatında olduğu için önce read_html metodu ile açıp, xlsx formatında tekrar kaydediyoruz.
@@ -86,6 +87,14 @@ def ikys_personel_verileri():
 	df = yeni_df.groupby("Sicil").tail(1).reset_index(drop=True)
 
 	#########################################################################################
+	# unvan_df'deki unvan_sira_no değerlerini bir sözlük (dictionary) olarak kaydedelim
+	unvan_bilgileri = unvan_df.set_index('unvan_sira_no')[['unvan_adi', 'unvan_sinifi', 'personel_tipi']].to_dict(orient='index')
+
+	# df'ye yeni sütunları ekleyelim
+	df['Ünvan'] = df['Kadro Ünvan Sıra No'].map(lambda x: unvan_bilgileri.get(x, {}).get('unvan_adi', None))
+	df['Sınıf'] = df['Kadro Ünvan Sıra No'].map(lambda x: unvan_bilgileri.get(x, {}).get('unvan_sinifi', None))
+	df['Personel Tipi'] = df['Kadro Ünvan Sıra No'].map(lambda x: unvan_bilgileri.get(x, {}).get('personel_tipi', 'Vekil'))
+	#########################################################################################
 
 	# Sadece memur ve vekil personel ile işlem yapacağımız için onları alıyoruz ve sözleşmelileri çıkarıyoruz.
 	df = df[df['Personel Tipi'].isin(['Memur', 'Vekil'])]
@@ -149,7 +158,6 @@ def ikys_personel_verileri():
 
 	# Ödenilecek Derece/Kademe sütunundaki parantezleri siliyoruz
 	df['Ödenilecek Derece/Kademe'].replace(regex=True, inplace=True, to_replace=r'[()]', value=r'')
-
 	df['Hizmet Süresi (Yıl)'] = bu_yil - pd.to_datetime(pd.Series(df['Diyanete Giriş Tarihi']), format='%d.%m.%Y').dt.year
 	#df['Hizmet Süresi (Yıl)'] = bu_yil - pd.to_datetime(pd.Series(df['İlk Memuriyete Başlama Tarihi']), format='%d.%m.%Y').dt.year
 
