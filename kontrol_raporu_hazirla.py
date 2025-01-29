@@ -15,8 +15,8 @@ bu_yil = datetime.now().year
 bu_ay = datetime.now().strftime("%B")
 
 # KBS ve İKYS verilerini DataFrame ekliyoruz.
-kbs_verisi = pd.DataFrame(pd.read_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/kbs_bordro_verileri.xlsx'))
-ikys_verisi = pd.DataFrame(pd.read_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/ikys_personel_verileri.xlsx'))
+kbs_verisi = pd.DataFrame(pd.read_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/.kbs_bordro_verileri.xlsx'))
+ikys_verisi = pd.DataFrame(pd.read_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/.ikys_personel_verileri.xlsx'))
 
 def kontrol_raporu_v1():
     if ikys_verisi.shape == kbs_verisi.shape:
@@ -56,7 +56,7 @@ def kontrol_raporu_v2():
             df_rapor = pd.DataFrame(np.where(data.ne(veri, level=0), renk, ''), index=data.index, columns=data.columns)
             return df_rapor
 
-        df_fark.style.apply(arkaplani_renklendir, axis=None).to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/maas_kontrol_raporu_v2.xlsx', engine='openpyxl', freeze_panes=(2,1))
+        df_fark.style.apply(arkaplani_renklendir, axis=None).to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/1-maas_kontrol_raporu_v2.xlsx', engine='openpyxl', freeze_panes=(2,1))
         print('%95')
 
     else:

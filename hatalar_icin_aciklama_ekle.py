@@ -16,7 +16,7 @@ bu_yil = datetime.now().year
 bu_ay = datetime.now().strftime('%B')
 
 bu_dizin = os.path.dirname(__file__) + '/rapor/'
-excel_file =glob(bu_dizin.replace('./', '') + str(bu_yil) + '/' + str(bu_ay) + '/maas_kontrol_raporu_v2.xlsx')
+excel_file =glob(bu_dizin.replace('./', '') + str(bu_yil) + '/' + str(bu_ay) + '/1-maas_kontrol_raporu_v2.xlsx')
 
 wb = load_workbook(''.join(excel_file), data_only = True)
 sh = wb.worksheets[0]
@@ -89,7 +89,7 @@ def aciklama_ekle():
                 if sh[f'{_get_column_letter(j-1)}1'].value == 'İlaveÖd.(375.40':
                     sh.cell(row=i, column=j).comment = Comment(f'{hata_kodlari.ilave_odeme_hata}','')
 
-    wb.save('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/maas_kontrol_raporu_v2.xlsx')
+    wb.save('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/1-maas_kontrol_raporu_v2.xlsx')
     print('%100')
     x = input('İşleminiz başarılı bir şekilde tamamlanmıştır.\nPencereyi kapatmak için enter tuşa basın.')
     sys.exit(x)

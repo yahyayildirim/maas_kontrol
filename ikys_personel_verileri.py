@@ -33,7 +33,7 @@ def ikys_personel_verileri():
 
 	# Dosyaların varlığını kontrol et
 	if not dosyalar:
-	    raise FileNotFoundError("Klasörde hiçbir HTML barındıran dosya bulunamadı!")
+	    raise FileNotFoundError("Klasörde .xls uzantılı herhangi dosya bulunamadı!")
 
 	# İlk dosyanın ilk tablosunu okuyarak başlangıç noktası yap
 	# İKYS Sistemi -> Personel Sorgulama alanından alınan Rapor
@@ -46,8 +46,8 @@ def ikys_personel_verileri():
 	for dosya in dosyalar[1:]:
 	    tablolar = pd.read_html(dosya)  # Dosyadaki tüm tablolar
 	    df = tablolar[0]  # İlk tabloyu al
-	    if "Sicil" not in df.columns:
-	        raise KeyError(f"Dosyada 'Sicil' sütunu bulunamadı: {dosya}")
+	    if "Sicil" or "Kadro Ünvan Sıra No" not in df.columns:
+	        raise KeyError(f"Dosyada 'Sicil' ve 'Kadro Ünvan Sıra No' sütunu bulunamadı: {dosya}")
 	    birlesik_df = pd.merge(birlesik_df, df, on="Sicil", how="inner")  # Birleştirme işlemi
 
 	# Sonuçları yeni bir Excel dosyasına kaydetmek
@@ -213,7 +213,7 @@ def ikys_personel_verileri():
 	df.sort_values(by=['TC Kimlik'], inplace=True, ignore_index=True)
 
 	# DataFrame içinde topladığımız ve sütunlarını belirlediğimiz verilerimizi excele xlsx formatında aktarıyoruz. freeze_panes değeri ile ilk satır ve ilk iki sütunu donduruyoruz.
-	df.to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/ikys_personel_verileri.xlsx', index=False, freeze_panes=(1,2))
+	df.to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/.ikys_personel_verileri.xlsx', index=False, freeze_panes=(1,2))
 	print('%30')
 
 if __name__ == "__main__":

@@ -126,7 +126,7 @@ def kbs_bordro_verileri():
 	df.sort_values(by=['TC Kimlik'], inplace=True, ignore_index=True)
 
 	# DataFrame içinde topladığımız ve sütunlarını belirlediğimiz verilerimizi excele xlsx formatında aktarıyoruz. freeze_panes değeri ile ilk satır ve ilk iki sütunu donduruyoruz.
-	df.to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/kbs_bordro_verileri.xlsx', index=False, freeze_panes=(1,2))
+	df.to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/.kbs_bordro_verileri.xlsx', index=False, freeze_panes=(1,2))
 	print('%20')
 
 if __name__ == '__main__':
