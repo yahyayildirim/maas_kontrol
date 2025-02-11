@@ -216,5 +216,6 @@ def ikys_personel_verileri():
 	df.to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/.ikys_personel_verileri.xlsx', index=False, freeze_panes=(1,2))
 	print('%30')
 
+
 if __name__ == "__main__":
 	ikys_personel_verileri()
