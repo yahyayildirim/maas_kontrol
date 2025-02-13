@@ -22,7 +22,11 @@ pd.options.mode.chained_assignment = None  # default='warn'
 
 bu_yil = datetime.now().year
 bu_ay = datetime.now().strftime("%B")
-unvan_df = pd.DataFrame(pd.read_excel(f'{os.path.dirname(__file__)}/maas_verileri.xlsx', sheet_name=4))
+
+
+def ikys_unvan_verileri():
+	unvan_df = pd.DataFrame(pd.read_excel(f'{os.path.dirname(__file__)}/maas_verileri.xlsx', sheet_name=4))
+	return unvan_df
 
 def ikys_personel_verileri():
 	#İKYSden indirdiğimiz dosya, html formatında olduğu için önce read_html metodu ile açıp, xlsx formatında tekrar kaydediyoruz.
@@ -87,6 +91,9 @@ def ikys_personel_verileri():
 	df = yeni_df.groupby("Sicil").tail(1).reset_index(drop=True)
 
 	#########################################################################################
+	#maas_verileri.xlsx dosyasının kadro_unvan_sira_no sayfasında aynı ünvan birden fazla yazılmış ise teke düşür
+	unvan_df = ikys_unvan_verileri().groupby('unvan_sira_no').first().reset_index()
+
 	# unvan_df'deki unvan_sira_no değerlerini bir sözlük (dictionary) olarak kaydedelim
 	unvan_bilgileri = unvan_df.set_index('unvan_sira_no')[['unvan_adi', 'unvan_sinifi', 'personel_tipi']].to_dict(orient='index')
 

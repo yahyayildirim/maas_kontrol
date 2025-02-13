@@ -79,7 +79,6 @@ def kbs_bordro_verileri():
 
 	# Hizmet Sın.-Ünvan sütununu Sınıf ve Unvan olarak iki sutüna ayırıyoruz.
 	#df['Hizmet Sın.-Ünvan'].replace(regex=True, inplace=True, to_replace=r'-Hat.', value=r'.Hat.')
-	
 	df[['Sınıf', 'Ünvan']] = df['Hizmet Sın.-Ünvan'].str.split('-', n=1, expand=True)
 
 	# Öd.Es.D.-K. Em.Es.D.-K. sütununu 'Derece-Kademe' ve 'Yan Ödeme' olarak iki sutüna ayırıyoruz.
