@@ -41,7 +41,7 @@ def ikys_personel_verileri():
 
 	# İlk dosyanın ilk tablosunu okuyarak başlangıç noktası yap
 	# İKYS Sistemi -> Personel Sorgulama alanından alınan Rapor
-	# Sicil, TC Kimlik, Adı Soyadı, Ünvan, Sınıf, Öğrenim Durumu-Okul-Fakülte-Bölüm, Diyanete Giriş Tarihi, Personel Tipi, Ödenilecek Derece/Kademe, İzin Adı
+	# Sicil, TC Kimlik, Adı Soyadı, Kadro Ünvan Sıra No, Öğrenim Durumu-Okul-Fakülte-Bölüm, Diyanete Giriş Tarihi, Ödenilecek Derece/Kademe, İzin Adı
 
 	ilk_tablo = pd.read_html(dosyalar[0])  # Tablolar listesi döner
 	birlesik_df = ilk_tablo[0]  # İlk tabloyu al
