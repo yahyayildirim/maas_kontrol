@@ -22,7 +22,7 @@ def gosterge_puani(derece,kademe):
 	# derece ve kademe girdisini alarak yan ödeme puanını verir
 
 def aylik_katsayi(gosterge_puani, unvan, izin):
-	vekilper = ['Vekil']	
+	vekilper = ['Vekil İ-H', 'Vekil M-K']	
 	if izin == "Aylıksız İzin" or unvan == "İl Müftüsü":
 		aylik_tutar = 0
 	elif unvan in vekilper:
@@ -56,7 +56,7 @@ def yan_odeme(gosterge_puani, unvan):
 	if unvan == "İl Müftüsü":
 		gosterge_puani = 0
 
-	vekilper = ['Vekil']
+	vekilper = ['Vekil İ-H', 'Vekil M-K']
 	if unvan in vekilper:
 		if bu_ay == "Ocak":
 			yan_odeme_tutar = df_1['yan_odeme_katsayi'].iloc[-2] * gosterge_puani
@@ -77,7 +77,7 @@ def taban_aylik(binlik, unvan):
 	# taban_aylik_katsayi x 1000
 
 def ek_gosterge(ek_gosterge, unvan, izin):
-	vekilper = ['Vekil']	
+	vekilper = ['Vekil İ-H', 'Vekil M-K']	
 	if izin == "Aylıksız İzin" or unvan == "İl Müftüsü":
 		return 0
 	elif unvan in vekilper:
@@ -103,7 +103,7 @@ def ozel_hizmet_orani(unvan, derece, ogrenim, izin):
 		return 0
 
 	else:
-		unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp', 'Tekniker', 'Teknisyen', 'Vekil']
+		unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp', 'Tekniker', 'Teknisyen', 'Vekil İ-H', 'Vekil M-K']
 		uz_unvanlar = ['Uzman Vaiz', 'Uz.İm.Hat', 'Kur.Uz.Öğ', 'Baş Müez.Kayyı', 'Baş Vaiz', 'Başimam', 'Kur.Baş.Öğ']
 		#print(unvan, derece, ogrenim)
 		if unvan in unvanlar:
@@ -123,7 +123,7 @@ def ozel_hizmet(unvan, derece, ogrenim, izin):
 	else:
 		unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp',  'Tekniker', 'Teknisyen']
 		uz_unvanlar = ['Uzman Vaiz', 'Uz.İm.Hat', 'Kur.Uz.Öğ', 'Baş Müez.Kayyı', 'Baş Vaiz', 'Başimam', 'Kur.Baş.Öğ']
-		vekilper = ['Vekil']
+		vekilper = ['Vekil İ-H', 'Vekil M-K']
 		#print(unvan, derece, ogrenim)
 
 		#Özel Hizmet Tazminatı = 9500 X Memur Maaş Katsayısı X Özel Hizmet Puanı / 100 formülüyle hesaplanır.
@@ -153,7 +153,7 @@ def ek_odeme_666(unvan, derece, ogrenim, izin):
 	if izin == "Aylıksız İzin":
 		return 0
 	else:
-		unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp',  'Tekniker', 'Teknisyen', 'Vekil']
+		unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp',  'Tekniker', 'Teknisyen', 'Vekil İ-H', 'Vekil M-K']
 		uz_unvanlar = ['Uzman Vaiz', 'Uz.İm.Hat', 'Kur.Uz.Öğ', 'Baş Müez.Kayyı', 'Baş Vaiz', 'Başimam', 'Kur.Baş.Öğ']
 		#print(unvan, derece, ogrenim)
 
@@ -172,7 +172,7 @@ def ek_odeme_666_orani(unvan, derece, ogrenim, izin):
 	if izin == "Aylıksız İzin":
 		return 0
 	else:
-		unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp',  'Tekniker', 'Teknisyen', 'Vekil']
+		unvanlar = ['İmam-Hat.', 'Müez.Kayyı', 'Kur.Krs.Öğ', 'Murakıp',  'Tekniker', 'Teknisyen', 'Vekil İ-H', 'Vekil M-K']
 		uz_unvanlar = ['Uzman Vaiz', 'Uz.İm.Hat', 'Kur.Uz.Öğ', 'Baş Müez.Kayyı', 'Baş Vaiz', 'Başimam', 'Kur.Baş.Öğ']
 		#print(unvan, derece, ogrenim)
 		if unvan in unvanlar:
@@ -265,7 +265,7 @@ def ek_tazminat_puani(unvan, derece, ogrenim):
 
 
 def ilave_odeme_97(unvan, izin):
-	vekilper = ['Vekil']
+	vekilper = ['Vekil İ-H', 'Vekil M-K']
 	if izin == "Aylıksız İzin":
 		ilave_odeme_tutari = 0
 	elif unvan in vekilper:

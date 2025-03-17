@@ -18,7 +18,7 @@ sinif_hata ="""MUHTEMEL HATA SEBEPLERİ:
 unvan_hata ="""MUHTEMEL HATA SEBEPLERİ:
 1- Personelin unvan bilgisi KBS'ye hatalı işlenmiş olabilir.
 2- Personel, unvan değişikliği yapmış ama KBS'den güncellenmemiş olabilir.
-3- vb.
+3- Personel vekil ise hata verebilir, dikkate almayınız.
 """
 
 derece_kademe_hata ="""MUHTEMEL HATA SEBEPLERİ:
@@ -48,10 +48,11 @@ ek_gos_ayligi_hata ="Ek Gösterge Puanı hatalı olunca bu alanda hata vermekted
 yan_odeme_hata ="""MUHTEMEL HATA SEBEPLERİ:
 1- Taşınır Kayıt Yetkilisine 575 puan mali sorumluluk puanı verilmektedir. Bu bir hata değildir. İKYS sisteminde bunu karşılaştıracağımız bir veri olmadığı için program hata olarak algılamaktadır.
 2- Personel, unvan değişikliği yapmış olabilir.
-3- VHKİ olarak görev yapmakta iken, ŞEF unvanına geçen biri, VHKİ görevini de yürütüyor ise 2250 puan alır. Bunu göz önünde bulundurunuz.
-4- Diğer durumlarda Yan Ödeme Kararnamesine bakarak ilgili personelin alması gerektiği tazminat oranını kontrol ediniz.
+3- Personel ay içerisinde rapor almış olabilir, kontrol ediniz.
+4- VHKİ olarak görev yapmakta iken, ŞEF unvanına geçen biri, VHKİ görevini de yürütüyor ise 2250 puan alır. Bunu göz önünde bulundurunuz.
+5- Diğer durumlarda Yan Ödeme Kararnamesine bakarak ilgili personelin alması gerektiği tazminat oranını kontrol ediniz.
    https://www.resmigazete.gov.tr/eskiler/2006/05/20060505-1.htm
-5- Tekniker ve Teknisyen unvanlarında sadece MYO olarak sorgulama yapılmaktadır. Personeliniz Meslek lisesi mezunu ise kontrolünü tazminat cetveline göre yapınız.
+6- Tekniker ve Teknisyen unvanlarında sadece MYO olarak sorgulama yapılmaktadır. Personeliniz Meslek lisesi mezunu ise kontrolünü tazminat cetveline göre yapınız.
 """
 
 yan_odeme_aylik_hata ="Yan Ödeme Puanı hatalı olunca bu alanda hata vermektedir. Puanı düzeltirseniz, bu alanda düzelecektir."
@@ -72,9 +73,10 @@ Diğerleri            : 40
 
 ozel_hiz_taz_puani_hata ="""MUHTEMEL HATA SEBEPLERİ:
 1- Personelin derecesini ve eğitim durumunu kontrol ediniz.
-2- Toplu Sözleşme ile bazı unvanlara ek özel hizmet tazminatı puanı verilmektedir. İlgili dönem toplu sözleşmeye göre verilen puanlar KBS'ye merkez tarafından yüklenmektedir. Buna göre bu oranı KBS üzerinden kontrol ediniz.
-3- Bu tutar 5510'a tabi personelin emekli keseneğini etkilediği için titizlikle kontrol edilmelidir.
-4- Diğer durumlarda aşağıdaki linkten II SAYILI CETVEL ile TOPLU SÖZLEŞME metinlerini kontrol ediniz.
+2- Personel ay içerisinde rapor almış olabilir, kontrol ediniz.
+3- Toplu Sözleşme ile bazı unvanlara ek özel hizmet tazminatı puanı verilmektedir. İlgili dönem toplu sözleşmeye göre verilen puanlar KBS'ye merkez tarafından yüklenmektedir. Buna göre bu oranı KBS üzerinden kontrol ediniz.
+4- Bu tutar 5510'a tabi personelin emekli keseneğini etkilediği için titizlikle kontrol edilmelidir.
+5- Diğer durumlarda aşağıdaki linkten II SAYILI CETVEL ile TOPLU SÖZLEŞME metinlerini kontrol ediniz.
 
 Devlet Memurlarına Ödenecek Zam ve Tazminatlara İlişkin Karar
 https://www.resmigazete.gov.tr/eskiler/2006/05/20060505-1.htm

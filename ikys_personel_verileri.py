@@ -41,7 +41,7 @@ def ikys_personel_verileri():
 
 	# İlk dosyanın ilk tablosunu okuyarak başlangıç noktası yap
 	# İKYS Sistemi -> Personel Sorgulama alanından alınan Rapor
-	# Sicil, TC Kimlik, Adı Soyadı, Kadro Ünvan Sıra No, Öğrenim Durumu-Okul-Fakülte-Bölüm, Diyanete Giriş Tarihi, Ödenilecek Derece/Kademe, İzin Adı
+	# Sicil, TC Kimlik, Adı Soyadı, Kadro Ünvan Sıra No, Görevlendirme Ünvanı, Öğrenim Durumu-Okul-Fakülte-Bölüm, Diyanete Giriş Tarihi, Ödenilecek Derece/Kademe, İzin Adı
 
 	ilk_tablo = pd.read_html(dosyalar[0])  # Tablolar listesi döner
 	birlesik_df = ilk_tablo[0]  # İlk tabloyu al
@@ -95,6 +95,7 @@ def ikys_personel_verileri():
 	unvan_df = ikys_unvan_verileri().groupby('unvan_sira_no').first().reset_index()
 
 	# unvan_df'deki unvan_sira_no değerlerini bir sözlük (dictionary) olarak kaydedelim
+	#df['Kadro Ünvan Sıra No'] = df['Kadro Ünvan Sıra No'].fillna(9999)  # Varsayılan olarak 0 verelim
 	unvan_bilgileri = unvan_df.set_index('unvan_sira_no')[['unvan_adi', 'unvan_sinifi', 'personel_tipi']].to_dict(orient='index')
 
 	# df'ye yeni sütunları ekleyelim
@@ -109,12 +110,10 @@ def ikys_personel_verileri():
 	# Mükerrer kayıtları çıkarıyoruz.
 	df = df.drop_duplicates(subset=['Sicil'], ignore_index=True)
 
-	#for i in df.index:
-	#	Ünvan = df.iloc[i]['Ünvan']
-	#	print(Ünvan)
-	#	if pd.isna(Ünvan):
-	#		#print(df.iloc[i]['Hizmet Cetveli Son Satır Unvanı'])
-	#		df['Ünvan'][i] = df.iloc[i]['Hizmet Cetveli Son Satır Unvanı']
+	for i in df.index:
+		Ünvan = df.iloc[i]['Ünvan']
+		if pd.isna(Ünvan):
+			df['Ünvan'][i] = df.iloc[i]['Görevlendirme Ünvanı']
 
 	# Bize lazım olan sütunları çekiyoruz.
 	df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Ünvan', 'Öğrenim Durumu-Okul-Fakülte-Bölüm', 'Diyanete Giriş Tarihi', 'Ödenilecek Derece/Kademe', 'İzin Adı']]
@@ -208,6 +207,7 @@ def ikys_personel_verileri():
 
 	# aynı şekilde ek ödeme 666 khk tutarını sabitler.py dosyasındaki fonsiyona gerekli parametreleri göndererek hesaplıyoruz.
 	df['Ek Öde.(666 KHK'] = round(df.apply(lambda row: sabitler.ek_odeme_666(row["Ünvan"], row["Derece"], row["ogrenim"], row["İzin Adı"]), axis=1), 2)
+
 	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Vekil.*K)', value=r'Müez.Kayyı')
 	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Vekil.*H)', value=r'İmam-Hat.')
 
