@@ -61,6 +61,8 @@ for i in $(cat moduller.txt);do sudo python3 -m pip install --break-system-packa
 # İKYS ÜZERİNDEN YAPILACAKLAR
 **[Buradaki](https://gitlab.com/yahyayildirim/test/-/tree/main/video_and_picture/maas_kontrol)** ekran görüntülerine bakarak alacağınız raporu Masaüstünde bulunan **maas_kontrol/ikys** klasörüne kopyalayın.
 
+![İKYS->Personel Sorgula](https://gitlab.com/yahyayildirim/test/-/raw/main/video_and_picture/maas_kontrol/rapor_ikys.png)
+
 **ÖNEMLİ NOT:** İndirdiğiniz dosyayı hiç açmayın, olduğu gibi ikys klasörüne taşıyın/kopyalayın. Eğer dosyanın ismi sadece **Personel** ise **Personel Rapor.xls** olarak değiştirin, bunun dışında hiçbir şekilde ismini veya dosya uzantısını değiştirmeyin.
 
 
@@ -68,6 +70,8 @@ for i in $(cat moduller.txt);do sudo python3 -m pip install --break-system-packa
 
 # KBS ÜZERİNDEN YAPILACAKLAR
 **[Buradaki](https://gitlab.com/yahyayildirim/test/-/tree/main/video_and_picture/maas_kontrol)** ekran görüntülerine bakarak alacağınız raporu Masaüstünde bulunan **maas_kontrol/kbs** klasörüne kopyalayın.
+
+![KBS->Raporlar](https://gitlab.com/yahyayildirim/test/-/raw/main/video_and_picture/maas_kontrol/rapor_kbs.png)
 
 **ÖNEMLİ NOT:** Dosya ismini değiştirmenize gerek yoktur. Burada dikkat etmeniz gereken, kbs klasörüne en son indirdiğiniz rapor tek kalsın.
 
