@@ -34,7 +34,7 @@ Bu program ile; İKYS ve KBS sistemlerinde bulunan aşağıdaki veriler karşıl
 # ÖN HAZIRLIK
 1- Başta belirtmem gerikir ki bu programın sağlıklı çalışabilmesi için Python versiyonunun 3.7 ve üzeri olması gerekiyor.
 
-2- Masaüstündeyken sağ tık yaparak `Burada Uçbirim Aç`a tıklıyoruz.
+2- Masaüstündeyken veya herhangi bir konumda boış bir alana sağ tık yaparak `Burada Uçbirim Aç`a tıklıyoruz.
 
 3- Aşağıdaki kodu uçbirime kopyalayın ve enter yapın.
 ```
@@ -44,15 +44,18 @@ sudo apt install -yy git python3-pip
 ```
 git clone https://gitlab.com/yahyayildirim/maas_kontrol.git
 ```
-5- Şimdi Masaüstünde **maas_kontrol** adında bir klasör oluşmuş olması gerekiyor. `cd maas_kontrol` komutu ile klasöre geçiş yapın.
+5- Şimdi **maas_kontrol** adında bir klasör oluşmuş olması gerekiyor. `cd maas_kontrol` komutu ile klasöre geçiş yapın.
 
-6- Aşağıdaki kodu uçbirime yazın/kopyalayın ve enter yapın. Bu aşama bilgisayar özelliklerine göre uzun sürebilir, sabredip bitmesini bekleyin.
+6- Aşağıdaki kodu uçbirime kopyalayın ve enter yapın.
+```
+python3 -m pip config set global.break-system-packages true
+```
 
-Python versiyonunuz 3.10'nun altında ise `--break-system-packages` ibaresini aşağıdaki koddan çıkartmayı unutmayın.
+7- Aşağıdaki kodu uçbirime yazın/kopyalayın ve enter yapın. Bu aşama bilgisayar özelliklerine göre uzun sürebilir, sabredip bitmesini bekleyin.
 ```
-for i in $(cat moduller.txt);do sudo python3 -m pip install --break-system-packages --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org -U $i;done
+for i in $(cat moduller.txt);do sudo python3 -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org -U $i;done
 ```
-**Önemli Not-1: _Domain kullanıcılarında 6. madde hata verecektir. Bu sebeple harici bir internet ile işlem yapmanız gerekmektedir._**
+**Önemli Not-1: _Domain kullanıcılarında 7. madde hata verebilir. Hata alırsanız harici bir internet ile işlem yapmanız gerekmektedir._**
 
 **Önemli Not-2: _Domain kullanıcıları harici internete bağlandıkları halde gitlab'a bağlanamıyorlarsa /etc/resolv.conf dosyasını açıp nameserver 8.8.8.8 olarak düzenleme yapmaları gerekmektedir._**
 
