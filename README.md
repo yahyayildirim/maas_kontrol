@@ -53,7 +53,7 @@ python3 -m pip config set global.break-system-packages true
 
 7- Aşağıdaki kodu uçbirime yazın/kopyalayın ve enter yapın. Bu aşama bilgisayar özelliklerine göre uzun sürebilir, sabredip bitmesini bekleyin.
 ```
-for i in $(cat moduller.txt);do sudo python3 -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org -U $i;done
+for i in $(cat moduller.txt);do python3 -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org -U $i;done
 ```
 **Önemli Not-1: _Domain kullanıcılarında 7. madde hata verebilir. Hata alırsanız harici bir internet ile işlem yapmanız gerekmektedir._**
 
