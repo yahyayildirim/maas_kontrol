@@ -23,7 +23,7 @@ def raporla():
 
 		# KBS Sisteminde bilgisi bulunup, İKYS Sisteminde kaydı bulunmayan Personel
 		kbs_in_ikys_out = kbs_verisi[~kbs_verisi['TC Kimlik'].isin(ikys_verisi['TC Kimlik'])]
-		kbs_in_ikys_out.to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/2-kbsde_olup_ikysde_personel.xlsx', index=False, header=True, freeze_panes=(1,0))
+		kbs_in_ikys_out.to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/2-kbsde_olup_ikysde_olmayan_personel.xlsx', index=False, header=True, freeze_panes=(1,0))
 		print('%50')
 
 		kbs_ikys_esitle = kbs_verisi.loc[kbs_verisi['TC Kimlik'].isin(ikys_verisi['TC Kimlik'])]
