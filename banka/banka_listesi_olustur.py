@@ -133,9 +133,9 @@ def BankaListesi(banka_listesi, data):
 		df['HESAP NO'] = df.apply(lambda row: iban_kontrol.musteri_no(row['IBAN NO']), axis=1).apply(pd.to_numeric)
 		df['EK NO'] = df.apply(lambda row: iban_kontrol.hesap_ek_no(row['IBAN NO']), axis=1).apply(pd.to_numeric)
 		df['VERGI NO'] = ""
-		df['KURUM ŞUBE KODU'] = 20900115047
-		df['KURUM HESAP NO'] = 1748399
-		df['KURUM EK NO'] = 1
+		df['KURUM ŞUBE KODU'] = "BOŞ"
+		df['KURUM HESAP NO'] = "BOŞ"
+		df['KURUM EK NO'] = "BOŞ"
 		df['PARA BIRIMI'] = "TRY"
 		#df['TC KIMLIK NO'] = df['TC KIMLIK NO'].astype(str)
 		df = df[['ADI SOYADI', 'IBAN NO', 'SUBE NO', 'HESAP NO', 'EK NO', 'MAAŞ TUTARI', 'AÇIKLAMA', 'REF', 'VERGI NO', 'TC KIMLIK NO', 'KURUM ŞUBE KODU', 'KURUM HESAP NO', 'KURUM EK NO', 'PARA BIRIMI']]
@@ -148,7 +148,7 @@ def BankaListesi(banka_listesi, data):
 		df['IBAN NO'] = df['IBAN NO'].astype(str)
 		df['VERGI NO'] = ""
 		df['ALICI EMAIL ADRESI'] = ""#df['IBAN NO'].str[13:22].apply(pd.to_numeric)
-		df['OPSIYON GÜN SAYISI'] = "" #df['IBAN NO'].str[22:].apply(pd.to_numeric)
+		df['OPSIYON GÜN SAYISI'] = ""#df['IBAN NO'].str[22:].apply(pd.to_numeric)
 		df['ÖDEME SEBEBİ'] = "P-Personel Ödemeleri"
 		df['ALICI YERLEŞİK BİLGİSİ'] = "Yurtiçi Yerleşik"
 		df['ÖDEME AMACI KATEGORİSİ'] = ""
@@ -172,6 +172,13 @@ def BankaListesi(banka_listesi, data):
 		df['EK NO'] = df.apply(lambda row: iban_kontrol.hesap_ek_no(row['IBAN NO']), axis=1).apply(pd.to_numeric)
 		df = df[['SIRA NO', 'TC KIMLIK NO', 'HESAP NO', 'EK NO', 'ADI SOYADI', 'MAAŞ TUTARI']]
 
+	elif "yapikredi" in f'{data["dosya_adi"]}'.lower():
+		#df['HESAP NO'] = df['IBAN NO'].str[13:20].apply(pd.to_numeric)
+		df['HESAP NO'] = df.apply(lambda row: iban_kontrol.musteri_no(row['IBAN NO']), axis=1).apply(pd.to_numeric)
+		df['ODEMETIPI'] = "MAAŞ"
+		df[['ADI', 'SOYADI']] = df['ADI SOYADI'].str.rsplit(n=1, expand=True)
+		df = df[['HESAP NO', 'TC KIMLIK NO', 'ADI', 'SOYADI', 'MAAŞ TUTARI', 'ODEMETIPI']]
+		
 	# Taslak Excel Dosyamız
 	excel_dosyasi = openpyxl.load_workbook(f'{data["dosya"]}')
 
@@ -196,7 +203,8 @@ if __name__ == '__main__':
 	data = [{'sira': 1, 'banka_adi': 'Ziraat Katılım (Maaş)', 'dosya_adi': 'ziraat_katilim_maas', 'dosya': 'ziraat_katilim_maas.xlsx'},
 			{'sira': 2, 'banka_adi': 'Ziraat Katılım (Diğer)', 'dosya_adi': 'ziraat_katilim_diger', 'dosya': 'ziraat_katilim_diger.xlsx'},
 			{'sira': 3, 'banka_adi': 'Albaraka Türk', 'dosya_adi': 'albarakaturk', 'dosya': 'albaraka_turk.xlsx'},
-			{'sira': 4, 'banka_adi': 'Kuveyt Türk', 'dosya_adi': 'kuveytturk', 'dosya': 'kuveytturk.xlsx'}]
+			{'sira': 4, 'banka_adi': 'Kuveyt Türk', 'dosya_adi': 'kuveytturk', 'dosya': 'kuveytturk.xlsx'},
+			{'sira': 5, 'banka_adi': 'YapıKredi', 'dosya_adi': 'yapikredi', 'dosya': 'yapikredi.xlsx'}]
 
 	datalist = [x for x in data]
 	for n,i in enumerate(datalist, 1):
