@@ -26,7 +26,7 @@ def aylik_katsayi(gosterge_puani, unvan, izin):
 	if izin == "Aylıksız İzin" or unvan == "İl Müftüsü":
 		aylik_tutar = 0
 	elif unvan in vekilper:
-		if bu_ay == "Ocak":
+		if bu_ay == "Ocak" or bu_ay == "Temmuz":
 			aylik_tutar = (df_1['aylik_katsayi'].iloc[-2] * gosterge_puani / 3) * 2
 		else:
 			aylik_tutar = (df_1['aylik_katsayi'].iloc[-1] * gosterge_puani / 3) * 2
@@ -58,7 +58,7 @@ def yan_odeme(gosterge_puani, unvan):
 
 	vekilper = ['Vekil İ-H', 'Vekil M-K']
 	if unvan in vekilper:
-		if bu_ay == "Ocak":
+		if bu_ay == "Ocak" or bu_ay == "Temmuz":
 			yan_odeme_tutar = df_1['yan_odeme_katsayi'].iloc[-2] * gosterge_puani
 		else:
 			yan_odeme_tutar = df_1['yan_odeme_katsayi'].iloc[-1] * gosterge_puani
@@ -81,7 +81,7 @@ def ek_gosterge(ek_gosterge, unvan, izin):
 	if izin == "Aylıksız İzin" or unvan == "İl Müftüsü":
 		return 0
 	elif unvan in vekilper:
-		if bu_ay == "Ocak":
+		if bu_ay == "Ocak" or bu_ay == "Temmuz":
 			ek_gosterge = ((df_1['aylik_katsayi'].iloc[-2] * ek_gosterge) / 3) * 2
 		else:
 			ek_gosterge = ((df_1['aylik_katsayi'].iloc[-1] * ek_gosterge) / 3) * 2
@@ -137,7 +137,7 @@ def ozel_hizmet(unvan, derece, ogrenim, izin):
 		elif unvan == "İl Müftüsü":
 			ozel_hizmet_tutari = 0
 		elif unvan in vekilper:
-			if bu_ay == "Ocak":
+			if bu_ay == "Ocak" or bu_ay == "Temmuz":
 				ozel_hizmet_taz = df_3.loc[(df_3['unvan'] == unvan) & (df_3['derece'] == derece) & (df_3['ogrenim'] == ogrenim), 'oht_orani'].sum()
 				ozel_hizmet_tutari = df_1['aylik_katsayi'].iloc[-2] * ozel_hizmet_taz * 9500 / 100
 			else:
