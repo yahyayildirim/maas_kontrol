@@ -111,6 +111,7 @@ def kbs_bordro_verileri():
 
 	df['666 KHK Oranı'] = round(df.apply(lambda row: sabitler.tutardan_666_orani_bul(row['Ek Öde.(666 KHK']), axis=1))
 
+	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Hzmetli.*)', value=r'Hizmetli')
 
 	# df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Unvan', 'Derece', 'Kademe', 'Yan Ödeme', 'Aylık Tutar', 'Ek Gösterge',
 	#  		'Gösterge Puanı', 'Hizmet Süresi (Yıl)', 'Ek Gös.Ay.', 'Yan Ödeme Aylık',
