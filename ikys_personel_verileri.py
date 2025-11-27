@@ -152,14 +152,15 @@ def ikys_personel_verileri():
 	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Vaiz.*)', value=r'Vaiz')
 	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Cez.*)', value=r'Cezv.Vaizi')
 	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Din.*)', value=r'Din Hz.Uzm')
-	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Eğitim.*)', value=r'Eğt.Uzmanı')
+	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Eğitim\sUzmanı)', value=r'Eğt.Uzmanı')
+	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Eğitim\sGörevlisi)', value=r'Eğitim Gör')
 	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(İma.*)', value=r'İmam-Hat.')
 	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Baş.*İma.*)', value=r'Başimam')
 	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Kur.*Öğre.*)', value=r'Kur.Krs.Öğ')
 	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Kur.*Uz.*)', value=r'Kur.Uz.Öğ')
 	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Müez.*)', value=r'Müez.Kayyı')
 	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Uzman.*İmam.*)', value=r'Uz.İm.Hat')
-	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Ayniyat Saymanı)', value=r'Ayn.Saym.')	
+	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Ayniyat Saymanı)', value=r'Ayn.Saym.')
 
 	# Ödenilecek Derece/Kademe sütunundaki parantezleri siliyoruz
 	df['Ödenilecek Derece/Kademe'].replace(regex=True, inplace=True, to_replace=r'[()]', value=r'')
