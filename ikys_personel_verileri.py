@@ -163,13 +163,14 @@ def ikys_personel_verileri():
 	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Ayniyat Saymanı)', value=r'Ayn.Saym.')
 
 	# Ödenilecek Derece/Kademe sütunundaki parantezleri siliyoruz
-	df['Ödenilecek Derece/Kademe'].replace(regex=True, inplace=True, to_replace=r'[()]', value=r'')
+	df['Ödenilecek Derece/Kademe'].replace(regex=True, inplace=True, to_replace=r'[()]', value='')
+
 	df['Hizmet Süresi (Yıl)'] = bu_yil - pd.to_datetime(pd.Series(df['Diyanete Giriş Tarihi']), format='%d.%m.%Y').dt.year
 	#df['Hizmet Süresi (Yıl)'] = bu_yil - pd.to_datetime(pd.Series(df['İlk Memuriyete Başlama Tarihi']), format='%d.%m.%Y').dt.year
 
 	# Ödenilecek Derece/Kademe sütununu Derece, Kademe ve Ek Gösterge olarak üç sutüna ayırıyoruz. NaN olan değerleri 0 olarak değiştiriyoruz ve tipini integer olarak belirliyoruz.
 	df[['Derece', 'Kademe', 'Ek Gösterge']] = df['Ödenilecek Derece/Kademe'].str.split('-', expand=True).fillna(0).astype(int)
-	df['Derece/Kademe'] = df['Ödenilecek Derece/Kademe'].map(lambda v: '-'.join(v.split('-')[0:2])).fillna(0)
+	df['Derece/Kademe'] = df['Ödenilecek Derece/Kademe'].str.split('-').str[:2].str.join('-')
 
 	# Personelin Derece ve Kademesini alarak yan ödemesini sabitler.py dosyasındaki fonksiyon aracılığı ile maas_verileri.xlsx içerisinden çekiyoruz. 1/4 --> 1500 gibi
 	df['Gösterge Puanı'] = df.apply(lambda row: sabitler.gosterge_puani(row["Derece"], row["Kademe"]), axis=1)
