@@ -1,0 +1,19 @@
+[project]
+name = "maas-kontrol"
+version = "0.1.0"
+description = "KBS ve İKYS verilerini karşılaştırarak muhtemel hataları tespit etmek için yazılmıştır."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "ansicolors",
+    "bottleneck",
+    "jinja2",
+    "lxml",
+    "natsort",
+    "numexpr",
+    "numpy",
+    "odfpy",
+    "openpyxl",
+    "pandas",
+    "xlrd",
+]

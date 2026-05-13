@@ -1,8 +1,6 @@
-pip
-setuptools
 pandas
 numexpr
-numpy==1.26.4
+numpy
 openpyxl
 Bottleneck
 odfpy
