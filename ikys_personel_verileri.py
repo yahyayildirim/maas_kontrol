@@ -64,7 +64,7 @@ def ikys_personel_verileri():
 
 	#########################################################################################
 	# Sicil sütunundaki birleşik hücreleri doldurmak için ffill kullanın
-	df["Sicil"] = df["Sicil"].fillna(method="ffill")
+	df["Sicil"] = df["Sicil"].ffill()
 
 	# Regex kullanarak öğrenim verisinde tarih ile biten kayıtları ayrı bir satır olarak ayırma
 	ayrilan_satirlar = []
@@ -112,7 +112,8 @@ def ikys_personel_verileri():
 	for i in df.index:
 		Ünvan = df.iloc[i]['Ünvan']
 		if pd.isna(Ünvan):
-			df['Ünvan'][i] = df.iloc[i]['Görevlendirme Ünvanı']
+			#df['Ünvan'][i] = df.iloc[i]['Görevlendirme Ünvanı']
+			df.loc[df['Ünvan'].isna(), 'Ünvan'] = df['Görevlendirme Ünvanı']
 
 	# Bize lazım olan sütunları çekiyoruz.
 	df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Ünvan', 'Öğrenim Durumu-Okul-Fakülte-Bölüm', 'Diyanete Giriş Tarihi', 'Ödenilecek Derece/Kademe', 'İzin Adı']]
@@ -135,35 +136,43 @@ def ikys_personel_verileri():
 
 	# Adı ve Soyadını büyük harfe çeviriyoruz. Büyük harfe çevirdiğimizde, küçük i harfi I olarak geçiyor. bunu düzeltmek için de ayrıca replace etmemiz gerekiyor.
 	df['Adı Soyadı'] = df['Adı Soyadı'].str.replace('i', 'İ').str.upper()
-	df['Adı Soyadı'].replace(regex=True, inplace=True, to_replace=r'^(DR. )', value=r'')
+	df['Adı Soyadı'] = df['Adı Soyadı'].replace(regex=True, to_replace=r'^(DR. )', value=r'')
 
 	# Sınıf sütunundaki büyük harfler hariç herşeyi siliyoruz ve geriye sadece GİH,DH,TH,YH ibarelerini bırakıyoruz.
-	df['Sınıf'].replace(regex=True, inplace=True, to_replace=r'([a-z]|\s|ı|ü|ş|ç|ğ|ö|)', value=r'')
+	df['Sınıf'] = df['Sınıf'].replace(regex=True, to_replace=r'([a-z]|\s|ı|ü|ş|ç|ğ|ö|)', value=r'')
 
+	# Ünvan kısaltmaları
 	# Ünvan sütunundaki ikys sisteminde bulunan Ünvanları kbs sistemindekine uyarlıyoruz.
-	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(.*Yar.*)', value=r'İl Müft.Yr')
-	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(İlçe.*)', value=r'İlçe Müft.')
-	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Şube.*)', value=r'Şube Md.')
-	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Veri.*)', value=r'V.H.K.İ.')
-	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Memur.*Ş.*)', value=r'Memur(Ş)')
-	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Hiz.*Ş.*)', value=r'Hzmetli(Ş)')
-	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Kaloriferci)', value=r'Kaloriferc')
-	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Uzman\sVaiz.*)', value=r'Uzman Vaiz')
-	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Vaiz.*)', value=r'Vaiz')
-	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Cez.*)', value=r'Cezv.Vaizi')
-	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Din.*)', value=r'Din Hz.Uzm')
-	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Eğitim\sUzmanı)', value=r'Eğt.Uzmanı')
-	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Eğitim\sGörevlisi)', value=r'Eğitim Gör')
-	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(İma.*)', value=r'İmam-Hat.')
-	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Baş.*İma.*)', value=r'Başimam')
-	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Kur.*Öğre.*)', value=r'Kur.Krs.Öğ')
-	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Kur.*Uz.*)', value=r'Kur.Uz.Öğ')
-	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Müez.*)', value=r'Müez.Kayyı')
-	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Uzman.*İmam.*)', value=r'Uz.İm.Hat')
-	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Ayniyat Saymanı)', value=r'Ayn.Saym.')
+	unvan_kisaltma = {
+		r'.*Yar.*': 'İl Müft.Yr',
+		r'^İlçe.*': 'İlçe Müft.',
+		r'^Şube.*': 'Şube Md.',
+		r'^Veri.*': 'V.H.K.İ.',
+		r'^Memur.*Ş.*': 'Memur(Ş)',
+		r'^Hiz.*Ş.*': 'Hzmetli(Ş)',
+		r'^Kaloriferci': 'Kaloriferc',
+		r'^Uzman\sVaiz.*': 'Uzman Vaiz',
+		r'^Vaiz.*': 'Vaiz',
+		r'^Cez.*': 'Cezv.Vaizi',
+		r'^Din.*Uzmanı': 'Din Hz.Uzm',
+		r'^Eğit.*Uzmanı': 'Eğt.Uzmanı',
+		r'^Eğit.*Görevlisi': 'Eğitim Gör',
+		r'^İma.*': 'İmam-Hat.',
+		r'^Baş.*İma.*': 'Başimam',
+		r'^Baş.*Müe.*': 'Başmüezzin',
+		r'^Kur.*Öğre.*': 'Kur.Krs.Öğ',
+		r'^Kur.*Uz.*': 'Kur.Uz.Öğ',
+		r'^Müez.*': 'Müez.Kayyı',
+		r'^Uzman.*İmam.*': 'Uz.İm.Hat',
+		r'^Ayniyat.*Saymanı': 'Ayn.Saym.',
+		r'^Dini.*Müdürü':'Dini İhtisas Merkezi Müdürü'
+	}
+
+	for p, r in unvan_kisaltma.items():
+		df['Ünvan'] = df['Ünvan'].replace(regex=True, to_replace=p, value=r)
 
 	# Ödenilecek Derece/Kademe sütunundaki parantezleri siliyoruz
-	df['Ödenilecek Derece/Kademe'].replace(regex=True, inplace=True, to_replace=r'[()]', value='')
+	df['Ödenilecek Derece/Kademe'] = df['Ödenilecek Derece/Kademe'].replace(regex=True, to_replace=r'[()]', value='')
 
 	df['Hizmet Süresi (Yıl)'] = bu_yil - pd.to_datetime(pd.Series(df['Diyanete Giriş Tarihi']), format='%d.%m.%Y').dt.year
 	#df['Hizmet Süresi (Yıl)'] = bu_yil - pd.to_datetime(pd.Series(df['İlk Memuriyete Başlama Tarihi']), format='%d.%m.%Y').dt.year
@@ -209,8 +218,8 @@ def ikys_personel_verileri():
 	# aynı şekilde ek ödeme 666 khk tutarını sabitler.py dosyasındaki fonsiyona gerekli parametreleri göndererek hesaplıyoruz.
 	df['Ek Öde.(666 KHK'] = round(df.apply(lambda row: sabitler.ek_odeme_666(row["Ünvan"], row["Derece"], row["ogrenim"], row["İzin Adı"]), axis=1), 2)
 
-	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Vekil.*K)', value=r'Müez.Kayyı')
-	df['Ünvan'].replace(regex=True, inplace=True, to_replace=r'^(Vekil.*H)', value=r'İmam-Hat.')
+	df['Ünvan'] = df['Ünvan'].replace(regex=True, to_replace=r'^(Vekil.*K)', value=r'Müez.Kayyı')
+	df['Ünvan'] = df['Ünvan'].replace(regex=True, to_replace=r'^(Vekil.*H)', value=r'İmam-Hat.')
 
 	# Son olarak excele aktaracağımız sütunları belirliyoruz.
 	df = df[['TC Kimlik', 'Adı Soyadı', 'Sınıf', 'Ünvan', 'Derece/Kademe', 'Gösterge Puanı', 'Aylık Tutar', 'Ek Gösterge', 'Ek Gös.Ay.', 'Yan Ödeme', 'Yan Ödeme Aylık', 'Ek Tazminat Puanı', 'Özel Hiz. Taz. Puanı',
