@@ -121,12 +121,36 @@ def kbs_bordro_verileri():
 	'Ek Gösterge', 'Ek Gös.Ay.', 'Yan Ödeme', 'Yan Ödeme Aylık', 'Ek Tazminat Puanı', 'Özel Hiz. Taz. Puanı',
 	'Özel Hiz.Taz.', '666 KHK Oranı', 'Ek Öde.(666 KHK', 'İlaveÖd.(375.40']].fillna(0)
 
-	# Listeyi TC veya Adı-Soyadına göre sıralayabilirsiniz, dikkat etmeniz gereken ise ikys_personel ve kbs_personelde de aynı değişikliği yapmanızdır.
-	#df.sort_values(by=['TC Kimlik'], inplace=True, ignore_index=True)
-	df.sort_values(by=['TC Kimlik'], inplace=True, ignore_index=True)
+	# sütun isimlerinin değiştiriyoruz, okunurluğu arttırmak için yaptık
+	yeni_sutun_isimleri = {
+		'TC Kimlik': 'TC Kimlik',
+		'Adı Soyadı': 'Adı Soyadı',
+		'Sınıf': 'Hizmet Sınıfı',
+		'Ünvan': 'Görev Ünvanı',
+		'Derece/Kademe': 'Derece/Kademe',
+		'Gösterge Puanı': 'Gösterge/Aylık Puanı',
+		'Aylık Tutar': 'Gösterge/Aylık Tutarı',
+		'Ek Gösterge': 'Ek Gösterge Puanı',
+		'Ek Gös.Ay.': 'Ek Gösterge Tutarı',
+		'Yan Ödeme': 'Yan Ödeme Puanı',
+		'Yan Ödeme Aylık': 'Yan Ödeme Tutarı',
+		'Ek Tazminat Puanı': 'Ek Tazminat Puanı',
+		'Özel Hiz. Taz. Puanı': 'Özel Hiz. Taz. Puanı',
+		'Özel Hiz.Taz.': 'Özel Hiz. Taz. Tutarı',
+		'666 KHK Oranı': 'Ek Ödeme Puanı (666 KHK)',
+		'Ek Öde.(666 KHK': 'Ek Ödeme Tutarı (666 KHK)',
+		'İlaveÖd.(375.40': 'İlave Ödeme (375-40 KHK)'
+		}
+	
+	# yeni sütunları dataframe ekliyoruz
+	df_final = df.rename(columns=yeni_sutun_isimleri)
+
+	# Listeyi TC veya Adı-Soyadına göre sıralayabilirsiniz, dikkat etmeniz gereken ise kbs_bordro ve kbs_personelde de aynı değişikliği yapmanızdır.
+	# Değerleri TC Kimlik numrasına göre sıralıyoruz.
+	df_final.sort_values(by=['TC Kimlik'], inplace=True, ignore_index=True)
 
 	# DataFrame içinde topladığımız ve sütunlarını belirlediğimiz verilerimizi excele xlsx formatında aktarıyoruz. freeze_panes değeri ile ilk satır ve ilk iki sütunu donduruyoruz.
-	df.to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/.kbs_bordro_verileri.xlsx', index=False, freeze_panes=(1,2))
+	df_final.to_excel('./rapor/' + str(bu_yil) + '/' + str(bu_ay) + '/.kbs_bordro_verileri.xlsx', index=False, freeze_panes=(1,2))
 	print('%20')
 
 if __name__ == '__main__':
