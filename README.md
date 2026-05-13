@@ -32,13 +32,13 @@ Bu program ile; İKYS ve KBS sistemlerinde bulunan aşağıdaki veriler karşıl
 ## 
 
 # ÖN HAZIRLIK
-1- Başta belirtmem gerikir ki bu programın sağlıklı çalışabilmesi için Python versiyonunun 3.7 ve üzeri olması gerekiyor.
+1- Başta belirtmem gerikir ki bu programın sağlıklı çalışabilmesi için Python versiyonunun 3.10 ve üzeri olması gerekiyor.
 
 2- Masaüstündeyken veya herhangi bir konumda boış bir alana sağ tık yaparak `Burada Uçbirim Aç`a tıklıyoruz.
 
 3- Aşağıdaki kodu uçbirime kopyalayın ve enter yapın.
 ```
-sudo apt install -yy git python3-pip
+sudo apt install -yy git python3-pip && pip install uv --break-system-packages
 ```
 4- Aşağıdaki kodu uçbirime kopyalayın ve enter yapın.
 ```
@@ -46,16 +46,11 @@ git clone https://gitlab.com/yahyayildirim/maas_kontrol.git
 ```
 5- Şimdi **maas_kontrol** adında bir klasör oluşmuş olması gerekiyor. `cd maas_kontrol` komutu ile klasöre geçiş yapın.
 
-6- Aşağıdaki kodu uçbirime kopyalayın ve enter yapın.
+6- Aşağıdaki kodu uçbirime yazın/kopyalayın ve enter yapın. Bu aşama bilgisayar özelliklerine göre uzun sürebilir, sabredip bitmesini bekleyin.
 ```
-python3 -m pip config set global.break-system-packages true
+uv sync
 ```
-
-7- Aşağıdaki kodu uçbirime yazın/kopyalayın ve enter yapın. Bu aşama bilgisayar özelliklerine göre uzun sürebilir, sabredip bitmesini bekleyin.
-```
-for i in $(cat moduller.txt);do python3 -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org -U $i;done
-```
-**Önemli Not-1: _Domain kullanıcılarında 7. madde hata verebilir. Hata alırsanız harici bir internet ile işlem yapmanız gerekmektedir._**
+**Önemli Not-1: _Domain kullanıcılarında 3. ve 6. madde de hata verebilir. Hata alırsanız harici bir internet ile işlem yapmanız gerekmektedir._**
 
 **Önemli Not-2: _Domain kullanıcıları harici internete bağlandıkları halde gitlab'a bağlanamıyorlarsa /etc/resolv.conf dosyasını açıp nameserver 8.8.8.8 olarak düzenleme yapmaları gerekmektedir._**
 
@@ -82,9 +77,8 @@ for i in $(cat moduller.txt);do python3 -m pip install --trusted-host pypi.org -
 
 # PROGRAMIN ÇALIŞTIRILMASI
 Programı iki yol ile çalıştırbiliriz.
-* **1. YOL:** maas_kontrol klasöründe bulunan **calistir.py** dosyasına çift tıklayarak açılan menüden **Uçbirimde Çalıştır** butonuna tıklamak.
-
-* **2. YOL:** maas_kontrol klasöründe uçbirim açıp, `./calistir.py` komutunu çalıştırmak
+* **1. YOL:** maas_kontrol klasöründe uçbirim açıp, `python3 calistir.py` komutunu çalıştırmak
+* **2. YOL:** maas_kontrol klasöründe uçbirim açıp, `uv run calistir.py` komutunu çalıştırmak
 
 ##
 
