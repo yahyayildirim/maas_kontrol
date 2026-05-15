@@ -145,6 +145,12 @@ def kbs_bordro_verileri():
 	# yeni sütunları dataframe ekliyoruz
 	df_final = df.rename(columns=yeni_sutun_isimleri)
 
+	# KBS Raporunun son satırındaki boş gelen değerler için bu şekilde bir değer ekliyorum.
+	# hata kodlarında durumu yazdık ama farklılık olsun diye ekledim.
+	if df_final.iat[-1, df_final.columns.get_loc("Ek Ödeme Puanı (666 KHK)")] == 0.0:
+		df_final.iat[-1, df_final.columns.get_loc("Ek Ödeme Puanı (666 KHK)")] = "#DEĞER"
+		df_final.iat[-1, df_final.columns.get_loc("Ek Ödeme Tutarı (666 KHK)")] = "#DEĞER"
+
 	# Listeyi TC veya Adı-Soyadına göre sıralayabilirsiniz, dikkat etmeniz gereken ise kbs_bordro ve kbs_personelde de aynı değişikliği yapmanızdır.
 	# Değerleri TC Kimlik numrasına göre sıralıyoruz.
 	df_final.sort_values(by=['TC Kimlik'], inplace=True, ignore_index=True)
